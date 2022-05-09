@@ -1,3 +1,5 @@
+import { LogInForm } from 'pages/LogIn';
+import { UserData } from 'pages/LogIn/iterfaces';
 import { lazy, Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Routes, Route } from 'react-router';
@@ -8,9 +10,15 @@ const BoardPage = lazy(() => import('pages/Board'));
 
 export const routesPath = {
   board: pathRoutes.root,
+  signUp: pathRoutes.auth.signup.relative,
+  signIn: pathRoutes.auth.signin.relative,
 };
 
-const routes = [{ path: routesPath.board, element: <BoardPage /> }];
+const routes = [
+  { path: routesPath.board, element: <BoardPage /> },
+  { path: routesPath.signUp, element: <LogInForm /> },
+  { path: routesPath.signIn, element: <LogInForm /> },
+];
 
 const AppRoutes = () => {
   return (
