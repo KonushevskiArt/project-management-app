@@ -21,12 +21,12 @@ export const Request = (
     headers: { Authorization: `Bearer ${checkToken()}` },
     data: data,
   }).then(function (response) {
-      console.log(response.status)
+    console.log(response.status);
     if (urlProp === '/signin') localStorage.setItem('token', response.data.token);
-    if (response.status.toString() === '403') {
+    /*if (response.status.toString() === '403') {
       alert('gjkmpjdfntkm yt yfqlty');
       reset();
-    }
+    }*/
 
     console.log(response);
   });
