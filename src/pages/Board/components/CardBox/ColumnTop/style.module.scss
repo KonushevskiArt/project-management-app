@@ -1,0 +1,42 @@
+.columnTop {
+  display: flex;
+  align-items: center;
+  color: var(--text-color-dark);
+}
+.title, .titleInput {
+  font-weight: bold;
+  color: var(--text-color-dark);
+  font-size: 14px;
+
+}
+.title {
+  flex-grow: 1;
+  margin-left: 2px;
+  padding: 5px;
+}
+.titleInput {
+  width: 100%;
+  padding: 3px;
+  padding-left: 5px;
+  border-radius: 2px;
+  outline: none;
+  &:focus {
+    border: 2px solid var(--main-color);
+  }
+}
+.inputWrapper {
+  flex-grow: 1;
+}
+.button {
+  padding: 9px 9px;
+  border-radius: 2px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: transparent;
+  &:hover {
+    background-color: var(--dark-button-hover);
+  } 
+}

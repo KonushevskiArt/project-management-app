@@ -1,0 +1,65 @@
+.addButtonWrapper {
+  padding: 3px;
+}
+.button {
+  padding: 9px 9px;
+  border: none;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  color: var(--text-color-dark);
+  background-color: transparent;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--dark-button-hover);
+  } 
+}
+.textArea {
+  font-family: 'Noto Sans', sans-serif;
+  resize: none;
+  width: 100%;
+  height: 66px;
+  font-size: 14px;
+  border-radius: 3px;
+  border: none;
+  outline: none;
+  padding: 10px;
+  border-bottom: 1px solid var(--bottom-border-task-color);
+  // box-shadow: 0px -3px 5px -5px rgba(9, 16, 21, 1) inset;
+  color: var(--text-color-dark);
+}
+.bottomButtonsWrapper {
+  margin-top: 6px;
+  display: flex;
+}
+.bottomButtonsLeftWrapper {
+  flex-grow: 1;
+  display: flex;
+}
+.fillButton {
+  margin-right: 5px;
+  border: none;
+  border-radius: 3px;
+  padding: 2px 12px;
+  color: var(--text-color-white);
+  background-color: var(--main-color);
+  transition: background-color 0.2s;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--main-color-dark);
+  }
+}
+.transparentButton {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  opacity: 0.7;
+  &:hover {
+    opacity: 1;
+  }
+
+}
+.buttonModify {
+  padding: 3px 6px;
+}
