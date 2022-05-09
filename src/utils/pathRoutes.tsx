@@ -84,6 +84,20 @@ export const pathRoutes = {
         join(pathRoutes.root, pathRoutes.column.relative(boardId), columnId),
     },
   },
+  task: {
+    relative: (boardId = ':id', columnId = ':id') =>
+      join(pathRoutes.root, pathRoutes.board.relative, boardId, 'columns', columnId, 'tasks'),
+    create: {
+      relative: '',
+      absolute: (boardId = ':boardId', columnId = ':columnId') =>
+        join(pathRoutes.root, pathRoutes.task.relative(boardId, columnId)),
+    },
+    getOneById: {
+      relative: '',
+      absolute: (boardId = ':boardId', columnId = ':columnsId', taskId = ':taskId') =>
+        join(pathRoutes.root, pathRoutes.task.relative(boardId, columnId), taskId),
+    },
+  },
 };
 
 // Task (boards/:boardId/columns/:columnsId route)
