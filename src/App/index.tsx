@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import './App.scss';
+import './normalize.scss';
+import './global-styles.scss';
 import AppRoutes from './AppRoutes';
 
 function App() {
