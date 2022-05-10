@@ -1,4 +1,4 @@
-import { FormEventHandler, useRef, useState } from 'react';
+import { useRef } from 'react';
 
 const useCreatCardForm = () => {
   const textareaEl = useRef(null);
@@ -19,8 +19,6 @@ const useCreatCardForm = () => {
       }
       (textarea as HTMLTextAreaElement).focus();
     }
-
-    // if (textareaEl.current) console.log((textareaEl.current as HTMLInputElement).focus());
   };
 
   const onKeyDown = (event: { key?: string; preventDefault: () => void }) => {
@@ -29,19 +27,10 @@ const useCreatCardForm = () => {
     }
   };
 
-  /*  const onInput: FormEventHandler<HTMLTextAreaElement> = (event) => {
-    setValue((event.target as HTMLInputElement).value);
-  }; */
-
   return {
-    textareaState: {
-      /*   value,
-      setValue, */
-    },
     handlers: {
       onSubmit,
       onKeyDown,
-      //  onInput,
     },
     textareaEl,
   };

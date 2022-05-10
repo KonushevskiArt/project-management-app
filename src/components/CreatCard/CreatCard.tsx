@@ -1,25 +1,26 @@
-import styles from './creat-card.module.scss';
 import { useState } from 'react';
-import LabelCard from './LabelCard';
+import CreatCardLabel from './CreatCardLabel';
 import CreatCardForm from './CreatCardForm';
 
-const TEXT_ADD_CARD = {
+const TEXT_CREAT_CARD = {
   label: 'Add a card',
-  placeholder: 'Enter a title for this card…',
 };
 
 const CreatCard = () => {
-  const [isActive, toggleIsActive] = useState(false);
+  const [isCreatingCard, toggIsCreatingCard] = useState(false);
 
-  const onLabelClick = () => toggleIsActive(true);
+  const onLabelClick = () => toggIsCreatingCard(true);
   const onCloseFormClick = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    toggleIsActive(false);
+    toggIsCreatingCard(false);
   };
   return (
     <div>
-      {!isActive && <LabelCard label={TEXT_ADD_CARD.label} onClick={onLabelClick} />}
-      {isActive && <CreatCardForm onCloseClick={onCloseFormClick} />}
+      {isCreatingCard ? (
+        <CreatCardForm onCloseClick={onCloseFormClick} />
+      ) : (
+        <CreatCardLabel label={TEXT_CREAT_CARD.label} onClick={onLabelClick} />
+      )}
     </div>
   );
 };
