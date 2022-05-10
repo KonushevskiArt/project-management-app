@@ -23,7 +23,6 @@ export const LogInForm = () => {
 
   function checkUser(data: UserData) {
     Request('post', location.pathname, reset, data);
-    console.log(data);
   }
 
   function checkText() {
