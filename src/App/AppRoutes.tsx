@@ -19,7 +19,7 @@ const AppRoutes = () => {
       <Routes>
         {routes.map((route) => (
           <Route
-            key={route.path + Date.now()}
+            key={route.path}
             path={route.path}
             element={
               <Suspense fallback={<h2>Loading...</h2>}>

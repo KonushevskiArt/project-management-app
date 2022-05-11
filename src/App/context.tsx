@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, Dispatch, ReactNode, useReducer } from 'react';
 
 type UpdateActionBoolean = {
   type: 'isLoaded' | 'notFound';
@@ -11,12 +11,12 @@ type ContextState = {
 };
 
 type AppContextProviderProps = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 type ContextType = {
   state: ContextState;
-  dispatch: React.Dispatch<CounterAction>;
+  dispatch: Dispatch<CounterAction>;
 };
 
 type CounterAction = UpdateActionBoolean;
@@ -26,7 +26,7 @@ const initialState = {
   notFound: false,
 };
 
-function reducer(state: ContextState, action: CounterAction) {
+const reducer = (state: ContextState, action: CounterAction) => {
   switch (action.type) {
     case 'isLoaded':
       return { ...state, isLoaded: action.payload };
@@ -35,7 +35,7 @@ function reducer(state: ContextState, action: CounterAction) {
     default:
       return state;
   }
-}
+};
 
 export const AppContext = createContext({} as ContextType);
 
