@@ -1,3 +1,4 @@
+import { allTasks } from 'data';
 import { pathRoutes } from 'utils/pathRoutes';
 
 export const BASE_URL = 'https://pure-cove-88107.herokuapp.com';
@@ -96,6 +97,9 @@ const token =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMGMyNDMyYy01MTY1LTRmMzQtOGViMS03Y2U5NWY2OWY5ZDUiLCJsb2dpbiI6InVzZXIwMDExMiIsImlhdCI6MTY1MjAyNzkwOX0.3PPt5NGDAVhhQPegn0s_u05rg7aQXBMeR2R8Wg_lOBE';
 
 export default {
+  getValue: () => {
+    return allTasks;
+  },
   signin: async (props: IsigninProps = signinBody) => {
     const res = await fetch(`${BASE_URL}${pathRoutes.auth.signin.absolute()}`, {
       method: 'POST',
