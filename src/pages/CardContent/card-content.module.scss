@@ -1,10 +1,13 @@
 .wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
   position: absolute;
   left: -100%;
   top: 50%;
   transform: translateY(-50%);
   width: 768px;
-  padding: 12px;
+  padding: 20px;
   background-color: #fff;
   z-index: 999;
   transition: all 0.3s ease 0s;
@@ -15,15 +18,29 @@
   transform: translate(-50%, -50%);
   left: 50%;
 }
-.header {
-  position: relative;
-}
-.body {
+
+.main {
   display: flex;
   justify-content: space-between;
   padding: 20px 0px;
 }
 
+.body {
+  display: flex;
+  flex-direction: column;
+  row-gap: 25px;
+}
+
+.header,
+.description,
+.activity {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-left: 30px;
+}
+
+.close-icon,
 .icon {
   color: var(--text-color-gray);
   width: 24px;
@@ -31,18 +48,27 @@
   transition: color 0.3s ease 0s;
 }
 
-.title {
-  display: flex;
-  column-gap: 12px;
+.icon {
+  position: absolute;
+  left: 0;
+  top: 0;
 }
-.title-text {
+
+.subtext {
+  font-size: 14px;
+}
+.column {
+  text-decoration: underline;
+}
+
+.title {
   font-size: 20px;
 }
-.subtitle-text {
+.subtitle {
   font-size: 18px;
 }
-.title-text,
-.subtitle-text {
+.title,
+.subtitle {
   color: var(--text-color-dark);
   margin: 0px;
   font-weight: 600;

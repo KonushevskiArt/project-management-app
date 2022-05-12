@@ -1,10 +1,27 @@
+import mockApi from 'MockApi';
 import { useRef } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
 
 const useCreatCardForm = () => {
   const textareaEl = useRef(null);
+  const queryClient = useQueryClient();
+  //const mutation = useMutation((newTodo) => axios.post('/todos', newTodo));
+  const { isLoading, isSuccess, isError, mutate } = useMutation(
+    (newTask: { title: string; order: number; description: string }) => mockApi.creatTask(newTask),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('tasks');
+      },
+    }
+  );
 
   const submitValue = (value: string) => {
     console.log(`submit: ${value}`);
+    mutate({
+      title: value,
+      order: 5,
+      description: '',
+    });
   };
 
   const onSubmit = (event: { preventDefault: () => void }) => {
@@ -32,6 +49,7 @@ const useCreatCardForm = () => {
       onSubmit,
       onKeyDown,
     },
+    isDisabled: isLoading,
     textareaEl,
   };
 };

@@ -5,16 +5,25 @@
   cursor: pointer;
   display: block;
   margin-bottom: 8px;
-  padding: 0px 8px;
-  max-width: 300px;
-  line-height: 32px;
+
   position: relative;
-  text-decoration: none;
+
   z-index: 0;
   color: var(--text-color-gray);
   transition: all 0.3s ease 0s;
   &:hover {
-    color: var(--text-color-dark);
     background-color: #f4f5f7;
+    .link {
+      color: var(--text-color-dark);
+    }
   }
+}
+.link {
+  display: block;
+  max-width: 300px;
+  line-height: 32px;
+  text-decoration: none;
+  color: var(--text-color-gray);
+  transition: all 0.3s ease 0s;
+  padding: 0px 8px;
 }
