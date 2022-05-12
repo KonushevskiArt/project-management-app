@@ -4,28 +4,61 @@ import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useQuery } from 'react-query';
+import { AuthService } from 'utils/services/Auth.service';
+import { UserService } from 'utils/services/User.service';
 
 type Inputs = {
   name: string;
 };
 
+const user = { name: 'Artem', password: '12345', login: 'qwer' };
+const userSignIn = { password: '12345', login: 'qwer' };
+
 const ColumnCreater = () => {
   const [isAddingColumn, setIsAddingColumn] = useState(false);
+  const {
+    // isLoading,
+    // data: response,
+    refetch,
+  } = useQuery(['signup', user], () => AuthService.signUp(user), {
+    onError: ({ error }) => {
+      console.log(error);
+    },
+    enabled: false,
+    // select: ({ data }) => {
+    //   console.log(data);
+    //   return data;
+    // },
+  });
+  const {
+    // isLoading,
+    // data: response,
+    refetch: refetch1,
+  } = useQuery(['signin', userSignIn], () => AuthService.signIn(userSignIn), {
+    onSuccess: ({ data }) => {
+      localStorage.setItem('token', data.token);
+    },
+    enabled: false,
+  });
 
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<Inputs>();
+    // isLoading,
+    // data: response,
+    refetch: refetch2,
+  } = useQuery('getAll', () => UserService.getAll(), {
+    enabled: false,
+  });
+
+  const { register, handleSubmit, reset } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    if (data.name.trim()) {
-      //api request craete column
-      console.log(data);
-      setIsAddingColumn(false);
-      reset();
-    }
+    // if (data.name.trim()) {
+    //   //api request craete column
+    //   console.log(data);
+    //   setIsAddingColumn(false);
+    //   reset();
+    // }
   };
 
   const ref = useOnclickOutside(() => {
@@ -44,6 +77,9 @@ const ColumnCreater = () => {
     <div className={s.columnCreater}>
       <div ref={ref} className={addColumnBlockClassNames}>
         <form onSubmit={handleSubmit(onSubmit)}>
+          {/* <button onClick={() => refetch()}>sign up</button> */}
+          <button onClick={() => refetch1()}>sign in</button>
+          <button onClick={() => refetch2()}>get All users</button>
           {!isAddingColumn ? (
             <button
               onClick={clickTriggerHandler}

@@ -2,12 +2,12 @@ import { lazy, Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Routes, Route } from 'react-router';
 import { ErrorFallback } from 'sharedComponents/ErrorFallBack';
-import { pathRoutes } from 'utils/pathRoutes';
+import { ApiRoutes } from 'utils/appRoutes';
 
 const BoardPage = lazy(() => import('pages/Board'));
 
 export const routesPath = {
-  board: pathRoutes.root,
+  board: ApiRoutes.root,
 };
 
 const routes = [{ path: routesPath.board, element: <BoardPage /> }];

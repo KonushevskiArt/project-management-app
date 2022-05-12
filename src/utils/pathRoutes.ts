@@ -1,6 +1,8 @@
 import { join } from 'path-browserify';
+// export const API_URL = 'https://pure-cove-88107.herokuapp.com/';
+
 export const pathRoutes = {
-  root: '/',
+  root: 'https://pure-cove-88107.herokuapp.com/',
   auth: {
     relative: '',
     signup: {
@@ -65,34 +67,63 @@ export const pathRoutes = {
     },
     getOneById: {
       relative: '',
-      absolute: (boardId = ':boardId', columnId = ':columnsId') =>
+      absolute: (boardId = 'id', columnId = ':id') =>
         join(pathRoutes.root, pathRoutes.column.relative(boardId), columnId),
     },
     create: {
       relative: '',
-      absolute: (boardId = ':boardId') =>
-        join(pathRoutes.root, pathRoutes.column.relative(boardId)),
+      absolute: (boardId = ':id') => join(pathRoutes.root, pathRoutes.column.relative(boardId)),
     },
     updateOneById: {
       relative: '',
-      absolute: (boardId = ':boardId', columnId = ':columnsId') =>
+      absolute: (boardId = 'id', columnId = ':id') =>
         join(pathRoutes.root, pathRoutes.column.relative(boardId), columnId),
     },
     deleteOneById: {
       relative: '',
-      absolute: (boardId = ':boardId', columnId = ':columnsId') =>
+      absolute: (boardId = 'id', columnId = ':id') =>
         join(pathRoutes.root, pathRoutes.column.relative(boardId), columnId),
     },
   },
+  task: {
+    relative: (boardId = ':id', columnId = ':id') =>
+      join(pathRoutes.root, pathRoutes.column.relative(boardId), columnId),
+    getAll: {
+      relative: '',
+      absolute: (boardId = ':id', columnId = ':id') =>
+        join(pathRoutes.root, pathRoutes.task.relative(boardId, columnId), 'tasks'),
+    },
+    getOneById: {
+      relative: '',
+      absolute: (boardId = ':id', columnId = ':id', taskId: ':id') =>
+        join(pathRoutes.root, pathRoutes.task.relative(boardId, columnId), 'tasks', taskId),
+    },
+    create: {
+      relative: '',
+      absolute: (boardId = ':id', columnId = ':id') =>
+        join(pathRoutes.root, pathRoutes.task.relative(boardId, columnId), 'tasks'),
+    },
+    updateOneById: {
+      relative: '',
+      absolute: (boardId = 'id', columnId = ':id', taskId: ':id') =>
+        join(pathRoutes.root, pathRoutes.task.relative(boardId, columnId), 'tasks', taskId),
+    },
+    deleteOneById: {
+      relative: '',
+      absolute: (boardId = 'id', columnId = ':id', taskId: ':id') =>
+        join(pathRoutes.root, pathRoutes.task.relative(boardId, columnId), 'tasks', taskId),
+    },
+  },
+  file: {
+    relative: 'file',
+    getOneByTaskIdAndFileName: {
+      relative: '',
+      absolute: (taskId = ':id', fileName = 'name') =>
+        join(pathRoutes.root, pathRoutes.file.relative, taskId, fileName),
+    },
+    upload: {
+      relative: '',
+      absolute: () => join(pathRoutes.root, pathRoutes.file.relative),
+    },
+  },
 };
-
-// Task (boards/:boardId/columns/:columnsId route)
-// GET /tasks - get all tasks
-// GET /tasks/:taskId - get the task by id
-// POST /tasks - create task
-// PUT /tasks/:taskId - update task
-// DELETE /tasks/:taskId - delete task
-// File:
-
-// GET file/:taskId/:filename/ - download file
-// POST file/ - upload file multipart/form-data
