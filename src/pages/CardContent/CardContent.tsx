@@ -5,7 +5,7 @@ import CardContentActivity from './CardContentActivity';
 
 import styles from './card-content.module.scss';
 import { ITask } from 'interfaces';
-import NotFound from 'components/not-found';
+import NotFound from 'pages/NotFound';
 import Modal from 'components/Modal';
 import { useNavigate } from 'react-router';
 

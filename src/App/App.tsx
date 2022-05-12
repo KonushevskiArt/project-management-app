@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Board from 'pages/Board';
-import NotFound from 'components/not-found';
+import NotFound from 'pages/NotFound';
 import CardContent from 'pages/CardContent';
 import Main from 'pages/Main';
 import { QueryClient, QueryClientProvider } from 'react-query';
