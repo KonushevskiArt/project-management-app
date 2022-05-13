@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { pathRoutes } from 'utils/pathRoutes';
+import { pathAPIRoutes } from 'utils/pathAPIRoutes';
 import { IBoard } from './models';
 
 const headersWithToken = {
@@ -8,27 +8,31 @@ const headersWithToken = {
 
 export const BoardService = {
   async getAll() {
-    return axios.get<IBoard[]>(pathRoutes.board.getAll.absolute(), {
+    return axios.get<IBoard[]>(pathAPIRoutes.board.getAll.absolute(), {
       headers: headersWithToken,
     });
   },
   async getBoardById(id: string) {
-    return axios.get<IBoard>(pathRoutes.board.getOneById.absolute(id), {
+    return axios.get<IBoard>(pathAPIRoutes.board.getOneById.absolute(id), {
       headers: headersWithToken,
     });
   },
   async createBoard(title: string) {
-    return axios.post<IBoard>(pathRoutes.board.create.absolute(), title, {
-      headers: headersWithToken,
-    });
+    return axios.post<IBoard>(
+      pathAPIRoutes.board.create.absolute(),
+      { title },
+      {
+        headers: headersWithToken,
+      }
+    );
   },
   async updateBoardById(id: string, board: IBoard) {
-    return axios.put<IBoard>(pathRoutes.board.getOneById.absolute(id), board, {
+    return axios.put<IBoard>(pathAPIRoutes.board.getOneById.absolute(id), board, {
       headers: headersWithToken,
     });
   },
   async deleteBoardById(id: string) {
-    return axios.delete(pathRoutes.board.deleteOneById.absolute(id), {
+    return axios.delete(pathAPIRoutes.board.deleteOneById.absolute(id), {
       headers: headersWithToken,
     });
   },

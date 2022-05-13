@@ -12,18 +12,17 @@ interface ITask {
 interface IProps {
   name?: string;
   tasks?: ITask[];
+  id: string;
 }
 
-const CardBox = ({ name = 'some name', tasks = [] }: IProps) => {
-  const [isEditName, setIsEditName] = useState(false);
-
+const CardBox = ({ name = 'some name', tasks = [], id }: IProps) => {
   return (
     <div className={s.cardBox}>
       <ColumnTop name={name} />
       {tasks.map((card) => (
         <Task key={card.name + Math.random()} name={card.name} />
       ))}
-      <ColumnBottom />
+      <ColumnBottom id={id} />
     </div>
   );
 };

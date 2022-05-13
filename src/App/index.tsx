@@ -2,8 +2,11 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import './normalize.scss';
 import './global-styles.scss';
+import './animation.scss';
 import AppRoutes from './AppRoutes';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -17,6 +20,7 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <AppRoutes />
       </QueryClientProvider>
+      <ToastContainer />
     </BrowserRouter>
   );
 }

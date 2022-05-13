@@ -1,14 +1,14 @@
 import axios from 'axios';
-import { pathRoutes } from '../pathRoutes';
+import { pathAPIRoutes } from '../pathAPIRoutes';
 import { IUser, IUserResponse, IUserSignIn, ISignInResponse } from './models';
 
-// axios.defaults.baseURL = pathRoutes.root;
+// axios.defaults.baseURL = pathAPIRoutes.root;
 
 export const AuthService = {
   async signUp(user: IUser) {
-    return axios.post<IUserResponse>(pathRoutes.auth.signup.absolute(), user);
+    return axios.post<IUserResponse>(pathAPIRoutes.auth.signup.absolute(), user);
   },
   async signIn(user: IUserSignIn) {
-    return axios.post<ISignInResponse>(pathRoutes.auth.signin.absolute(), user);
+    return axios.post<ISignInResponse>(pathAPIRoutes.auth.signin.absolute(), user);
   },
 };

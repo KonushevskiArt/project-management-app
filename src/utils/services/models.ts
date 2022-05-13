@@ -18,8 +18,9 @@ export interface ISignInResponse {
 }
 
 export interface IBoard {
-  title: string;
+  columns: IColumn[];
   id: string;
+  title: string;
 }
 
 export interface IColumn {
@@ -27,6 +28,26 @@ export interface IColumn {
   title: string;
   order: number;
   tasks: [];
+}
+export interface IResponseNewColumn {
+  id: string;
+  title: string;
+  order: number;
+}
+export interface ITask {
+  title: string;
+  order: number;
+  description: string;
+  userId: string;
+  boardId: string;
+  columnId: string;
+  id: string;
+}
+export interface INewTask {
+  title: string;
+  order: number;
+  description: string;
+  userId: string;
 }
 
 export interface INewColumn {

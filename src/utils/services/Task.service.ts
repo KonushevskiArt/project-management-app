@@ -1,38 +1,42 @@
 import axios from 'axios';
-import { pathRoutes } from 'utils/pathRoutes';
-import { IColumn, INewColumn } from './models';
+import { pathAPIRoutes } from 'utils/pathAPIRoutes';
+import { INewTask, ITask } from './models';
 
 const headersWithToken = {
   Authorization: `Bearer ${localStorage.getItem('token')}`,
 };
-// here change all methods
+
 export const TaskService = {
-  async getAll(boardId: string) {
-    return axios.get<IColumn[]>(pathRoutes.column.getAll.absolute(boardId), {
+  async getAll(boardId: string, columnId: string) {
+    return axios.get<ITask[]>(pathAPIRoutes.task.getAll.absolute(boardId, columnId), {
       headers: headersWithToken,
     });
   },
-  async getColumnById(boardId: string, columnId: string) {
-    return axios.get<IColumn>(pathRoutes.column.getOneById.absolute(boardId, columnId), {
+  async getTaskById(boardId: string, columnId: string, taskId: string) {
+    return axios.get<ITask>(pathAPIRoutes.task.getOneById.absolute(boardId, columnId, taskId), {
       headers: headersWithToken,
     });
   },
-  async createColumn(boardId: string, newColumn: INewColumn) {
-    return axios.post<IColumn>(
-      pathRoutes.column.create.absolute(boardId),
-      { boardId, newColumn },
+  async createTask(boardId: string, coumntId: string, newTask: INewTask) {
+    return axios.post<ITask>(
+      pathAPIRoutes.task.create.absolute(boardId),
+      { boardId, coumntId, body: { ...newTask } },
       {
         headers: headersWithToken,
       }
     );
   },
-  async updateColumnById(boardId: string, columnId: string, column: IColumn) {
-    return axios.put<IColumn>(pathRoutes.column.getOneById.absolute(boardId, columnId), column, {
-      headers: headersWithToken,
-    });
+  async updateTaskById(boardId: string, columnId: string, taskId: string, task: ITask) {
+    return axios.put<ITask>(
+      pathAPIRoutes.task.getOneById.absolute(boardId, columnId, taskId),
+      task,
+      {
+        headers: headersWithToken,
+      }
+    );
   },
-  async deleteColumnById(boardId: string, columnId: string) {
-    return axios.delete(pathRoutes.column.deleteOneById.absolute(boardId, columnId), {
+  async deleteTaskById(boardId: string, columnId: string, taskId: string) {
+    return axios.delete(pathAPIRoutes.task.deleteOneById.absolute(boardId, columnId, taskId), {
       headers: headersWithToken,
     });
   },

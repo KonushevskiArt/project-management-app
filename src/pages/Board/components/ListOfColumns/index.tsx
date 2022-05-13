@@ -2,27 +2,18 @@ import React from 'react';
 import MockCardBox from '../MockCardBox';
 import s from './style.module.scss';
 import ColumnCreater from '../ColumnCreater';
+import { BoardCtx } from 'pages/Board';
 
-interface ITask {
-  name: string;
-  description?: string;
-}
+const idMyBoard = 'c9a87cc2-d708-4098-9668-818d259eee93';
 
-interface IColumn {
-  name: string;
-  tasks: ITask[];
-}
+const ListOfColumns = () => {
+  const { columns } = React.useContext(BoardCtx);
 
-interface IProps {
-  columns?: IColumn[];
-}
-
-const ListOfColumns = ({ columns = [] }: IProps) => {
   return (
     <ul className={s.columnList}>
-      {columns.map(({ name, tasks }) => (
-        <li key={name + Math.random()}>
-          <MockCardBox name={name} tasks={tasks} />
+      {columns.map(({ title, tasks, id }) => (
+        <li key={title + Math.random()}>
+          <MockCardBox id={id} name={title} tasks={tasks} />
         </li>
       ))}
       <ColumnCreater />
