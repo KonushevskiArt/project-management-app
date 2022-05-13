@@ -17,15 +17,16 @@ export const routesPath = {
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path={routesPath.board} element={<BoardPage />} />
+      <Route path="/*" element={<MyHomePage />} />
+      <Route path={`${pathRoutes.board.relative}:id`} element={<BoardPage />} />
       {!Cookies.get('token') && (
         <>
-          <Route path={routesPath.signIn} element={<LogInForm />} />
-          <Route path={routesPath.signUp} element={<LogInForm />} />
+          <Route path={pathRoutes.auth.signup.relative} element={<LogInForm />} />
+          <Route path={pathRoutes.auth.signin.relative} element={<LogInForm />} />
         </>
       )}
-      <Route path="errorPage" element={<ErrorPage />} />
-      <Route path="*" element={<Navigate to="errorPage" replace />} />
+      <Route path="/errorPage/*" element={<ErrorPage />} />
+      <Route path="/*" element={<Navigate to="/errorPage" replace />} />
     </Routes>
   );
 };
