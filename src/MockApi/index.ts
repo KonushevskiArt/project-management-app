@@ -1,9 +1,30 @@
-import { allTasks } from 'data';
-import { ITask } from 'interfaces';
+import { column, allTasks, board } from 'data';
+import { ITask, IBoard, IColumn } from 'interfaces';
 import { v4 as uuid } from 'uuid';
+
+interface ICreatTaskProps {
+  boardId: string;
+  columnId: string;
+  body: {
+    title: string;
+    order: number;
+    description: string;
+    userId: string;
+  };
+}
+interface IGetAllTasksProps {
+  boardId: string;
+  columnId: string;
+}
+
+interface IGetBoardByIdProps {
+  boardId: string;
+}
 
 class MockApi {
   private tasks: ITask[] = [...allTasks];
+  private columns: IColumn[] = [{ ...column, tasks: this.tasks }];
+  private boards: IBoard[] = [{ ...board, columns: this.columns }];
 
   private getNewTask = ({
     title,
@@ -19,32 +40,62 @@ class MockApi {
     order,
     description,
     userId: '',
-    boardId: '',
-    columnId: '',
+    boardId: '9a111e19-24ec-43e1-b8c4-13776842b8d5',
+    columnId: '41344d09-b995-451f-93dc-2f17ae13a4a5',
   });
 
-  getAllTasks = (): Promise<ITask[]> => {
+  getAllTasks = ({ boardId, columnId }: IGetAllTasksProps): Promise<ITask[]> => {
+    const board = this.boards.find(({ id }) => id === boardId);
+    const column = board && board.columns.find(({ id }) => id === columnId);
+    const tasks = column && column.tasks;
     return new Promise((resolve, reject) => {
-      setTimeout(() => resolve(this.tasks), 1000);
-      //  setTimeout(() => reject(new Error('Whoops!')), 1000);
+      if (tasks) setTimeout(() => resolve(tasks), 1000);
+      setTimeout(() => reject(new Error('Whoops!')), 1000);
     });
   };
 
   creatTask = ({
-    title,
-    order,
-    description,
-  }: {
-    title: string;
-    order: number;
-    description: string;
-  }): Promise<ITask> => {
+    boardId,
+    columnId,
+    body: { title, order, description, userId },
+  }: ICreatTaskProps): Promise<ITask> => {
     const newTask = this.getNewTask({ title, order, description });
-    this.tasks = [...this.tasks, newTask];
-    console.log(this.tasks);
+    const board = this.boards.find(({ id }) => id === boardId);
+    const column = board && board.columns.find(({ id }) => id === columnId);
+    const tasks = column && column.tasks;
+
+    tasks && tasks.push(newTask);
+
     return new Promise((resolve, reject) => {
-      setTimeout(() => resolve(newTask), 1000);
-      //  setTimeout(() => reject(new Error('Whoops!')), 1000);
+      if (tasks) setTimeout(() => resolve(newTask), 1000);
+      setTimeout(() => reject(new Error('Whoops!')), 1000);
+    });
+  };
+
+  getBoardById = ({ boardId }: IGetBoardByIdProps): Promise<IBoard> => {
+    const board = this.boards.find(({ id }) => id === boardId);
+    return new Promise((resolve, reject) => {
+      if (board) setTimeout(() => resolve(board), 1000);
+      setTimeout(() => reject(new Error('Whoops!')), 1000);
+    });
+  };
+
+  getAllColumns = ({ boardId }: IGetBoardByIdProps): Promise<IColumn[]> => {
+    const columns = this.boards.find(({ id }) => id === boardId)?.columns;
+
+    return new Promise((resolve, reject) => {
+      if (columns) setTimeout(() => resolve(columns), 1000);
+      setTimeout(() => reject(new Error('Whoops!')), 1000);
+    });
+  };
+
+  getColumnById = ({ boardId, columnId }: IGetAllTasksProps): Promise<IColumn> => {
+    const board = this.boards.find(({ id }) => id === boardId);
+    const column = board && board.columns.find(({ id }) => id === columnId);
+
+    return new Promise((resolve, reject) => {
+      if (column) setTimeout(() => resolve(column), 1000);
+      setTimeout(() => reject(new Error('Whoops!')), 1000);
     });
   };
 }

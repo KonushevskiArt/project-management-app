@@ -1,13 +1,17 @@
 import Board from 'pages/Board';
 import { Link } from 'react-router-dom';
 
-const Main = () => (
-  <div>
-    Main Page
+const BOARD_ID = '9a111e19-24ec-43e1-b8c4-13776842b8d5';
+
+const Main = () => {
+  return (
     <div>
-      <Link to="/board">Board</Link>
+      Main Page
+      <div>
+        <Link to={`/boards/${BOARD_ID}`}>Board</Link>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Main;

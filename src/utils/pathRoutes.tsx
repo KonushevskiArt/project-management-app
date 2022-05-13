@@ -33,32 +33,32 @@ export const pathRoutes = {
       absolute: (id = ':id') => join(pathRoutes.root, pathRoutes.user.relative, id),
     },
   },
-  board: {
+  boards: {
     relative: 'boards',
     getAll: {
       relative: '',
-      absolute: () => join(pathRoutes.root, pathRoutes.board.relative),
+      absolute: () => join(pathRoutes.root, pathRoutes.boards.relative),
     },
     getOneById: {
       relative: '',
-      absolute: (id = ':id') => join(pathRoutes.root, pathRoutes.board.relative, id),
+      absolute: (id = ':id') => join(pathRoutes.root, pathRoutes.boards.relative, id),
     },
     create: {
       relative: '',
-      absolute: () => join(pathRoutes.root, pathRoutes.board.relative),
+      absolute: () => join(pathRoutes.root, pathRoutes.boards.relative),
     },
     updateOneById: {
       relative: '',
-      absolute: (id = ':id') => join(pathRoutes.root, pathRoutes.board.relative, id),
+      absolute: (id = ':id') => join(pathRoutes.root, pathRoutes.boards.relative, id),
     },
     deleteOneById: {
       relative: '',
-      absolute: (id = ':id') => join(pathRoutes.root, pathRoutes.board.relative, id),
+      absolute: (id = ':id') => join(pathRoutes.root, pathRoutes.boards.relative, id),
     },
   },
   column: {
     relative: (boardId = ':id') =>
-      join(pathRoutes.root, pathRoutes.board.relative, boardId, 'columns'),
+      join(pathRoutes.root, pathRoutes.boards.relative, boardId, 'columns'),
     getAll: {
       relative: '',
       absolute: (boardId = ':id') => join(pathRoutes.root, pathRoutes.column.relative(boardId)),
@@ -86,7 +86,7 @@ export const pathRoutes = {
   },
   task: {
     relative: (boardId = ':id', columnId = ':id') =>
-      join(pathRoutes.root, pathRoutes.board.relative, boardId, 'columns', columnId, 'tasks'),
+      join(pathRoutes.root, pathRoutes.boards.relative, boardId, 'columns', columnId, 'tasks'),
     create: {
       relative: '',
       absolute: (boardId = ':boardId', columnId = ':columnId') =>

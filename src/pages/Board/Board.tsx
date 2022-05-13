@@ -1,40 +1,43 @@
-import Cards from 'components/Cards';
-import ListCardContent from 'pages/CardContent';
 import { Route, Routes, useParams } from 'react-router';
 import mockApi from 'MockApi';
-import { useEffect, useState } from 'react';
-import { useQuery, useInfiniteQuery } from 'react-query';
-import { ITask } from 'interfaces';
+import { useQuery } from 'react-query';
 import Loader from 'components/Loader';
 import NotFound from 'pages/NotFound';
-
-const initialState: ITask[] | [] = [];
+import TaskContent from 'pages/TaskContent';
+import Columns from './Columns';
 
 const Board = () => {
+  const { boardId = '', columnId, taskId } = useParams();
+
   const {
     isLoading,
     error,
-    data: cards = [],
-    isSuccess,
-  } = useQuery(['tasks'], () => {
-    try {
-      return mockApi.getAllTasks().then((res) => res);
-    } catch (error) {
-      throw Error('!!!');
+    data: board,
+  } = useQuery(
+    ['boards', boardId],
+    () => {
+      try {
+        return mockApi.getBoardById({ boardId }).then((res) => res);
+      } catch (error) {
+        throw Error('!!!');
+      }
+    },
+    {
+      retry: false,
     }
-  });
+  );
 
-  const { taskId = '' } = useParams();
-
-  const cardById = cards.find((task) => task.id === taskId);
+  const columnById = board?.columns.find(({ id }) => columnId === id);
+  const cardById = columnById?.tasks.find(({ id }) => taskId === id);
 
   if (error) return <NotFound />;
+  if (isLoading) return <Loader />;
   return (
     <div>
-      <p>First board</p>
-      {isLoading ? <Loader /> : <Cards cards={cards} />}
+      <h4>{board?.title}</h4>
+      <Columns columns={board?.columns} />
       <Routes>
-        <Route path=":taskId" element={<ListCardContent card={cardById} />} />
+        <Route path="columns/:columnId/tasks/:taskId" element={<TaskContent card={cardById} />} />
       </Routes>
     </div>
   );

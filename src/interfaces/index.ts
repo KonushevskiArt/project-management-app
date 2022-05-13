@@ -7,3 +7,16 @@ export interface ITask {
   boardId: string;
   columnId: string;
 }
+
+export interface IColumn {
+  id: string;
+  title: string;
+  order: number;
+  tasks: ITask[];
+}
+
+export interface IBoard {
+  id: string;
+  title: string;
+  columns: IColumn[];
+}

@@ -125,7 +125,7 @@ export default {
   },
 
   creatBoard: async (props: IcreatBoardProps) => {
-    const res = await fetch(`${BASE_URL}${pathRoutes.board.create.absolute()}`, {
+    const res = await fetch(`${BASE_URL}${pathRoutes.boards.create.absolute()}`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -139,7 +139,7 @@ export default {
   },
 
   getBoardById: async (props: IgetBoardByIdProps) => {
-    const res = await fetch(`${BASE_URL}${pathRoutes.board.getOneById.absolute(props.id)}`, {
+    const res = await fetch(`${BASE_URL}${pathRoutes.boards.getOneById.absolute(props.id)}`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,

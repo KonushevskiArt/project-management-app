@@ -1,16 +1,20 @@
 import mockApi from 'MockApi';
 import { useRef } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
+import { useNavigate, useParams } from 'react-router';
 
 const useCreatCardForm = () => {
   const textareaEl = useRef(null);
   const queryClient = useQueryClient();
-  //const mutation = useMutation((newTodo) => axios.post('/todos', newTodo));
+  const navigate = useNavigate();
+  const { boardId = '', columnId = '' } = useParams();
+
   const { isLoading, isSuccess, isError, mutate } = useMutation(
-    (newTask: { title: string; order: number; description: string }) => mockApi.creatTask(newTask),
+    (newTask: { title: string; order: number; description: string }) =>
+      mockApi.creatTask({ boardId, columnId, body: { ...newTask, userId: '' } }),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries('tasks');
+        queryClient.invalidateQueries(['tasks', boardId, columnId]);
       },
     }
   );
@@ -44,10 +48,13 @@ const useCreatCardForm = () => {
     }
   };
 
+  const onCloseClick = () => navigate(`/boards/${boardId}`);
+
   return {
     handlers: {
       onSubmit,
       onKeyDown,
+      onCloseClick,
     },
     isDisabled: isLoading,
     textareaEl,
