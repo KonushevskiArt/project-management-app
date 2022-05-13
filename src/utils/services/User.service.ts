@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { pathAPIRoutes } from 'utils/pathAPIRoutes';
+import { pathRoutes } from 'utils/pathRoutes';
 import { IUserResponse, IUser } from './models';
 
 const headersWithToken = {
@@ -8,22 +8,22 @@ const headersWithToken = {
 
 export const UserService = {
   async getAll() {
-    return axios.get<IUserResponse[]>(pathAPIRoutes.user.getAll.absolute(), {
+    return axios.get<IUserResponse[]>(pathRoutes.user.getAll.absolute(), {
       headers: headersWithToken,
     });
   },
   async getUserById(id: string) {
-    return axios.get<IUserResponse>(pathAPIRoutes.user.getOneById.absolute(id), {
+    return axios.get<IUserResponse>(pathRoutes.user.getOneById.absolute(id), {
       headers: headersWithToken,
     });
   },
   async updateUserById(id: string, user: IUser) {
-    return axios.put<IUserResponse>(pathAPIRoutes.user.getOneById.absolute(id), user, {
+    return axios.put<IUserResponse>(pathRoutes.user.getOneById.absolute(id), user, {
       headers: headersWithToken,
     });
   },
   async deleteUserById(id: string) {
-    return axios.delete(pathAPIRoutes.user.deleteOneById.absolute(id), {
+    return axios.delete(pathRoutes.user.deleteOneById.absolute(id), {
       headers: headersWithToken,
     });
   },

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router';
-import { pathAPIRoutes } from 'utils/pathAPIRoutes';
+import { pathRoutes } from 'utils/pathRoutes';
 import { AuthService } from 'utils/services/Auth.service';
 import { BoardService } from 'utils/services/Board.service';
 
@@ -33,7 +33,7 @@ const MyHomePage = () => {
         response.data.columns.length > 0
           ? response.data.columns[response.data.columns.length - 1].order
           : 1;
-      navigate(`${pathAPIRoutes.board.relative}/${response.data.id}`, {
+      navigate(`${pathRoutes.board.relative}/${response.data.id}`, {
         state: {
           data: response.data,
           lastColumnOrder,

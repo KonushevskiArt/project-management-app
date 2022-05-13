@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { pathAPIRoutes } from 'utils/pathAPIRoutes';
+import { pathRoutes } from 'utils/pathRoutes';
 import { IColumn, INewColumn, IResponseNewColumn } from './models';
 
 const headersWithToken = {
@@ -8,18 +8,18 @@ const headersWithToken = {
 
 export const ColumnService = {
   async getAll(boardId: string) {
-    return axios.get<IColumn[]>(pathAPIRoutes.column.getAll.absolute(boardId), {
+    return axios.get<IColumn[]>(pathRoutes.column.getAll.absolute(boardId), {
       headers: headersWithToken,
     });
   },
   async getColumnById(boardId: string, columnId: string) {
-    return axios.get<IColumn>(pathAPIRoutes.column.getOneById.absolute(boardId, columnId), {
+    return axios.get<IColumn>(pathRoutes.column.getOneById.absolute(boardId, columnId), {
       headers: headersWithToken,
     });
   },
   async createColumn(boardId: string, { title, order }: INewColumn) {
     return axios.post<IResponseNewColumn>(
-      pathAPIRoutes.column.create.absolute(boardId),
+      pathRoutes.column.create.absolute(boardId),
       { title, order },
       {
         headers: headersWithToken,
@@ -27,12 +27,12 @@ export const ColumnService = {
     );
   },
   async updateColumnById(boardId: string, columnId: string, column: IColumn) {
-    return axios.put<IColumn>(pathAPIRoutes.column.getOneById.absolute(boardId, columnId), column, {
+    return axios.put<IColumn>(pathRoutes.column.getOneById.absolute(boardId, columnId), column, {
       headers: headersWithToken,
     });
   },
   async deleteColumnById(boardId: string, columnId: string) {
-    return axios.delete(pathAPIRoutes.column.deleteOneById.absolute(boardId, columnId), {
+    return axios.delete(pathRoutes.column.deleteOneById.absolute(boardId, columnId), {
       headers: headersWithToken,
     });
   },

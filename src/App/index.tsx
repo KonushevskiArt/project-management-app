@@ -14,11 +14,15 @@ const queryClient = new QueryClient({
   },
 });
 
+import { ContextProvider } from './context';
+
 function App() {
   return (
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
-        <AppRoutes />
+        <ContextProvider>
+          <AppRoutes />
+        </ContextProvider>
       </QueryClientProvider>
       <ToastContainer />
     </BrowserRouter>
