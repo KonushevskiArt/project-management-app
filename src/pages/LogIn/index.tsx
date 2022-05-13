@@ -1,12 +1,14 @@
 import { Box, Button, Container, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useLocation } from 'react-router';
-import { Request } from 'utils/axios';
+import { Navigate, useLocation } from 'react-router';
 import { UserData } from './iterfaces';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import './style.css';
+import { Request } from '../../utils/axios';
+import { AppContext } from 'App/context';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export const LogInForm = () => {
   const {
@@ -17,12 +19,21 @@ export const LogInForm = () => {
   } = useForm<UserData>({
     mode: 'all',
   });
-
   const [show, setShow] = useState(false);
   const location = useLocation();
+  const appContext = useContext(AppContext);
+
+  Request(reset);
 
   function checkUser(data: UserData) {
-    Request('post', location.pathname, reset, data);
+    const requestData = {
+      method: 'post',
+      urlProp: location.pathname,
+      data: data,
+    };
+    appContext.dispatch({ type: 'setRequestData', payload: requestData });
+    appContext.dispatch({ type: 'setLogInLogOut', payload: true });
+    console.log(requestData);
   }
 
   function checkText() {
@@ -33,6 +44,9 @@ export const LogInForm = () => {
   function showHidePassord() {
     show ? setShow(false) : setShow(true);
   }
+
+  if (localStorage.getItem('user')) return <Navigate to="/" />;
+  if (appContext.state.signUp) return <Navigate to="/signin" />;
 
   return (
     <Container>
@@ -45,12 +59,15 @@ export const LogInForm = () => {
           height: '100vh',
         }}
       >
-        <Typography variant="h4">{checkText() + 'to ...'}</Typography>
+        <Typography variant="h4">{checkText() + 'to App'}</Typography>
         <form
           className="form"
           onSubmit={handleSubmit((data) => {
             checkUser(data);
           })}
+          onChange={() => {
+            appContext.dispatch({ type: 'setNotFound', payload: false });
+          }}
         >
           {location.pathname === '/signup' && (
             <Box sx={{ position: 'relative', width: '100%' }}>
@@ -86,7 +103,7 @@ export const LogInForm = () => {
               {...register('password', {
                 required: true,
                 pattern: {
-                  value: /^.{8,}$/i,
+                  value: /^.{6,}$/i,
                   message: 'Min length 6',
                 },
               })}
@@ -101,8 +118,13 @@ export const LogInForm = () => {
             )}
             {errors?.password && <p className="error-text">{errors.password.message}</p>}
           </Box>
+          {appContext.state.notFound && (
+            <Typography color="red" sx={{ marginTop: '-16px' }}>
+              Не верные данные
+            </Typography>
+          )}
           <Button variant="contained" color="success" type="submit">
-            {checkText()}
+            {appContext.state.logInProces ? <CircularProgress color="info" /> : checkText()}
           </Button>
         </form>
       </Box>
