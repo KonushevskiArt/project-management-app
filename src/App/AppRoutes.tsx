@@ -4,6 +4,7 @@ import { Routes, Route, Navigate } from 'react-router';
 import { pathRoutes } from 'utils/pathRoutes';
 import Cookies from 'js-cookie';
 import { ErrorPage } from 'pages/ErrorPage/ErrorPage';
+import { Header } from 'pages/Header';
 
 const BoardPage = lazy(() => import('pages/Board'));
 
@@ -15,17 +16,20 @@ export const routesPath = {
 
 const AppRoutes = () => {
   return (
-    <Routes>
-      <Route path={routesPath.board} element={<BoardPage />} />
-      {!Cookies.get('token') && (
-        <>
-          <Route path={routesPath.signIn} element={<LogInForm />} />
-          <Route path={routesPath.signUp} element={<LogInForm />} />
-        </>
-      )}
-      <Route path="errorPage" element={<ErrorPage />} />
-      <Route path="*" element={<Navigate to="errorPage" replace />} />
-    </Routes>
+    <>
+      <Header />
+      <Routes>
+        <Route path={routesPath.board} element={<BoardPage />} />
+        {!Cookies.get('token') && (
+          <>
+            <Route path={routesPath.signIn} element={<LogInForm />} />
+            <Route path={routesPath.signUp} element={<LogInForm />} />
+          </>
+        )}
+        <Route path="errorPage" element={<ErrorPage />} />
+        <Route path="*" element={<Navigate to="errorPage" replace />} />
+      </Routes>
+    </>
   );
 };
 
