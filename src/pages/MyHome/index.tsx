@@ -11,34 +11,32 @@ const MyHomePage = () => {
   const navigate = useNavigate();
   const userSignIn = { password: '12345', login: 'qwer' };
 
-  const {
-    isSuccess,
-    isLoading,
-    data: response,
-    error,
-    refetch,
-  } = useQuery('get board by id', () => BoardService.getBoardById(idMyBoard), { enabled: false });
+  const { isSuccess, isLoading, error, refetch } = useQuery(
+    'get board by id',
+    () => BoardService.getBoardById(idMyBoard),
+    {
+      enabled: false,
+      onSuccess: (response) => {
+        const lastColumnOrder =
+          response.data.columns.length > 0
+            ? response.data.columns[response.data.columns.length - 1].order
+            : 1;
+        navigate(`${pathRoutes.board.relative}/${response.data.id}`, {
+          state: {
+            data: response.data,
+            lastColumnOrder,
+          },
+        });
+      },
+    }
+  );
 
-  const {
-    isSuccess: isSuccessSignIn,
-    isLoading: isLoadingSignIn,
-    data: responseSingIn,
-    error: errorSignIn,
-    refetch: refetchSignIn,
-  } = useQuery('sign In', () => AuthService.signIn(userSignIn), { enabled: false });
+  const { refetch: refetchSignIn } = useQuery('sign In', () => AuthService.signIn(userSignIn), {
+    enabled: false,
+  });
 
   useEffect(() => {
     if (isSuccess) {
-      const lastColumnOrder =
-        response.data.columns.length > 0
-          ? response.data.columns[response.data.columns.length - 1].order
-          : 1;
-      navigate(`${pathRoutes.board.relative}/${response.data.id}`, {
-        state: {
-          data: response.data,
-          lastColumnOrder,
-        },
-      });
     }
   }, [isSuccess]);
 

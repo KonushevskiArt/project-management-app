@@ -18,7 +18,7 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/*" element={<MyHomePage />} />
-      <Route path={`${pathRoutes.board.relative}:id`} element={<BoardPage />} />
+      <Route path={`${pathRoutes.board.relative}/:id`} element={<BoardPage />} />
       {!Cookies.get('token') && (
         <>
           <Route path={pathRoutes.auth.signup.relative} element={<LogInForm />} />
