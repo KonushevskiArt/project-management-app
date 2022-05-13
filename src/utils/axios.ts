@@ -28,7 +28,6 @@ export const Request = (reset: UseFormReset<UserData>) => {
         if (appContext.state.requestData.urlProp === '/signin') {
           const in23Hours = new Date(new Date().getTime() + 23 * 60 * 60 * 1000);
           Cookies.set('token', response.data.token, { expires: in23Hours });
-          localStorage.setItem('user', 'y');
           appContext.dispatch({ type: 'setLogInLogOut', payload: false });
           appContext.dispatch({ type: 'setNotFound', payload: false });
         }
@@ -42,7 +41,6 @@ export const Request = (reset: UseFormReset<UserData>) => {
       .catch(function (error) {
         if (error.response) {
           if (error.response.status === 403) {
-            console.log('ssdw');
             appContext.dispatch({ type: 'setNotFound', payload: true });
             appContext.dispatch({ type: 'setLogInLogOut', payload: false });
           }

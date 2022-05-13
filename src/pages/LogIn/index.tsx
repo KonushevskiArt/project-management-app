@@ -9,6 +9,7 @@ import './style.css';
 import { Request } from '../../utils/axios';
 import { AppContext } from 'App/context';
 import CircularProgress from '@mui/material/CircularProgress';
+import Cookies from 'js-cookie';
 
 export const LogInForm = () => {
   const {
@@ -45,7 +46,7 @@ export const LogInForm = () => {
     show ? setShow(false) : setShow(true);
   }
 
-  if (localStorage.getItem('user')) return <Navigate to="/" />;
+  if (Cookies.get('token')) return <Navigate to="/" />;
   if (appContext.state.signUp) return <Navigate to="/signin" />;
 
   return (

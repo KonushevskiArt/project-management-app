@@ -2,6 +2,7 @@ import { LogInForm } from 'pages/LogIn';
 import { lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router';
 import { pathRoutes } from 'utils/pathRoutes';
+import Cookies from 'js-cookie';
 
 const BoardPage = lazy(() => import('pages/Board'));
 
@@ -17,11 +18,11 @@ const AppRoutes = () => {
       <Route path={routesPath.board} element={<BoardPage />} />
       <Route
         path={routesPath.signIn}
-        element={localStorage.getItem('user') ? <Navigate to="/" /> : <LogInForm />}
+        element={Cookies.get('token') ? <Navigate to="/" /> : <LogInForm />}
       />
       <Route
         path={routesPath.signUp}
-        element={localStorage.getItem('user') ? <Navigate to="/" /> : <LogInForm />}
+        element={Cookies.get('token') ? <Navigate to="/" /> : <LogInForm />}
       />
     </Routes>
   );
