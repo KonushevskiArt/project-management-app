@@ -53,7 +53,6 @@ export const pathRoutes = {
       relative: '',
       // absolute: () => join(pathRoutes.root, pathRoutes.board.relative),
       absolute: () => {
-        console.log('path====', `${BASE_URL}/${pathRoutes.board.relative}`);
         return `${BASE_URL}/${pathRoutes.board.relative}`;
       },
     },
@@ -67,8 +66,11 @@ export const pathRoutes = {
     },
   },
   column: {
-    relative: (boardId = ':id') =>
-      join(pathRoutes.root, pathRoutes.board.relative, boardId, 'columns'),
+    relative: (boardId = ':id') => {
+      // join(pathRoutes.root, pathRoutes.board.relative, boardId, 'columns'),
+      console.log('path====', `${pathRoutes.root}/${pathRoutes.board.relative}/${boardId}/columns`);
+      return `${pathRoutes.root}/${pathRoutes.board.relative}/${boardId}/columns`;
+    },
     getAll: {
       relative: '',
       absolute: (boardId = ':id') => join(pathRoutes.column.relative(boardId)),
@@ -81,7 +83,7 @@ export const pathRoutes = {
     create: {
       relative: '',
       // absolute: (boardId = ':id') => join(pathRoutes.column.relative(boardId)),
-      absolute: (boardId = ':id') => `${pathRoutes.column.relative(boardId)}`,
+      absolute: (boardId = ':id') => pathRoutes.column.relative(boardId),
     },
     updateOneById: {
       relative: '',
