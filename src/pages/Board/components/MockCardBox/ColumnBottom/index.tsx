@@ -2,11 +2,8 @@ import React, { useState } from 'react';
 import s from './style.module.scss';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
-import { useQuery } from 'react-query';
-import { ColumnService } from 'utils/services/Column.service';
-import { BoardCtx } from 'pages/Board';
 import { useParams } from 'react-router';
-import { toast, ToastOptions } from 'react-toastify';
+import { useDeleteColumnById } from 'hooks/columns/useDeleteColumnById';
 
 interface IProps {
   name?: string;
@@ -16,43 +13,16 @@ interface IProps {
 const ColumnBottom = ({ id }: IProps) => {
   const [isAddingCard, setIsAddingCard] = useState(false);
   const params = useParams();
-  const { removeColumn } = React.useContext(BoardCtx);
   const boardId = params.id as string;
-  const [isLoading, setIsLoading] = useState(false);
 
-  const toastOption = {
-    position: 'bottom-center',
-    hideProgressBar: true,
-    autoClose: 5000,
-  } as ToastOptions;
-
-  const { refetch } = useQuery(
-    'delete column' + id,
-    () => ColumnService.deleteColumnById(boardId, id),
-    {
-      enabled: false,
-      onSuccess: (data) => {
-        console.log(data);
-        removeColumn(id);
-        setIsLoading(false);
-        toast.success('Column deleted successfuly!', toastOption);
-      },
-      onError: (error: Error) => {
-        console.log(error);
-        setIsLoading(false);
-        toast.error('Failed remove by network error!', toastOption);
-      },
-    }
-  );
+  const { mutate, isLoading } = useDeleteColumnById(boardId, id);
 
   const addTaskHandler = () => {
     console.log('addCard');
   };
 
   const removeColumnHandler = () => {
-    console.log('remove column');
-    setIsLoading(true);
-    refetch();
+    mutate();
   };
 
   return (

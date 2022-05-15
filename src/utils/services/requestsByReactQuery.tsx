@@ -47,14 +47,8 @@
 // });
 
 //create board
-// const {
-//   isLoading: isLoading2,
-//   data: response2,
-//   error: error2,
-//   refetch: refetch4,
-// } = useQuery('create board', () => BoardService.createBoard("Artem's board"), {
-//   enabled: false,
-// });
+//.........
+//.........
 
 //get board by id
 // const {
@@ -77,24 +71,37 @@
 // });
 
 // create column
-// const {
-//   isLoading,
-//   data: response,
-//   error,
-//   refetch: refetch3,
-// } = useQuery('create column', () => ColumnService.createColumn(idMyBoard, newColumn), {
-//   enabled: false,
-// });
+// const { mutate } = useMutation(
+//   'add new column',
+//   (newColumn: INewColumn) => {
+//     return ColumnService.createColumn(boardId, newColumn);
+//   },
+//   {
+//     onError: (error: Error) => {
+
+//     },
+//     onSuccess: ({ data }: AxiosResponse<IResponseNewColumn>) => {
+
+//     },
+//   }
+// );
+//
+// mutate() -- some where.
 
 // delete column
-// const {
-//   isLoading,
-//   data: response,
-//   error,
-//   refetch: refetch3,
-// } = useQuery('create column', () => ColumnService.deleteColumnById(idMyBoard, newColumnId), {
-//   enabled: false,
-// });
+// const { mutate, isLoading } = useMutation(
+//   'delete column' + id,
+//   () => ColumnService.deleteColumnById(boardId, id),
+//   {
+//     onError: (error: Error) => {
+
+//     },
+//     onSuccess: () => {
+
+//     },
+//   }
+// );
+// mutate() --- somewhere by click
 
 export const someThing = () => {
   console.log('df');

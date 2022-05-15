@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import React, { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router';
@@ -33,12 +34,10 @@ const MyHomePage = () => {
 
   const { refetch: refetchSignIn } = useQuery('sign In', () => AuthService.signIn(userSignIn), {
     enabled: false,
+    onSuccess: (response) => {
+      Cookies.set('token', response.data.token);
+    },
   });
-
-  useEffect(() => {
-    if (isSuccess) {
-    }
-  }, [isSuccess]);
 
   return (
     <div>

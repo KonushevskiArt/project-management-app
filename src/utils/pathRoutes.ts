@@ -2,7 +2,7 @@ import { join } from 'path-browserify';
 // export const API_URL = 'https://pure-cove-88107.herokuapp.com/';
 
 export const pathRoutes = {
-  root: 'https://pure-cove-88107.herokuapp.com/',
+  root: 'https:/pure-cove-88107.herokuapp.com/',
   docs: () => join(pathRoutes.root, 'docs'),
   auth: {
     relative: '',

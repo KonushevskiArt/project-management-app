@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import s from './style.module.scss';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useQuery } from 'react-query';
-import { ColumnService } from 'utils/services/Column.service';
 import { useLocation, useParams } from 'react-router';
-import { BoardCtx } from 'pages/Board';
-import { IResponseNewColumn } from 'utils/services/models';
 import CircularProgress from '@mui/material/CircularProgress';
-import { toast, ToastOptions } from 'react-toastify';
+import { useCreateColumn } from 'hooks/columns/useCreateColumn';
 
 type Inputs = {
   name: string;
@@ -23,9 +19,7 @@ interface LocationState {
 const ColumnCreater = () => {
   const params = useParams();
   const boardId = params.id as string;
-  const { addColumn } = React.useContext(BoardCtx);
   const [isAddingColumn, setIsAddingColumn] = useState(false);
-  const [columnTitle, setColumnTitle] = useState('');
   const { register, handleSubmit, reset } = useForm<Inputs>();
 
   const location = useLocation();
@@ -33,46 +27,12 @@ const ColumnCreater = () => {
 
   const [currentOrder, setCurrentOrder] = useState(lastColumnOrder);
 
-  const [isLoading, setIsLoading] = useState(false);
-
-  const toastOption = {
-    position: 'bottom-center',
-    hideProgressBar: true,
-    autoClose: 5000,
-  } as ToastOptions;
-
-  const { refetch } = useQuery(
-    'create column',
-    () => ColumnService.createColumn(boardId, { title: columnTitle, order: currentOrder }),
-    {
-      enabled: false,
-      onError: (error: Error) => {
-        console.log(error);
-        setIsLoading(false);
-        toast.error('Column creating failed by network error!', toastOption);
-      },
-      onSuccess: (data) => {
-        const newColumn = data?.data as IResponseNewColumn;
-        addColumn(newColumn);
-        setIsAddingColumn(false);
-        setIsLoading(false);
-        toast.success('Column created successfuly!', toastOption);
-      },
-    }
-  );
-
-  useEffect(() => {
-    if (columnTitle) {
-      refetch();
-      setColumnTitle('');
-    }
-  }, [columnTitle]);
+  const { mutate, isLoading } = useCreateColumn(boardId, setIsAddingColumn);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     if (data.name.trim() && isLoading === false) {
-      setIsLoading(true);
+      mutate({ title: data.name, order: currentOrder + 1 });
       setCurrentOrder(currentOrder + 1);
-      setColumnTitle(data.name);
       reset();
     }
   };

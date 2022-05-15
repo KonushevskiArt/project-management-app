@@ -3,7 +3,6 @@ import { LogInForm } from 'pages/LogIn';
 import { lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router';
 import { pathRoutes } from 'utils/pathRoutes';
-import Cookies from 'js-cookie';
 import { ErrorPage } from 'pages/ErrorPage/ErrorPage';
 
 const BoardPage = lazy(() => import('pages/Board'));
@@ -19,12 +18,8 @@ const AppRoutes = () => {
     <Routes>
       <Route path="/*" element={<MyHomePage />} />
       <Route path={`${pathRoutes.board.relative}/:id`} element={<BoardPage />} />
-      {!Cookies.get('token') && (
-        <>
-          <Route path={pathRoutes.auth.signup.relative} element={<LogInForm />} />
-          <Route path={pathRoutes.auth.signin.relative} element={<LogInForm />} />
-        </>
-      )}
+      <Route path={pathRoutes.auth.signup.relative} element={<LogInForm />} />
+      <Route path={pathRoutes.auth.signin.relative} element={<LogInForm />} />
       <Route path="/errorPage/*" element={<ErrorPage />} />
       <Route path="/*" element={<Navigate to="/errorPage" replace />} />
     </Routes>

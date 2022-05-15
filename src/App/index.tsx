@@ -15,13 +15,16 @@ const queryClient = new QueryClient({
 });
 
 import { ContextProvider } from './context';
+import RequestInterceptor from './RequestInterceptor';
 
 function App() {
   return (
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <ContextProvider>
-          <AppRoutes />
+          <RequestInterceptor>
+            <AppRoutes />
+          </RequestInterceptor>
         </ContextProvider>
       </QueryClientProvider>
       <ToastContainer />
