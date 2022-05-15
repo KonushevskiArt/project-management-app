@@ -1,14 +1,15 @@
 import { join } from 'path-browserify';
 
 export const pathRoutes = {
-  root: 'https:/pure-cove-88107.herokuapp.com/',
+  root: 'https:/pure-cove-88107.herokuapp.com',
   docs: () => join(pathRoutes.root, 'docs'),
   auth: {
     relative: '',
     signup: {
       relative: 'signup',
       absolute: () =>
-        join(pathRoutes.root, pathRoutes.auth.relative, pathRoutes.auth.signup.relative),
+        // join(pathRoutes.root, pathRoutes.auth.relative, pathRoutes.auth.signup.relative),
+        `${pathRoutes.root}/${pathRoutes.auth.relative}/${pathRoutes.auth.signup.relative}`,
     },
     signin: {
       relative: 'signin',
@@ -43,11 +44,13 @@ export const pathRoutes = {
     },
     getOneById: {
       relative: '',
-      absolute: (id = ':id') => join(pathRoutes.root, pathRoutes.board.relative, id),
+      // absolute: (id = ':id') => join(pathRoutes.root, pathRoutes.board.relative, id),
+      absolute: (id = ':id') => `${pathRoutes.root}/${pathRoutes.board.relative}/${id}`,
     },
     create: {
       relative: '',
-      absolute: () => join(pathRoutes.root, pathRoutes.board.relative),
+      // absolute: () => join(pathRoutes.root, pathRoutes.board.relative),
+      absolute: () => `${pathRoutes.root}/${pathRoutes.board.relative}`,
     },
     updateOneById: {
       relative: '',
