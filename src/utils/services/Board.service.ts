@@ -10,6 +10,7 @@ export const BoardService = {
     return axios.get<IBoard>(pathRoutes.board.getOneById.absolute(id));
   },
   async createBoard(title: string) {
+    console.log('service----', pathRoutes.board.create.absolute());
     return axios.post<IBoard>(pathRoutes.board.create.absolute(), { title });
   },
   async updateBoardById(id: string, board: IBoard) {
