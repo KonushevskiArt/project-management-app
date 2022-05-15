@@ -8,15 +8,11 @@ export const pathRoutes = {
     relative: '',
     signup: {
       relative: 'signup',
-      absolute: () =>
-        // join(pathRoutes.root, pathRoutes.auth.relative, pathRoutes.auth.signup.relative),
-        `${BASE_URL}/${pathRoutes.auth.relative}/${pathRoutes.auth.signup.relative}`,
+      absolute: () => `${pathRoutes.root}/${pathRoutes.auth.signup.relative}`,
     },
     signin: {
       relative: 'signin',
-      absolute: () =>
-        // join(pathRoutes.root, pathRoutes.auth.relative, pathRoutes.auth.signin.relative),
-        `${pathRoutes.root}/${pathRoutes.auth.signin.relative}`,
+      absolute: () => `${pathRoutes.root}/${pathRoutes.auth.signin.relative}`,
     },
   },
   user: {
@@ -46,15 +42,11 @@ export const pathRoutes = {
     },
     getOneById: {
       relative: '',
-      absolute: (id = ':id') => join(pathRoutes.root, pathRoutes.board.relative, id),
-      // absolute: (id = ':id') => `${pathRoutes.root}/${pathRoutes.board.relative}/${id}`,
+      absolute: (id = ':id') => `${pathRoutes.root}/${pathRoutes.board.relative}/${id}`,
     },
     create: {
       relative: '',
-      // absolute: () => join(pathRoutes.root, pathRoutes.board.relative),
-      absolute: () => {
-        return `${BASE_URL}/${pathRoutes.board.relative}`;
-      },
+      absolute: () => `${pathRoutes.root}/${pathRoutes.board.relative}`,
     },
     updateOneById: {
       relative: '',
@@ -62,12 +54,11 @@ export const pathRoutes = {
     },
     deleteOneById: {
       relative: '',
-      absolute: (id = ':id') => join(BASE_URL, pathRoutes.board.relative, id),
+      absolute: (id = ':id') => join(pathRoutes.root, pathRoutes.board.relative, id),
     },
   },
   column: {
     relative: (boardId = ':id') => {
-      // join(pathRoutes.root, pathRoutes.board.relative, boardId, 'columns'),
       return `${pathRoutes.root}/${pathRoutes.board.relative}/${boardId}/columns`;
     },
     getAll: {
@@ -81,8 +72,7 @@ export const pathRoutes = {
     },
     create: {
       relative: '',
-      absolute: (boardId = ':id') => join(pathRoutes.column.relative(boardId)),
-      // absolute: (boardId = ':id') => pathRoutes.column.relative(boardId),
+      absolute: (boardId = ':id') => pathRoutes.column.relative(boardId),
     },
     updateOneById: {
       relative: '',
@@ -92,7 +82,6 @@ export const pathRoutes = {
     deleteOneById: {
       relative: '',
       absolute: (boardId = 'id', columnId = ':id') =>
-        // join(pathRoutes.column.relative(boardId), columnId),
         `${pathRoutes.column.relative(boardId)}/${columnId}`,
     },
   },
