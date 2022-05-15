@@ -18,8 +18,8 @@ const AppRoutes = () => {
     <Routes>
       <Route path="/*" element={<MyHomePage />} />
       <Route path={`${pathRoutes.board.relative}/:id`} element={<BoardPage />} />
-      <Route path={pathRoutes.auth.signup.relative} element={<LogInForm />} />
-      <Route path={pathRoutes.auth.signin.relative} element={<LogInForm />} />
+      {/* <Route path={pathRoutes.auth.signup.relative} element={<LogInForm />} />
+      <Route path={pathRoutes.auth.signin.relative} element={<LogInForm />} /> */}
       <Route path="/errorPage/*" element={<ErrorPage />} />
       <Route path="/*" element={<Navigate to="/errorPage" replace />} />
     </Routes>

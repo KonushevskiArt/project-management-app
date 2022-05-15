@@ -16,11 +16,11 @@ const RequestInterceptor = ({ children }: Props) => {
 
     const token = Cookies.get('token') || null;
 
-    if (token === null) {
-      console.log('navitage', token);
-      navigate(pathRoutes.auth.signin.relative);
-      // How can I stop request ?
-    } else if (!(innerPath[1] === 'signin' || innerPath[1] === 'signin')) {
+    // if (token === null) {
+    // navigate(pathRoutes.auth.signin.relative);
+    // How can I stop request ?
+    // } else
+    if (!(innerPath[1] === 'signin' || innerPath[1] === 'signin')) {
       config.headers = {
         ...config.headers,
         Authorization: `Bearer ${Cookies.get('token')}`,
