@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router';
 import { pathRoutes } from 'utils/pathRoutes';
@@ -12,8 +12,8 @@ const MyHomePage = () => {
   const navigate = useNavigate();
   const userSignIn = { password: '12345', login: 'qwer' };
 
-  const { isSuccess, isLoading, error, refetch } = useQuery(
-    'get board by id',
+  const { isLoading, error, refetch } = useQuery(
+    'get board by id' + idMyBoard,
     () => BoardService.getBoardById(idMyBoard),
     {
       enabled: false,

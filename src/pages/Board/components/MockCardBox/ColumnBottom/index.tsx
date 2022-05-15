@@ -6,7 +6,6 @@ import { useParams } from 'react-router';
 import { useDeleteColumnById } from 'hooks/columns/useDeleteColumnById';
 
 interface IProps {
-  name?: string;
   id: string;
 }
 
