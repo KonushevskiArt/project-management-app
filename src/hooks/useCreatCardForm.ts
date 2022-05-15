@@ -1,4 +1,5 @@
 import { creatTask } from 'api';
+import { ICreatTask } from 'api/apiInterfaces';
 import mockApi from 'MockApi';
 import { useRef } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
@@ -10,12 +11,12 @@ const useCreatCardForm = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { boardId = '', columnId = '' } = useParams();
-  console.log(boardId);
-  console.log(columnId);
-  const onSuccess = () =>
-    queryClient.invalidateQueries(pathRoutes.tasks.relative(boardId, columnId));
 
-  const { isLoading, isSuccess, isError, mutate } = useMutation(creatTask(onSuccess));
+  const { isLoading, isSuccess, isError, mutate } = useMutation({
+    mutationFn: ({ boardId, columnId, body }: ICreatTask) =>
+      mockApi.creatTask({ boardId, columnId, body }),
+    onSuccess: () => queryClient.invalidateQueries(pathRoutes.tasks.relative(boardId, columnId)),
+  });
 
   const submitValue = (value: string) => {
     console.log(`submit: ${value}`);
