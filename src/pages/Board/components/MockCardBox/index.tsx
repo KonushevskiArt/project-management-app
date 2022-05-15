@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ColumnBottom from './ColumnBottom';
 import ColumnTop from './ColumnTop';
 import s from './style.module.scss';
