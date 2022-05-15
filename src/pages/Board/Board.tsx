@@ -1,43 +1,33 @@
 import { Route, Routes, useParams } from 'react-router';
-import mockApi from 'MockApi';
 import { useQuery } from 'react-query';
 import Loader from 'components/Loader';
 import NotFound from 'pages/NotFound';
 import TaskContent from 'pages/TaskContent';
 import Columns from './Columns';
+import { getBoardById } from 'api';
+import { pathRoutes } from 'utils/pathRoutes';
 
 const Board = () => {
-  const { boardId = '', columnId, taskId } = useParams();
+  const { boardId = '' } = useParams();
 
   const {
     isLoading,
     error,
     data: board,
-  } = useQuery(
-    ['boards', boardId],
-    () => {
-      try {
-        return mockApi.getBoardById({ boardId }).then((res) => res);
-      } catch (error) {
-        throw Error('!!!');
-      }
-    },
-    {
-      retry: false,
-    }
-  );
+  } = useQuery({
+    queryKey: pathRoutes.boards.getOneById.absolute(boardId),
+    queryFn: () => getBoardById({ boardId }),
+  });
 
-  const columnById = board?.columns.find(({ id }) => columnId === id);
-  const cardById = columnById?.tasks.find(({ id }) => taskId === id);
-
-  if (error) return <NotFound />;
   if (isLoading) return <Loader />;
+  if (error || !board) return <NotFound />;
+
   return (
     <div>
-      <h4>{board?.title}</h4>
-      <Columns columns={board?.columns} />
+      <h4>{board.title}</h4>
+      <Columns columns={board.columns} />
       <Routes>
-        <Route path="columns/:columnId/tasks/:taskId" element={<TaskContent card={cardById} />} />
+        <Route path="columns/:columnId/tasks/:taskId/content" element={<TaskContent />} />
       </Routes>
     </div>
   );

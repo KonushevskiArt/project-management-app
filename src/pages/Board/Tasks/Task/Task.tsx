@@ -8,7 +8,7 @@ interface IProps {
 
 const Task = ({ task }: IProps) => (
   <li className={styles.card}>
-    <Link className={styles.link} to={`columns/${task.columnId}/tasks/${task.id}`}>
+    <Link className={styles.link} to={`columns/${task.columnId}/tasks/${task.id}/content`}>
       {task.title}
     </Link>
   </li>

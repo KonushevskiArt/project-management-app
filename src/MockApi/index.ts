@@ -22,26 +22,34 @@ interface IGetBoardByIdProps {
 }
 
 class MockApi {
-  private tasks: ITask[] = [...allTasks];
-  private columns: IColumn[] = [{ ...column, tasks: this.tasks }];
+  private tasks1: ITask[] = [...allTasks];
+  private tasks2: ITask[] = allTasks.map((task) => ({ ...task, columnId: 'svsb' }));
+  private columns: IColumn[] = [
+    { ...column, tasks: this.tasks1 },
+    { ...column, tasks: this.tasks2, id: 'svsb' },
+  ];
   private boards: IBoard[] = [{ ...board, columns: this.columns }];
 
   private getNewTask = ({
     title,
     order,
     description,
+    boardId,
+    columnId,
   }: {
     title: string;
     order: number;
     description: string;
+    boardId: string;
+    columnId: string;
   }) => ({
     id: uuid(),
     title,
     order,
     description,
     userId: '',
-    boardId: '9a111e19-24ec-43e1-b8c4-13776842b8d5',
-    columnId: '41344d09-b995-451f-93dc-2f17ae13a4a5',
+    boardId,
+    columnId,
   });
 
   getAllTasks = ({ boardId, columnId }: IGetAllTasksProps): Promise<ITask[]> => {
@@ -59,9 +67,11 @@ class MockApi {
     columnId,
     body: { title, order, description, userId },
   }: ICreatTaskProps): Promise<ITask> => {
-    const newTask = this.getNewTask({ title, order, description });
+    const newTask = this.getNewTask({ title, order, description, boardId, columnId });
     const board = this.boards.find(({ id }) => id === boardId);
+
     const column = board && board.columns.find(({ id }) => id === columnId);
+
     const tasks = column && column.tasks;
 
     tasks && tasks.push(newTask);

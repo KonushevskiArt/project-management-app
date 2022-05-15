@@ -1,30 +1,33 @@
+import { creatTask } from 'api';
 import mockApi from 'MockApi';
 import { useRef } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router';
+import { pathRoutes } from 'utils/pathRoutes';
 
 const useCreatCardForm = () => {
   const textareaEl = useRef(null);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { boardId = '', columnId = '' } = useParams();
+  console.log(boardId);
+  console.log(columnId);
+  const onSuccess = () =>
+    queryClient.invalidateQueries(pathRoutes.tasks.relative(boardId, columnId));
 
-  const { isLoading, isSuccess, isError, mutate } = useMutation(
-    (newTask: { title: string; order: number; description: string }) =>
-      mockApi.creatTask({ boardId, columnId, body: { ...newTask, userId: '' } }),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['tasks', boardId, columnId]);
-      },
-    }
-  );
+  const { isLoading, isSuccess, isError, mutate } = useMutation(creatTask(onSuccess));
 
   const submitValue = (value: string) => {
     console.log(`submit: ${value}`);
     mutate({
-      title: value,
-      order: 5,
-      description: '',
+      boardId,
+      columnId,
+      body: {
+        title: value,
+        order: 5,
+        description: '',
+        userId: '',
+      },
     });
   };
 

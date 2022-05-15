@@ -2,38 +2,27 @@ import TaskContentHeader from './TaskContentHeader';
 import TaskContentSidebar from './TaskContentSidebar';
 import TaskContentDescription from './TaskContentDescription';
 import TaskContentActivity from './TaskContentActivity';
-
 import styles from './task-content.module.scss';
-import { IColumn, ITask } from 'interfaces';
 import NotFound from 'pages/NotFound';
 import Modal from 'components/Modal';
 import { useNavigate, useParams } from 'react-router';
-import { QueryClient, useQuery } from 'react-query';
-import mockApi from 'MockApi';
+import { QueryClient, useQuery, useQueryClient } from 'react-query';
 
-interface IProps {
-  card?: ITask;
-  columnTitle?: string;
-}
+import { getColumnById } from 'api';
+import { pathRoutes } from 'utils/pathRoutes';
 
-const queryClient = new QueryClient();
+const TaskContent = () => {
+  const { boardId = '', columnId = '', taskId = '' } = useParams();
 
-const TaskContent = ({ card, columnTitle }: IProps) => {
-  const { boardId = '', columnId = '', taskId } = useParams();
+  const { getQueryData } = useQueryClient();
+  console.log(taskId);
+  const { data: column } = useQuery({
+    queryKey: pathRoutes.columns.getOneById.absolute(boardId, columnId),
+    queryFn: () => getColumnById({ columnId, boardId }),
+    initialData: () => getQueryData(['columns', boardId, columnId]),
+  });
 
-  const { data: column } = useQuery(
-    ['columns', boardId, columnId],
-    () => {
-      try {
-        return mockApi.getColumnById({ columnId, boardId }).then((res) => res);
-      } catch (error) {
-        throw Error('!!!');
-      }
-    },
-    {
-      initialData: () => queryClient.getQueryData(['columns', boardId, columnId]),
-    }
-  );
+  const card = column?.tasks.find(({ id }) => id === taskId);
 
   const navigate = useNavigate();
   const onCloseClick = () => navigate(`/boards/${card?.boardId}`);

@@ -56,46 +56,46 @@ export const pathRoutes = {
       absolute: (id = ':id') => join(pathRoutes.root, pathRoutes.boards.relative, id),
     },
   },
-  column: {
+  columns: {
     relative: (boardId = ':id') =>
       join(pathRoutes.root, pathRoutes.boards.relative, boardId, 'columns'),
     getAll: {
       relative: '',
-      absolute: (boardId = ':id') => join(pathRoutes.root, pathRoutes.column.relative(boardId)),
+      absolute: (boardId = ':id') => join(pathRoutes.root, pathRoutes.columns.relative(boardId)),
     },
     getOneById: {
       relative: '',
       absolute: (boardId = ':boardId', columnId = ':columnsId') =>
-        join(pathRoutes.root, pathRoutes.column.relative(boardId), columnId),
+        join(pathRoutes.root, pathRoutes.columns.relative(boardId), columnId),
     },
     create: {
       relative: '',
       absolute: (boardId = ':boardId') =>
-        join(pathRoutes.root, pathRoutes.column.relative(boardId)),
+        join(pathRoutes.root, pathRoutes.columns.relative(boardId)),
     },
     updateOneById: {
       relative: '',
       absolute: (boardId = ':boardId', columnId = ':columnsId') =>
-        join(pathRoutes.root, pathRoutes.column.relative(boardId), columnId),
+        join(pathRoutes.root, pathRoutes.columns.relative(boardId), columnId),
     },
     deleteOneById: {
       relative: '',
       absolute: (boardId = ':boardId', columnId = ':columnsId') =>
-        join(pathRoutes.root, pathRoutes.column.relative(boardId), columnId),
+        join(pathRoutes.root, pathRoutes.columns.relative(boardId), columnId),
     },
   },
-  task: {
+  tasks: {
     relative: (boardId = ':id', columnId = ':id') =>
       join(pathRoutes.root, pathRoutes.boards.relative, boardId, 'columns', columnId, 'tasks'),
     create: {
       relative: '',
       absolute: (boardId = ':boardId', columnId = ':columnId') =>
-        join(pathRoutes.root, pathRoutes.task.relative(boardId, columnId)),
+        join(pathRoutes.root, pathRoutes.tasks.relative(boardId, columnId)),
     },
     getOneById: {
       relative: '',
       absolute: (boardId = ':boardId', columnId = ':columnsId', taskId = ':taskId') =>
-        join(pathRoutes.root, pathRoutes.task.relative(boardId, columnId), taskId),
+        join(pathRoutes.root, pathRoutes.tasks.relative(boardId, columnId), taskId),
     },
   },
 };

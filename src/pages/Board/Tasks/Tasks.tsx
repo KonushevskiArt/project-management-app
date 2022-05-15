@@ -1,39 +1,26 @@
-import CreatCard from 'components/CreatTask';
-import CreatCardForm from 'components/CreatTask/CreatTaskForm';
-import { IColumn, ITask } from 'interfaces';
-import mockApi from 'MockApi';
+import { getAllTasks } from 'api';
+import { ITask } from 'interfaces';
 import { useQuery } from 'react-query';
-import { Route, Routes, useParams } from 'react-router';
-import { Link } from 'react-router-dom';
+import { useParams } from 'react-router';
+import { pathRoutes } from 'utils/pathRoutes';
 import Task from './Task';
 import styles from './tasks.module.scss';
 
 interface IProps {
   tasks: ITask[];
-  columnId: string;
 }
 
-const Tasks = ({ tasks, columnId }: IProps) => {
+const Tasks = ({ tasks }: IProps) => {
   const { boardId = '' } = useParams();
+  const [{ columnId }] = tasks;
 
-  const {
-    isLoading,
-    error,
-    data = [],
-  } = useQuery(
-    ['tasks', boardId, columnId],
-    () => {
-      try {
-        return mockApi.getAllTasks({ boardId, columnId }).then((res) => res);
-      } catch (error) {
-        throw Error('!!!');
-      }
-    },
-    {
-      initialData: tasks,
-    }
-  );
+  const { error, data } = useQuery({
+    queryKey: pathRoutes.tasks.relative(boardId, columnId),
+    queryFn: () => getAllTasks({ columnId, boardId }),
+    initialData: () => tasks,
+  });
 
+  if (error || !data) return <div>{`No data :(`}</div>;
   return (
     <ul className={styles.list}>
       {data.map((task: ITask) => (

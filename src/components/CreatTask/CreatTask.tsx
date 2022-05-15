@@ -1,6 +1,6 @@
 import CreatTaskLabel from './CreatTaskLabel';
 import CreatTaskForm from './CreatTaskForm';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes, useParams } from 'react-router-dom';
 
 const TEXT_CREAT_CARD = {
   label: 'Add a card',
@@ -11,13 +11,17 @@ interface IProps {
 }
 
 const CreatTask = ({ columnId }: IProps) => {
+  const { columnId: id } = useParams();
+
   return (
     <Routes>
-      <Route path={`columns/${columnId}`} element={<CreatTaskForm />} />
+      {columnId === id && (
+        <Route path={`columns/${columnId}/tasks/creat-task`} element={<CreatTaskForm />} />
+      )}
       <Route
         path="/*"
         element={
-          <Link to={`columns/${columnId}`}>
+          <Link to={`columns/${columnId}/tasks/creat-task`}>
             <CreatTaskLabel label={TEXT_CREAT_CARD.label} />
           </Link>
         }
