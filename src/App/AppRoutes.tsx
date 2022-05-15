@@ -6,7 +6,7 @@ import { pathRoutes } from 'utils/pathRoutes';
 import { ErrorPage } from 'pages/ErrorPage/ErrorPage';
 
 const BoardPage = lazy(() => import('pages/Board'));
-
+//
 export const routesPath = {
   board: pathRoutes.root,
   signUp: pathRoutes.auth.signup.relative,
