@@ -46,8 +46,8 @@ export const pathRoutes = {
     },
     getOneById: {
       relative: '',
-      // absolute: (id = ':id') => join(pathRoutes.root, pathRoutes.board.relative, id),
-      absolute: (id = ':id') => `${pathRoutes.root}/${pathRoutes.board.relative}/${id}`,
+      absolute: (id = ':id') => join(pathRoutes.root, pathRoutes.board.relative, id),
+      // absolute: (id = ':id') => `${pathRoutes.root}/${pathRoutes.board.relative}/${id}`,
     },
     create: {
       relative: '',
@@ -68,7 +68,6 @@ export const pathRoutes = {
   column: {
     relative: (boardId = ':id') => {
       // join(pathRoutes.root, pathRoutes.board.relative, boardId, 'columns'),
-      console.log('path====', `${pathRoutes.root}/${pathRoutes.board.relative}/${boardId}/columns`);
       return `${pathRoutes.root}/${pathRoutes.board.relative}/${boardId}/columns`;
     },
     getAll: {
@@ -82,8 +81,8 @@ export const pathRoutes = {
     },
     create: {
       relative: '',
-      // absolute: (boardId = ':id') => join(pathRoutes.column.relative(boardId)),
-      absolute: (boardId = ':id') => pathRoutes.column.relative(boardId),
+      absolute: (boardId = ':id') => join(pathRoutes.column.relative(boardId)),
+      // absolute: (boardId = ':id') => pathRoutes.column.relative(boardId),
     },
     updateOneById: {
       relative: '',
