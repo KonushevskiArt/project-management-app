@@ -1,11 +1,11 @@
+import MyHomePage from 'pages/Main';
 import { LogInForm } from 'pages/LogIn';
-import { lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router';
 import { pathRoutes } from 'utils/pathRoutes';
-import Cookies from 'js-cookie';
 import { ErrorPage } from 'pages/ErrorPage/ErrorPage';
-
-const BoardPage = lazy(() => import('pages/Board'));
+import CreatTask from 'pages/Board/components/CreatTask';
+import TaskContent from 'pages/TaskContent';
+import BoardPage from 'pages/Board';
 
 export const routesPath = {
   board: pathRoutes.root,
@@ -16,15 +16,26 @@ export const routesPath = {
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path={routesPath.board} element={<BoardPage />} />
-      {!Cookies.get('token') && (
-        <>
-          <Route path={routesPath.signIn} element={<LogInForm />} />
-          <Route path={routesPath.signUp} element={<LogInForm />} />
-        </>
-      )}
-      <Route path="errorPage" element={<ErrorPage />} />
-      <Route path="*" element={<Navigate to="errorPage" replace />} />
+      <Route path="/" element={<MyHomePage />} />
+      <Route path="boards/*">
+        <Route path=":boardId/*" element={<BoardPage />}>
+          <Route path="columns/*">
+            <Route path=":columnId/*">
+              <Route path="tasks/*">
+                <Route path="creat-task" element={<CreatTask />} />
+                <Route path=":taskId/*">
+                  <Route path="content" element={<TaskContent />} />
+                </Route>
+              </Route>
+            </Route>
+          </Route>
+        </Route>
+      </Route>
+      {/* <Route path="/boards" element={<Navigate to="/" replace />} /> */}
+      <Route path={pathRoutes.auth.signup.relative} element={<LogInForm />} />
+      <Route path={pathRoutes.auth.signin.relative} element={<LogInForm />} />
+      <Route path="/errorPage/*" element={<ErrorPage />} />
+      <Route path="/*" element={<Navigate to="/errorPage" replace />} />
     </Routes>
   );
 };
