@@ -1,11 +1,10 @@
-import { BoardCtx } from 'pages/Board';
-import React from 'react';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { toast, ToastOptions } from 'react-toastify';
+import { pathRoutes } from 'utils/pathRoutes';
 import { ColumnService } from 'utils/services/Column.service';
 
 export const useDeleteColumnById = (boardId: string, columnId: string) => {
-  const { removeColumn } = React.useContext(BoardCtx);
+  const queryClient = useQueryClient();
   const toastOption = {
     position: 'bottom-center',
     hideProgressBar: true,
@@ -21,8 +20,8 @@ export const useDeleteColumnById = (boardId: string, columnId: string) => {
         toast.error('Failed remove by network error!', toastOption);
       },
       onSuccess: () => {
-        removeColumn(columnId);
         toast.success('Column deleted successfuly!', toastOption);
+        queryClient.invalidateQueries(pathRoutes.column.getAll.absolute(boardId));
       },
     }
   );

@@ -2,14 +2,30 @@ import React from 'react';
 import MockCardBox from '../MockCardBox';
 import s from './style.module.scss';
 import ColumnCreater from '../ColumnCreater';
-import { BoardCtx } from 'pages/Board';
+import { useQuery } from 'react-query';
+import { pathRoutes } from 'utils/pathRoutes';
+import { ColumnService } from 'utils/services/Column.service';
+import { IColumn } from 'utils/services/models';
 
-const ListOfColumns = () => {
-  const { columns } = React.useContext(BoardCtx);
+interface IProps {
+  columns: IColumn[];
+  boardId: string;
+}
+
+const ListOfColumns = ({ columns, boardId }: IProps) => {
+  const { error, data } = useQuery(
+    pathRoutes.column.getAll.absolute(boardId),
+    () => ColumnService.getAll(boardId),
+    {
+      initialData: () => columns,
+    }
+  );
+
+  if (error || !data) return <div>{`No data :(`}</div>;
 
   return (
     <ul className={s.columnList}>
-      {columns.map(({ title, tasks, id }) => (
+      {data.map(({ title, tasks, id }) => (
         <li key={title + Math.random()}>
           <MockCardBox id={id} name={title} tasks={tasks} />
         </li>

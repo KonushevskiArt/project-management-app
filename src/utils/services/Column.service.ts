@@ -4,7 +4,9 @@ import { IColumn, INewColumn, IResponseNewColumn } from './models';
 
 export const ColumnService = {
   async getAll(boardId: string) {
-    return axios.get<IColumn[]>(pathRoutes.column.getAll.absolute(boardId));
+    return axios
+      .get<IColumn[]>(pathRoutes.column.getAll.absolute(boardId))
+      .then((data) => data.data);
   },
   async getColumnById(boardId: string, columnId: string) {
     return axios.get<IColumn>(pathRoutes.column.getOneById.absolute(boardId, columnId));

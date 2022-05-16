@@ -1,16 +1,15 @@
-import { AxiosResponse } from 'axios';
-import { BoardCtx } from 'pages/Board';
 import React from 'react';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { ToastOptions, toast } from 'react-toastify';
+import { pathRoutes } from 'utils/pathRoutes';
 import { ColumnService } from 'utils/services/Column.service';
-import { INewColumn, IResponseNewColumn } from 'utils/services/models';
+import { INewColumn } from 'utils/services/models';
 
 export const useCreateColumn = (
   boardId: string,
   setIsAddingColumn: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
-  const { addColumn } = React.useContext(BoardCtx);
+  const queryClient = useQueryClient();
   const toastOption = {
     position: 'bottom-center',
     hideProgressBar: true,
@@ -27,11 +26,10 @@ export const useCreateColumn = (
         console.log(error);
         toast.error('Column creating failed by network error!', toastOption);
       },
-      onSuccess: ({ data }: AxiosResponse<IResponseNewColumn>) => {
-        const newColumn = data;
-        addColumn(newColumn);
+      onSuccess: () => {
         setIsAddingColumn(false);
         toast.success('Column created successfuly!', toastOption);
+        queryClient.invalidateQueries(pathRoutes.column.getAll.absolute(boardId));
       },
     }
   );
