@@ -21,8 +21,10 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <ContextProvider>
           <RequestInterceptor>
-            <div className="wrapper wrapper__box">
-              <AppRoutes />
+            <div className="wrapper">
+              <div className="wrapper__box">
+                <AppRoutes />
+              </div>
             </div>
           </RequestInterceptor>
         </ContextProvider>

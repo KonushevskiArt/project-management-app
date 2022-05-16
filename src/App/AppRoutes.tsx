@@ -1,13 +1,11 @@
-import MyHomePage from 'pages/MyHome';
+import MyHomePage from 'pages/Main';
 import { LogInForm } from 'pages/LogIn';
-import { lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router';
 import { pathRoutes } from 'utils/pathRoutes';
 import { ErrorPage } from 'pages/ErrorPage/ErrorPage';
 import CreatTask from 'pages/Board/components/CreatTask';
 import TaskContent from 'pages/TaskContent';
-
-const BoardPage = lazy(() => import('pages/Board'));
+import BoardPage from 'pages/Board';
 
 export const routesPath = {
   board: pathRoutes.root,
