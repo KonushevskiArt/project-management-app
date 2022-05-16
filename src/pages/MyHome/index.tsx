@@ -14,28 +14,19 @@ const MyHomePage = () => {
 
   const { isLoading, error, refetch } = useQuery(
     'get board by id' + idMyBoard,
-    () => BoardService.getBoardById(idMyBoard),
+    () => BoardService.getOneById(idMyBoard),
     {
       enabled: false,
-      onSuccess: (response) => {
-        const lastColumnOrder =
-          response.data.columns.length > 0
-            ? response.data.columns[response.data.columns.length - 1].order
-            : 1;
-        navigate(`${pathRoutes.board.relative}/${response.data.id}`, {
-          state: {
-            data: response.data,
-            lastColumnOrder,
-          },
-        });
+      onSuccess: ({ id }) => {
+        navigate(`${pathRoutes.board.relative}/${id}`);
       },
     }
   );
 
   const { refetch: refetchSignIn } = useQuery('sign In', () => AuthService.signIn(userSignIn), {
     enabled: false,
-    onSuccess: (response) => {
-      Cookies.set('token', response.data.token);
+    onSuccess: ({ token }) => {
+      Cookies.set('token', token);
     },
   });
 

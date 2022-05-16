@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { ToastOptions, toast } from 'react-toastify';
 import { pathRoutes } from 'utils/pathRoutes';
 import { ColumnService } from 'utils/services/Column.service';
-import { INewColumn } from 'utils/services/models';
+import { INewColumn } from 'interfaces';
 
 export const useCreateColumn = (
   boardId: string,
@@ -17,9 +17,9 @@ export const useCreateColumn = (
   } as ToastOptions;
 
   const { mutate, isLoading } = useMutation(
-    'add new column',
+    'add new column' + boardId + Math.random() + Date.now(),
     (newColumn: INewColumn) => {
-      return ColumnService.createColumn(boardId, newColumn);
+      return ColumnService.create(boardId, newColumn);
     },
     {
       onError: (error: Error) => {
@@ -29,7 +29,8 @@ export const useCreateColumn = (
       onSuccess: () => {
         setIsAddingColumn(false);
         toast.success('Column created successfuly!', toastOption);
-        queryClient.invalidateQueries(pathRoutes.column.getAll.absolute(boardId));
+        // queryClient.invalidateQueries(pathRoutes.column.getAll.absolute(boardId));
+        queryClient.invalidateQueries(pathRoutes.board.getOneById.absolute(boardId));
       },
     }
   );

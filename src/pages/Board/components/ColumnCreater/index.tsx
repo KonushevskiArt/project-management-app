@@ -4,7 +4,7 @@ import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useLocation, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useCreateColumn } from 'hooks/columns/useCreateColumn';
 
@@ -12,22 +12,19 @@ type Inputs = {
   name: string;
 };
 
-interface LocationState {
+interface IProps {
   lastColumnOrder: number;
 }
 
-const ColumnCreater = () => {
-  const params = useParams();
-  const boardId = params.id as string;
+const ColumnCreater = ({ lastColumnOrder }: IProps) => {
+  const { boardId } = useParams();
+
   const [isAddingColumn, setIsAddingColumn] = useState(false);
   const { register, handleSubmit, reset } = useForm<Inputs>();
 
-  const location = useLocation();
-  const { lastColumnOrder } = location.state as LocationState;
-
   const [currentOrder, setCurrentOrder] = useState(lastColumnOrder);
 
-  const { mutate, isLoading } = useCreateColumn(boardId, setIsAddingColumn);
+  const { mutate, isLoading } = useCreateColumn(boardId as string, setIsAddingColumn);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     if (data.name.trim() && isLoading === false) {

@@ -1,5 +1,4 @@
 import { join } from 'path-browserify';
-export const BASE_URL = 'https://pure-cove-88107.herokuapp.com';
 
 export const pathRoutes = {
   root: 'https://pure-cove-88107.herokuapp.com',
@@ -19,26 +18,26 @@ export const pathRoutes = {
     relative: 'users',
     getAll: {
       relative: '',
-      absolute: () => join(pathRoutes.root, pathRoutes.user.relative),
+      absolute: () => `${pathRoutes.root}/${pathRoutes.user.relative}`,
     },
     getOneById: {
       relative: '',
-      absolute: (id = ':id') => join(pathRoutes.root, pathRoutes.user.relative, id),
+      absolute: (id = ':id') => `${pathRoutes.root}/${pathRoutes.user.relative}/${id}`,
     },
     updateOneById: {
       relative: '',
-      absolute: (id = ':id') => join(pathRoutes.root, pathRoutes.user.relative, id),
+      absolute: (id = ':id') => `${pathRoutes.root}/${pathRoutes.user.relative}/${id}`,
     },
     deleteOneById: {
       relative: '',
-      absolute: (id = ':id') => join(pathRoutes.root, pathRoutes.user.relative, id),
+      absolute: (id = ':id') => `${pathRoutes.root}/${pathRoutes.user.relative}/${id}`,
     },
   },
   board: {
     relative: 'boards',
     getAll: {
       relative: '',
-      absolute: () => join(pathRoutes.root, pathRoutes.board.relative),
+      absolute: () => `${pathRoutes.root}/${pathRoutes.board.relative}`,
     },
     getOneById: {
       relative: '',
@@ -50,11 +49,11 @@ export const pathRoutes = {
     },
     updateOneById: {
       relative: '',
-      absolute: (id = ':id') => join(pathRoutes.root, pathRoutes.board.relative, id),
+      absolute: (id = ':id') => `${pathRoutes.root}/${pathRoutes.board.relative}/${id}`,
     },
     deleteOneById: {
       relative: '',
-      absolute: (id = ':id') => join(pathRoutes.root, pathRoutes.board.relative, id),
+      absolute: (id = ':id') => `${pathRoutes.root}/${pathRoutes.board.relative}/${id}`,
     },
   },
   column: {
@@ -63,12 +62,12 @@ export const pathRoutes = {
     },
     getAll: {
       relative: '',
-      absolute: (boardId = ':id') => join(pathRoutes.column.relative(boardId)),
+      absolute: (boardId = ':id') => pathRoutes.column.relative(boardId),
     },
     getOneById: {
       relative: '',
       absolute: (boardId = 'id', columnId = ':id') =>
-        join(pathRoutes.column.relative(boardId), columnId),
+        `${pathRoutes.column.relative(boardId)}/${columnId}`,
     },
     create: {
       relative: '',
@@ -77,7 +76,7 @@ export const pathRoutes = {
     updateOneById: {
       relative: '',
       absolute: (boardId = 'id', columnId = ':id') =>
-        join(pathRoutes.column.relative(boardId), columnId),
+        `${pathRoutes.column.relative(boardId)}/${columnId}`,
     },
     deleteOneById: {
       relative: '',
@@ -87,31 +86,31 @@ export const pathRoutes = {
   },
   task: {
     relative: (boardId = ':id', columnId = ':id') =>
-      join(pathRoutes.root, pathRoutes.column.relative(boardId), columnId),
+      `${pathRoutes.column.relative(boardId)}/${columnId}`,
     getAll: {
       relative: '',
       absolute: (boardId = ':id', columnId = ':id') =>
-        join(pathRoutes.task.relative(boardId, columnId), 'tasks'),
+        `${pathRoutes.task.relative(boardId, columnId)}/tasks`,
     },
     getOneById: {
       relative: '',
       absolute: (boardId = ':id', columnId = ':id', taskId = ':id') =>
-        join(pathRoutes.task.relative(boardId, columnId), 'tasks', taskId),
+        `${pathRoutes.task.relative(boardId, columnId)}/tasks/${taskId}`,
     },
     create: {
       relative: '',
       absolute: (boardId = ':id', columnId = ':id') =>
-        join(pathRoutes.task.relative(boardId, columnId), 'tasks'),
+        `${pathRoutes.task.relative(boardId, columnId)}/tasks`,
     },
     updateOneById: {
       relative: '',
       absolute: (boardId = 'id', columnId = ':id', taskId = ':id') =>
-        join(pathRoutes.task.relative(boardId, columnId), 'tasks', taskId),
+        `${pathRoutes.task.relative(boardId, columnId)}/tasks/${taskId}`,
     },
     deleteOneById: {
       relative: '',
       absolute: (boardId = 'id', columnId = ':id', taskId = ':id') =>
-        join(pathRoutes.task.relative(boardId, columnId), 'tasks', taskId),
+        `${pathRoutes.task.relative(boardId, columnId)}/tasks/${taskId}`,
     },
   },
   file: {

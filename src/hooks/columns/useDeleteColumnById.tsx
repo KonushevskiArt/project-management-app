@@ -13,7 +13,7 @@ export const useDeleteColumnById = (boardId: string, columnId: string) => {
 
   const { mutate, isLoading } = useMutation(
     'delete column' + columnId,
-    () => ColumnService.deleteColumnById(boardId, columnId),
+    () => ColumnService.deleteOneById(boardId, columnId),
     {
       onError: (error: Error) => {
         console.log(error);
@@ -21,7 +21,8 @@ export const useDeleteColumnById = (boardId: string, columnId: string) => {
       },
       onSuccess: () => {
         toast.success('Column deleted successfuly!', toastOption);
-        queryClient.invalidateQueries(pathRoutes.column.getAll.absolute(boardId));
+        // queryClient.invalidateQueries(pathRoutes.column.getAll.absolute(boardId));
+        queryClient.invalidateQueries(pathRoutes.board.getOneById.absolute(boardId));
       },
     }
   );

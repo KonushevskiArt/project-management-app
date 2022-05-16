@@ -1,8 +1,5 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import './normalize.scss';
-import './global-styles.scss';
-import './animation.scss';
 import AppRoutes from './AppRoutes';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,6 +13,7 @@ const queryClient = new QueryClient({
 
 import { ContextProvider } from './context';
 import RequestInterceptor from './RequestInterceptor';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 function App() {
   return (
@@ -23,9 +21,12 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <ContextProvider>
           <RequestInterceptor>
-            <AppRoutes />
+            <div className="wrapper wrapper__box">
+              <AppRoutes />
+            </div>
           </RequestInterceptor>
         </ContextProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
       <ToastContainer />
     </BrowserRouter>
