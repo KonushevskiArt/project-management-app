@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Box, Switch, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 import { useNavigate } from 'react-router';
 import Button from '@mui/material/Button';
 import Cookies from 'js-cookie';
+import { AppContext } from 'App/context';
 
 export const Header = () => {
   const navigate = useNavigate();
   const [scroll, setScroll] = useState(false);
   const [checked, setChecked] = useState(true);
+  const appContext = useContext(AppContext);
 
   window.onscroll = function () {
     if (window.pageYOffset > 0) {
@@ -42,6 +44,7 @@ export const Header = () => {
   const signOut = () => {
     Cookies.remove('token', { path: '' });
     localStorage.removeItem('user');
+    appContext.dispatch({ type: 'setLogInSucsess', payload: false });
     navigate('/welcome');
   };
 
@@ -88,7 +91,15 @@ export const Header = () => {
             >
               Sign Out
             </Button>
-            <Button variant="contained" color="inherit" size="small" sx={{ marginRight: '10px' }}>
+            <Button
+              variant="contained"
+              color="inherit"
+              size="small"
+              sx={{ marginRight: '10px' }}
+              onClick={() => {
+                navigate('/');
+              }}
+            >
               Create new board
             </Button>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>

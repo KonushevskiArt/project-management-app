@@ -19,7 +19,7 @@ export const WelcomPage = () => {
         width: '100%',
         display: 'flex',
         alignItems: 'center',
-        marginTop: '50px',
+        marginTop: '10px',
         flexDirection: 'column',
       }}
     >

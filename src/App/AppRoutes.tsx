@@ -33,10 +33,14 @@ const AppRoutes = () => {
     if (Cookies.get('token') || appContext.state.logInSucsess) return <LogInForm />;
     else return <Navigate to="errorPage" replace />;
   }
-
+  function TestHead() {
+    if (Cookies.get('token') || appContext.state.logInSucsess) return <Header />;
+    else return <></>;
+  }
+  //{Cookies.get('token') && <Header />}
   return (
     <>
-      <Header />
+      <TestHead />
       <Routes>
         <Route path="/" element={<MyHomePage />} />
         <Route path="boards/*">
