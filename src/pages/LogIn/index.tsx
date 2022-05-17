@@ -1,15 +1,18 @@
 import { Box, Button, Container, Typography } from '@mui/material';
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Navigate, useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { UserData } from './iterfaces';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import './style.css';
-import { Request } from '../../utils/axios';
 import { AppContext } from 'App/context';
 import CircularProgress from '@mui/material/CircularProgress';
+import { AuthService } from 'utils/services/Auth.service';
 import Cookies from 'js-cookie';
+import { IUser, IUserResponse, IUserSignIn, IUserUpdate } from 'interfaces';
+import { notify } from 'pages/UpdatePage';
+import { UserService } from 'utils/services/User.service';
 
 export const LogInForm = () => {
   const {
@@ -23,18 +26,65 @@ export const LogInForm = () => {
   const [show, setShow] = useState(false);
   const location = useLocation();
   const appContext = useContext(AppContext);
+  const navigate = useNavigate();
+  const [notFound, setNotFound] = useState(false);
+  const [LogInProces, setLogInProces] = useState(false);
+  const [userIsExist, setUserIsExist] = useState(false);
 
-  Request(reset);
-
-  function checkUser(data: UserData) {
-    const requestData = {
-      method: 'post',
-      urlProp: location.pathname,
-      data: data,
-    };
-    appContext.dispatch({ type: 'setRequestData', payload: requestData });
-    appContext.dispatch({ type: 'setLogInLogOut', payload: true });
-    console.log(requestData);
+  function checkUser(data: IUser | IUserSignIn | IUserUpdate) {
+    setLogInProces(true);
+    if (location.pathname === '/signin') {
+      AuthService.signIn(data as IUserSignIn)
+        .then(function (response) {
+          const in23Hours = new Date(new Date().getTime() + 23 * 60 * 60 * 1000);
+          Cookies.set('token', response.token, { expires: in23Hours });
+          localStorage.setItem('user', data.login);
+          appContext.dispatch({ type: 'setLogInSucsess', payload: true });
+          navigate('/');
+        })
+        .catch(function (error) {
+          if (error.response) {
+            if (error.response.status === 403) {
+              setLogInProces(false);
+              setNotFound(true);
+            }
+          }
+        });
+    }
+    if (location.pathname === '/signup') {
+      AuthService.signUp(data as IUser)
+        .then(function () {
+          notify();
+          setTimeout(() => {
+            reset();
+            setLogInProces(false);
+            navigate('/signin');
+          }, 1000);
+        })
+        .catch(function (error) {
+          if (error.response) {
+            if (error.response.status === 409) {
+              setLogInProces(false);
+              setUserIsExist(true);
+            }
+          }
+        });
+    }
+    if (location.pathname === '/update') {
+      setLogInProces(true);
+      UserService.getAll().then(function (response) {
+        response.map((item: IUserResponse) => {
+          if (item.login === localStorage.getItem('user')) {
+            UserService.updateUserById(item.id, data as IUserUpdate).then(function (response) {
+              localStorage.setItem('user', data.login);
+              setLogInProces(false);
+              notify();
+              reset();
+            });
+          }
+        });
+      });
+    }
   }
 
   function checkText() {
@@ -45,9 +95,6 @@ export const LogInForm = () => {
   function showHidePassord() {
     show ? setShow(false) : setShow(true);
   }
-
-  /*if (Cookies.get('token')) return <Navigate to="/welcome" />;
-  if (appContext.state.signUp) return <Navigate to="/signin" />;*/
 
   return (
     <Container>
@@ -60,17 +107,20 @@ export const LogInForm = () => {
           height: '100vh',
         }}
       >
-        <Typography variant="h4">{checkText() + 'to App'}</Typography>
+        <Typography variant="h4">
+          {location.pathname === '/update' ? 'Update User' : checkText() + 'to App'}
+        </Typography>
         <form
+          onChange={() => {
+            setNotFound(false);
+            setUserIsExist(false);
+          }}
           className="form"
           onSubmit={handleSubmit((data) => {
             checkUser(data);
           })}
-          onChange={() => {
-            appContext.dispatch({ type: 'setNotFound', payload: false });
-          }}
         >
-          {location.pathname === '/signup' && (
+          {(location.pathname === '/signup' || location.pathname === '/update') && (
             <Box sx={{ position: 'relative', width: '100%' }}>
               <input
                 role="inputName"
@@ -113,24 +163,30 @@ export const LogInForm = () => {
               type={`${show ? 'text' : 'password'}`}
             />
             {show ? (
-              <VisibilityOff className="icon" onClick={showHidePassord} />
+              <VisibilityOff className="icon" onClick={showHidePassord} color="action" />
             ) : (
-              <Visibility className="icon" onClick={showHidePassord} />
+              <Visibility className="icon" onClick={showHidePassord} color="action" />
             )}
             {errors?.password && <p className="error-text">{errors.password.message}</p>}
           </Box>
-          {appContext.state.notFound && (
+          {notFound && (
             <Typography color="red" sx={{ marginTop: '-16px' }}>
-              Не верные данные
+              Wrong data
             </Typography>
           )}
-          {appContext.state.notFound && (
+          {userIsExist && (
             <Typography color="red" sx={{ marginTop: '-16px' }}>
-              Не верные данные
+              User exist
             </Typography>
           )}
           <Button variant="contained" color="success" type="submit">
-            {appContext.state.logInProces ? <CircularProgress color="info" /> : checkText()}
+            {LogInProces ? (
+              <CircularProgress color="info" />
+            ) : location.pathname === '/update' ? (
+              'Update'
+            ) : (
+              checkText()
+            )}
           </Button>
         </form>
       </Box>

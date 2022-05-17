@@ -26,6 +26,7 @@ export const Header = () => {
       transitionDuration: '0.3s',
       opacity: '0.9',
       zIndex: '10',
+      position: 'fixed',
     };
     const fixStyle: React.CSSProperties = {
       boxShadow: 'none',
@@ -62,7 +63,6 @@ export const Header = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'flex-end',
-          position: 'fixed',
           top: 0,
         }}
       >

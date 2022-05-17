@@ -21,11 +21,27 @@ export const routesPath = {
 
 const AppRoutes = () => {
   const appContext = useContext(AppContext);
-  function PrivatePath() {
-    if (Cookies.get('token') || appContext.state.logInSucsess) return <UpdateUser />;
+  type ProtectedRouteProps = {
+    outlet: JSX.Element;
+  };
+
+  function ProtectedRoute({ outlet }: ProtectedRouteProps) {
+    if (!Cookies.get('token') || !appContext.state.logInSucsess) return outlet;
     else return <Navigate to="errorPage" replace />;
   }
 
+  function PrivatePath() {
+    if (Cookies.get('token') || appContext.state.logInSucsess) return <LogInForm />;
+    else return <Navigate to="errorPage" replace />;
+  }
+  /*        {Cookies.get('token') === undefined ||
+          (appContext.state.logInSucsess === false && (
+            <>
+              <Route path="/signin" element={<LogInForm />} />
+              <Route path="/signup" element={<LogInForm />} />
+            </>
+          ))}
+          */
   return (
     <>
       <Header />
@@ -46,14 +62,10 @@ const AppRoutes = () => {
           </Route>
         </Route>
         {/* <Route path="/boards" element={<Navigate to="/" replace />} /> */}
+        <Route path="/signin" element={<ProtectedRoute outlet={<LogInForm />} />} />
+        <Route path="/signup" element={<ProtectedRoute outlet={<LogInForm />} />} />
         <Route path="/welcome" element={<WelcomPage />} />
         <Route path="/update" element={<PrivatePath />} />
-        {!Cookies.get('token') && (
-          <>
-            <Route path={routesPath.signIn} element={<LogInForm />} />
-            <Route path={routesPath.signUp} element={<LogInForm />} />
-          </>
-        )}
         <Route path="/errorPage/*" element={<ErrorPage />} />
         <Route path="/*" element={<Navigate to="/errorPage" replace />} />
       </Routes>

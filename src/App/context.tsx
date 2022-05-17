@@ -5,7 +5,7 @@ type UpdateActionBoolean = {
   type:
     | 'isLoaded'
     | 'setNotFound'
-    | 'setLogInLogOut'
+    | 'setLogInProces'
     | 'setSingUp'
     | 'userIsExist'
     | 'setLogInSucsess';
@@ -28,7 +28,6 @@ type ContextState = {
   isLoaded: boolean;
   notFound: boolean;
   logInProces: boolean;
-  requestData: AxiosData;
 };
 
 type AppContextProviderProps = {
@@ -49,7 +48,6 @@ const initialState = {
   logInProces: false,
   isLoaded: false,
   notFound: false,
-  requestData: {} as AxiosData,
 };
 
 const reducer = (state: ContextState, action: CounterAction) => {
@@ -58,10 +56,8 @@ const reducer = (state: ContextState, action: CounterAction) => {
       return { ...state, isLoaded: action.payload };
     case 'setNotFound':
       return { ...state, notFound: action.payload };
-    case 'setLogInLogOut':
+    case 'setLogInProces':
       return { ...state, logInProces: action.payload };
-    case 'setRequestData':
-      return { ...state, requestData: action.payload };
     case 'setSingUp':
       return { ...state, signUp: action.payload };
     case 'userIsExist':

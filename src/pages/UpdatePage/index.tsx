@@ -1,7 +1,6 @@
 import { Box, Button, Container, Typography } from '@mui/material';
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useLocation } from 'react-router';
 import { UserData } from '../LogIn/iterfaces';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -10,7 +9,7 @@ import { AppContext } from 'App/context';
 import CircularProgress from '@mui/material/CircularProgress';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 interface UpdateUser {
@@ -18,6 +17,17 @@ interface UpdateUser {
   login: string;
   password: string;
 }
+
+export const notify = () =>
+  toast.success('Success', {
+    position: 'top-left',
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
 
 export const UpdateUser = () => {
   const {
@@ -28,20 +38,8 @@ export const UpdateUser = () => {
     mode: 'all',
   });
   const [show, setShow] = useState(false);
-  const location = useLocation();
   const appContext = useContext(AppContext);
   const [loading, setLoading] = useState(false);
-
-  const notify = () =>
-    toast.success('Success', {
-      position: 'top-left',
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
 
   function checkUser(data: UserData) {
     const baseUrl = 'https://pure-cove-88107.herokuapp.com';
@@ -76,7 +74,6 @@ export const UpdateUser = () => {
 
   return (
     <Container>
-      <ToastContainer />
       <Box
         sx={{
           display: 'flex',
