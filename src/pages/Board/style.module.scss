@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+}
+.board {
+  padding: 40px;
+  background-color: var(--main-color);
+  flex-grow: 1;
+  height: 100vh;
+  width: auto;
+  color: var(--text-color-white)
+}
