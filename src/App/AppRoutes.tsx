@@ -5,7 +5,6 @@ import { pathRoutes } from 'utils/pathRoutes';
 import { ErrorPage } from 'pages/ErrorPage/ErrorPage';
 import { Header } from 'pages/Header';
 import { WelcomPage } from 'pages/WelcomPage';
-import { UpdateUser } from 'pages/UpdatePage';
 import { useContext } from 'react';
 import { AppContext } from './context';
 import CreatTask from 'pages/Board/components/CreatTask';
@@ -34,14 +33,7 @@ const AppRoutes = () => {
     if (Cookies.get('token') || appContext.state.logInSucsess) return <LogInForm />;
     else return <Navigate to="errorPage" replace />;
   }
-  /*        {Cookies.get('token') === undefined ||
-          (appContext.state.logInSucsess === false && (
-            <>
-              <Route path="/signin" element={<LogInForm />} />
-              <Route path="/signup" element={<LogInForm />} />
-            </>
-          ))}
-          */
+
   return (
     <>
       <Header />

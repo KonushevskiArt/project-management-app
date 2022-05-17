@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { pathRoutes } from 'utils/pathRoutes';
-import { IUserResponse, IUser, IUserUpdate } from '../../interfaces';
+import { IUserResponse, IUserUpdate } from '../../interfaces';
 
 export const UserService = {
   async getAll() {

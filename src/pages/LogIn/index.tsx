@@ -11,8 +11,20 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { AuthService } from 'utils/services/Auth.service';
 import Cookies from 'js-cookie';
 import { IUser, IUserResponse, IUserSignIn, IUserUpdate } from 'interfaces';
-import { notify } from 'pages/UpdatePage';
 import { UserService } from 'utils/services/User.service';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+export const notify = () =>
+  toast.success('Success', {
+    position: 'top-left',
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
 
 export const LogInForm = () => {
   const {
