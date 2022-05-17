@@ -2,7 +2,13 @@ import { AxiosData } from 'pages/LogIn/iterfaces';
 import React, { createContext, Dispatch, ReactNode, useReducer } from 'react';
 
 type UpdateActionBoolean = {
-  type: 'isLoaded' | 'setNotFound' | 'setLogInLogOut' | 'setSingUp';
+  type:
+    | 'isLoaded'
+    | 'setNotFound'
+    | 'setLogInLogOut'
+    | 'setSingUp'
+    | 'userIsExist'
+    | 'setLogInSucsess';
   payload: boolean;
 };
 
@@ -16,6 +22,8 @@ type Reset = {
 };
 
 type ContextState = {
+  logInSucsess: boolean;
+  userExist: boolean;
   signUp: boolean;
   isLoaded: boolean;
   notFound: boolean;
@@ -35,6 +43,8 @@ type ContextType = {
 type CounterAction = UpdateActionBoolean | UpdateActionDataForLogIn | Reset;
 
 const initialState = {
+  logInSucsess: false,
+  userExist: false,
   signUp: false,
   logInProces: false,
   isLoaded: false,
@@ -54,6 +64,10 @@ const reducer = (state: ContextState, action: CounterAction) => {
       return { ...state, requestData: action.payload };
     case 'setSingUp':
       return { ...state, signUp: action.payload };
+    case 'userIsExist':
+      return { ...state, userExist: action.payload };
+    case 'setLogInSucsess':
+      return { ...state, logInSucsess: action.payload };
     case 'reset': {
       return initialState;
     }

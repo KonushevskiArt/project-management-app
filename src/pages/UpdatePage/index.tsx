@@ -1,21 +1,28 @@
 import { Box, Button, Container, Typography } from '@mui/material';
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Navigate, useLocation } from 'react-router';
-import { UserData } from './iterfaces';
+import { useLocation } from 'react-router';
+import { UserData } from '../LogIn/iterfaces';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import './style.css';
-import { Request } from '../../utils/axios';
+import '../LogIn/style.css';
 import { AppContext } from 'App/context';
 import CircularProgress from '@mui/material/CircularProgress';
+import axios from 'axios';
 import Cookies from 'js-cookie';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-export const LogInForm = () => {
+interface UpdateUser {
+  id: string;
+  login: string;
+  password: string;
+}
+
+export const UpdateUser = () => {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<UserData>({
     mode: 'all',
@@ -23,34 +30,53 @@ export const LogInForm = () => {
   const [show, setShow] = useState(false);
   const location = useLocation();
   const appContext = useContext(AppContext);
+  const [loading, setLoading] = useState(false);
 
-  Request(reset);
+  const notify = () =>
+    toast.success('Success', {
+      position: 'top-left',
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
 
   function checkUser(data: UserData) {
-    const requestData = {
-      method: 'post',
-      urlProp: location.pathname,
-      data: data,
-    };
-    appContext.dispatch({ type: 'setRequestData', payload: requestData });
-    appContext.dispatch({ type: 'setLogInLogOut', payload: true });
-    console.log(requestData);
-  }
-
-  function checkText() {
-    if (location.pathname === '/signin') return 'Sign In ';
-    if (location.pathname === '/signup') return 'Sign Up ';
+    const baseUrl = 'https://pure-cove-88107.herokuapp.com';
+    axios({
+      method: 'get',
+      url: `${baseUrl}/users`,
+      headers: { Authorization: `Bearer ${Cookies.get('token')}` },
+    }).then(function (response) {
+      console.log(response);
+      response.data.map((item: UpdateUser) => {
+        if (item.login === localStorage.getItem('user')) {
+          axios({
+            method: 'put',
+            url: `${baseUrl}/users/${item.id}`,
+            headers: { Authorization: `Bearer ${Cookies.get('token')}` },
+            data: data,
+          }).then(function (response) {
+            localStorage.setItem('user', data.login);
+            setLoading(false);
+            notify();
+            console.log(response);
+          });
+        }
+      });
+    });
+    setLoading(true);
   }
 
   function showHidePassord() {
     show ? setShow(false) : setShow(true);
   }
 
-  /*if (Cookies.get('token')) return <Navigate to="/welcome" />;
-  if (appContext.state.signUp) return <Navigate to="/signin" />;*/
-
   return (
     <Container>
+      <ToastContainer />
       <Box
         sx={{
           display: 'flex',
@@ -60,29 +86,24 @@ export const LogInForm = () => {
           height: '100vh',
         }}
       >
-        <Typography variant="h4">{checkText() + 'to App'}</Typography>
+        <Typography variant="h4">Update User Data</Typography>
         <form
           className="form"
           onSubmit={handleSubmit((data) => {
             checkUser(data);
           })}
-          onChange={() => {
-            appContext.dispatch({ type: 'setNotFound', payload: false });
-          }}
         >
-          {location.pathname === '/signup' && (
-            <Box sx={{ position: 'relative', width: '100%' }}>
-              <input
-                role="inputName"
-                {...register('name', {
-                  required: true,
-                })}
-                placeholder="Enter name"
-                className={`text-input ${errors?.name ? 'error-border' : ''}`}
-              />
-              {errors?.name && <p className="error-text">Field must be filled</p>}
-            </Box>
-          )}
+          <Box sx={{ position: 'relative', width: '100%' }}>
+            <input
+              role="inputName"
+              {...register('name', {
+                required: true,
+              })}
+              placeholder="Enter name"
+              className={`text-input ${errors?.name ? 'error-border' : ''}`}
+            />
+            {errors?.name && <p className="error-text">Field must be filled</p>}
+          </Box>
           <Box sx={{ position: 'relative', width: '100%' }}>
             <input
               role="inputEmail"
@@ -119,18 +140,8 @@ export const LogInForm = () => {
             )}
             {errors?.password && <p className="error-text">{errors.password.message}</p>}
           </Box>
-          {appContext.state.notFound && (
-            <Typography color="red" sx={{ marginTop: '-16px' }}>
-              Не верные данные
-            </Typography>
-          )}
-          {appContext.state.notFound && (
-            <Typography color="red" sx={{ marginTop: '-16px' }}>
-              Не верные данные
-            </Typography>
-          )}
           <Button variant="contained" color="success" type="submit">
-            {appContext.state.logInProces ? <CircularProgress color="info" /> : checkText()}
+            {appContext.state.logInProces ? <CircularProgress color="info" /> : 'Update'}
           </Button>
         </form>
       </Box>

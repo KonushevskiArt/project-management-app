@@ -28,8 +28,11 @@ export const Request = (reset: UseFormReset<UserData>) => {
         if (appContext.state.requestData.urlProp === '/signin') {
           const in23Hours = new Date(new Date().getTime() + 23 * 60 * 60 * 1000);
           Cookies.set('token', response.data.token, { expires: in23Hours });
-          appContext.dispatch({ type: 'setLogInLogOut', payload: false });
-          appContext.dispatch({ type: 'setNotFound', payload: false });
+          localStorage.setItem('user', appContext.state.requestData.data?.login as string);
+          appContext.dispatch({ type: 'reset' });
+          appContext.dispatch({ type: 'setLogInSucsess', payload: true });
+          reset();
+          navigate('/');
         }
         if (appContext.state.requestData.urlProp === '/signup') {
           appContext.dispatch({ type: 'setLogInLogOut', payload: false });
@@ -42,6 +45,10 @@ export const Request = (reset: UseFormReset<UserData>) => {
         if (error.response) {
           if (error.response.status === 403) {
             appContext.dispatch({ type: 'setNotFound', payload: true });
+            appContext.dispatch({ type: 'setLogInLogOut', payload: false });
+          }
+          if (error.response.status === 409) {
+            appContext.dispatch({ type: 'userIsExist', payload: true });
             appContext.dispatch({ type: 'setLogInLogOut', payload: false });
           }
         }
