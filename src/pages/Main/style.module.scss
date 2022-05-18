@@ -1,10 +1,29 @@
 .container {
   margin-top: 30px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: space-around;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 280px;
+  gap: 30px;
 }
 .page {
-  padding: 30px;
+  margin-top: 30px;
+  width: 90vw;
+}
+.title {
+  margin-bottom: 20px;
+}
+@media (min-width: 768px) { 
+  .container {
+    grid-template-columns: repeat(2, 280px);
+  }
+}
+@media (min-width: 1024px) { 
+  .container {
+    grid-template-columns: repeat(3, 280px);
+  }
+}
+@media (min-width: 1440px) { 
+  .container {
+    grid-template-columns: repeat(4, 280px);
+  }
 }
