@@ -1,4 +1,4 @@
-import { Box, Button, Container, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router';
@@ -111,7 +111,7 @@ export const LogInForm = () => {
 
   return (
     <Box>
-      <Delete />
+      {location.pathname === '/update' && <Delete />}
       <Box
         sx={{
           display: 'flex',
