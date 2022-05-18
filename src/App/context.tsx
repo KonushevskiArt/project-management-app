@@ -1,4 +1,3 @@
-import { AxiosData } from 'pages/LogIn/iterfaces';
 import React, { createContext, Dispatch, ReactNode, useReducer } from 'react';
 
 type UpdateActionBoolean = {

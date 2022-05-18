@@ -75,7 +75,7 @@ export const Header = () => {
               variant="contained"
               color="inherit"
               size="small"
-              sx={{ marginRight: '10px' }}
+              sx={{ marginRight: '10px', color: 'black' }}
               onClick={() => {
                 navigate('/update');
               }}
@@ -86,7 +86,7 @@ export const Header = () => {
               variant="contained"
               color="inherit"
               size="small"
-              sx={{ marginRight: '10px' }}
+              sx={{ marginRight: '10px', color: 'black' }}
               onClick={signOut}
             >
               Sign Out
@@ -95,7 +95,7 @@ export const Header = () => {
               variant="contained"
               color="inherit"
               size="small"
-              sx={{ marginRight: '10px' }}
+              sx={{ marginRight: '10px', color: 'black' }}
               onClick={() => {
                 navigate('/');
               }}

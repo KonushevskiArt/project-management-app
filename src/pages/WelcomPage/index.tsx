@@ -4,12 +4,9 @@ import Container from '@mui/material/Container';
 import { useNavigate } from 'react-router';
 import Button from '@mui/material/Button';
 import Cookies from 'js-cookie';
-import { useContext } from 'react';
-import { AppContext } from '../../App/context';
 
 export const WelcomPage = () => {
   const navigate = useNavigate();
-  const appContext = useContext(AppContext);
 
   return (
     <Container
@@ -30,7 +27,7 @@ export const WelcomPage = () => {
               variant="contained"
               color="inherit"
               size="small"
-              sx={{ marginRight: '10px' }}
+              sx={{ marginRight: '10px', color: 'black' }}
               onClick={() => {
                 navigate('/signin');
               }}
@@ -41,6 +38,7 @@ export const WelcomPage = () => {
               variant="contained"
               color="inherit"
               size="small"
+              sx={{ color: 'black' }}
               onClick={() => {
                 navigate('/signup');
               }}
@@ -53,6 +51,7 @@ export const WelcomPage = () => {
             variant="contained"
             color="inherit"
             size="small"
+            sx={{ color: 'black' }}
             onClick={() => {
               navigate('/');
             }}

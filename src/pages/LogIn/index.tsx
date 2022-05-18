@@ -14,11 +14,12 @@ import { IUser, IUserResponse, IUserSignIn, IUserUpdate } from 'interfaces';
 import { UserService } from 'utils/services/User.service';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Delete } from './deleteButton';
 
-export const notify = () =>
-  toast.success('Success', {
+export const notify = (name: string) =>
+  toast.success(name, {
     position: 'top-left',
-    autoClose: 2000,
+    autoClose: 1500,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -66,7 +67,7 @@ export const LogInForm = () => {
     if (location.pathname === '/signup') {
       AuthService.signUp(data as IUser)
         .then(function () {
-          notify();
+          notify('Registration was successful');
           setTimeout(() => {
             reset();
             setLogInProces(false);
@@ -87,10 +88,10 @@ export const LogInForm = () => {
       UserService.getAll().then(function (response) {
         response.map((item: IUserResponse) => {
           if (item.login === localStorage.getItem('user')) {
-            UserService.updateUserById(item.id, data as IUserUpdate).then(function (response) {
+            UserService.updateUserById(item.id, data as IUserUpdate).then(function () {
               localStorage.setItem('user', data.login);
               setLogInProces(false);
-              notify();
+              notify('Updated successfully');
               reset();
             });
           }
@@ -109,14 +110,15 @@ export const LogInForm = () => {
   }
 
   return (
-    <Container>
+    <Box>
+      <Delete />
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          height: '100vh',
+          marginTop: '20vh',
         }}
       >
         <Typography variant="h4">
@@ -202,6 +204,6 @@ export const LogInForm = () => {
           </Button>
         </form>
       </Box>
-    </Container>
+    </Box>
   );
 };
