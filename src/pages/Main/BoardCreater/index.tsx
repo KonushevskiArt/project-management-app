@@ -3,6 +3,7 @@ import s from './style.module.scss';
 import AddIcon from '@mui/icons-material/Add';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useCreateBoard } from 'hooks/boards/useCraeteBoard';
+import useOnclickOutside from 'react-cool-onclickoutside';
 
 type Inputs = {
   title: string;
@@ -14,10 +15,12 @@ const BoardCreater = () => {
   const wrapperClasses = isOpen ? `${s.wrapper} ${s.wrapperActive}` : s.wrapper;
   const boardCreater = isOpen ? `${s.boardCreater} ${s.boardCreaterActive}` : s.boardCreater;
   const { mutate, isLoading } = useCreateBoard();
+  const ref = useOnclickOutside(() => setIsOpen(false));
 
   const submitHandler: SubmitHandler<Inputs> = (data) => {
     if (data.title.trim() && isLoading === false) {
       mutate(data.title);
+      setIsOpen(false);
       reset();
     }
   };
@@ -31,16 +34,18 @@ const BoardCreater = () => {
           </button>
         )}
         {isOpen && (
-          <form onSubmit={handleSubmit(submitHandler)}>
+          <form ref={ref} onSubmit={handleSubmit(submitHandler)}>
             <input
               {...register('title')}
               className={s.inputAdd}
               maxLength={120}
               autoFocus={true}
-              onBlur={() => setIsOpen(false)}
               placeholder="Input title of new board"
               type="text"
             />
+            <button type="submit" className={s.createBtn}>
+              create
+            </button>
           </form>
         )}
       </div>

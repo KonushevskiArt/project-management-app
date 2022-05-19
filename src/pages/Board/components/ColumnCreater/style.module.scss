@@ -1,6 +1,7 @@
 .columnCreater {
   position: relative;
   width : 272px;
+  margin-right: 20px;
   background-color: transparent;
 }
 .addColumnBlock {
@@ -28,7 +29,7 @@
   margin-bottom: 5px;
 }
 .triggerAddColumn {
-  width: 100%;
+  width: 272px;
   outline: none;
   border: none;
   padding: 5px;
