@@ -19,21 +19,3 @@
   text-decoration: underline;
   color: var(--text-color-white-hover)
 }
-.link {
-  border-radius: 5px;
-  background: transparent;
-  padding: 5px;
-  border: 1px solid var(--text-color-white);
-  color: var(--text-color-white);
-  transition: color 0.2s, background 0.2s;
-  cursor: pointer;
-  &:hover {
-    color: var(--main-color);
-    background: var(--text-color-white);
-  }
-}
-.wrapper {
-  display: flex;
-  gap: 30px;
-  align-items: center;
-}
