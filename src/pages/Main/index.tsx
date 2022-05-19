@@ -12,9 +12,7 @@ const MyHomePage = () => {
     pathRoutes.board.getAll.absolute(),
     () => BoardService.getAll(),
     {
-      onSuccess: () => {
-        console.log('success');
-      },
+      staleTime: 1000 * 180,
     }
   );
 
@@ -27,7 +25,7 @@ const MyHomePage = () => {
         {data?.length && (
           <div className={s.container}>
             {data?.map(({ title, id }) => (
-              <CardBoard id={id} title={title} key={Date.now() + Math.random() * 1000} />
+              <CardBoard id={id} title={title} key={id} />
             ))}
             <BoardCreater />
           </div>

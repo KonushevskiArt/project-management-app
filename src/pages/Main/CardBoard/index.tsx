@@ -12,7 +12,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useUpdateBoardById } from 'hooks/boards/useUpdateBoard';
 import { useDeleteBoardById } from 'hooks/boards/useDeleteBoard';
-import { useGetBoardById } from 'hooks/boards/useGetBoardById';
 
 interface IProps {
   id: string;
@@ -22,29 +21,24 @@ type Inputs = {
   title: string;
 };
 
-const CardBoard = ({ id }: IProps) => {
+const CardBoard = ({ id, title }: IProps) => {
   const [isEdit, setIsEdit] = useState(false);
-  // const [isLoading, setIsLoading] = useState(false);
-  let cashedTitle = '';
+  const [currentTitle, setCurrentTitle] = useState(title);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const menuClasses = isOpenMenu ? `${s.options} ${s.menuActive}` : s.options;
   const { register, handleSubmit, getValues } = useForm<Inputs>();
   const { mutate: updateMutate, isLoading: isUpdateLoading } = useUpdateBoardById(
     id as string,
-    setIsEdit
+    setIsEdit,
+    setCurrentTitle
   );
   const { mutate: deleteMutate, isLoading: isDeleteLoading } = useDeleteBoardById(id as string);
-  const { isLoading: isFetchLoading, error: fetchError, data } = useGetBoardById(id as string);
   const ref = useOnclickOutside(() => setIsOpenMenu(false));
 
-  if (data?.title) {
-    cashedTitle = data.title;
-  }
-
-  const isLoading = isUpdateLoading || isDeleteLoading || isFetchLoading;
+  const isLoading = isUpdateLoading || isDeleteLoading;
 
   const submitHandler: SubmitHandler<Inputs> = (data) => {
-    if (data.title.trim() && !isLoading && data.title !== cashedTitle) {
+    if (data.title.trim() && !isLoading && data.title !== currentTitle) {
       updateMutate(data.title);
     } else {
       setIsEdit(false);
@@ -63,13 +57,13 @@ const CardBoard = ({ id }: IProps) => {
     <div className={s.card}>
       <>
         <form onSubmit={handleSubmit(submitHandler)}>
-          {!isEdit && <h3 className={s.title}>{data?.title || 'unknown'}</h3>}
+          {!isEdit && <h3 className={s.title}>{currentTitle || 'unknown'}</h3>}
           {isEdit && (
             <input
               {...register('title')}
               autoFocus
               onBlur={() => submitHandler(getValues())}
-              defaultValue={data?.title}
+              defaultValue={currentTitle}
               maxLength={120}
               className={s.editTitle}
               type="text"
@@ -107,7 +101,6 @@ const CardBoard = ({ id }: IProps) => {
         {isLoading ? (
           <CircularProgress sx={{ mt: '15px', color: `var(--text-color-white)` }} size={25} />
         ) : null}
-        {fetchError && <p className={s.error}>Network error...</p>}
       </>
     </div>
   );

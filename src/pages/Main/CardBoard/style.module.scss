@@ -12,8 +12,12 @@
   background: linear-gradient(0deg, var(--main-color-dark) 0%, var(--main-color-light) 100%);
   color: var(--text-color-white);
   box-shadow: 5px 5px 6px -5px rgba(25, 44, 58, 0.69);
-  transition: box-shadow 0.1s;
+  transition: box-shadow 0.1s, transform 0.2s, opacity 0.2s;
+  opacity: 0.9;
   &:hover {
+    opacity: 1;
+    z-index: 1;
+    transform: scale(1.03);
     box-shadow: 5px 5px 19px -5px rgba(13, 24, 32, 0.81);
   }
 }

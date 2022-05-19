@@ -1,13 +1,13 @@
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import { toast, ToastOptions } from 'react-toastify';
 import { pathRoutes } from 'utils/pathRoutes';
 import { BoardService } from 'utils/services/Board.service';
 
 export const useUpdateBoardById = (
   boardId: string,
-  setIsEditBoard: React.Dispatch<React.SetStateAction<boolean>>
+  setIsEditBoard: React.Dispatch<React.SetStateAction<boolean>>,
+  setCurrentTitle: React.Dispatch<React.SetStateAction<string>>
 ) => {
-  const queryClient = useQueryClient();
   const toastOption = {
     position: 'bottom-center',
     hideProgressBar: true,
@@ -23,9 +23,9 @@ export const useUpdateBoardById = (
         console.log(error);
         toast.error("Failed update board's title by network error!", toastOption);
       },
-      onSuccess: () => {
+      onSuccess: (data) => {
         setIsEditBoard(false);
-        queryClient.invalidateQueries(pathRoutes.board.getOneById.absolute(boardId));
+        setCurrentTitle(data.title);
         toast.success("Board's title updated successfuly!", toastOption);
       },
     }
