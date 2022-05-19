@@ -60,6 +60,6 @@ li {
   background-color: var(--main-color);
 }
 .wrapper__box {
-  max-width: 1400px;
+  width: 100%;
   margin: 0 auto;
 }
