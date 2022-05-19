@@ -1,0 +1,10 @@
+.wrapper {
+  position: relative;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}
+.wrapper__box {
+  max-width: 1400px;
+  margin: 0 auto;
+}

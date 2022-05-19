@@ -1,7 +1,6 @@
 import MyHomePage from 'pages/Main';
 import { LogInForm } from 'pages/LogIn';
 import { Routes, Route, Navigate } from 'react-router';
-import { pathRoutes } from 'utils/pathRoutes';
 import { ErrorPage } from 'pages/ErrorPage/ErrorPage';
 import { Header } from 'pages/Header';
 import { WelcomPage } from 'pages/WelcomPage';
@@ -11,12 +10,7 @@ import CreatTask from 'pages/Board/components/CreatTask';
 import TaskContent from 'pages/TaskContent';
 import BoardPage from 'pages/Board';
 import Cookies from 'js-cookie';
-
-export const routesPath = {
-  board: pathRoutes.root,
-  signUp: pathRoutes.auth.signup.relative,
-  signIn: pathRoutes.auth.signin.relative,
-};
+import MainPage from 'pages/Main';
 
 const AppRoutes = () => {
   const appContext = useContext(AppContext);
@@ -37,12 +31,12 @@ const AppRoutes = () => {
     if (Cookies.get('token') || appContext.state.logInSucsess) return <Header />;
     else return <></>;
   }
-  //{Cookies.get('token') && <Header />}
+
   return (
     <>
       <TestHead />
       <Routes>
-        <Route path="/" element={<MyHomePage />} />
+        <Route path="/" element={<MainPage />} />
         <Route path="boards/*">
           <Route path=":boardId/*" element={<BoardPage />}>
             <Route path="columns/*">
@@ -57,7 +51,6 @@ const AppRoutes = () => {
             </Route>
           </Route>
         </Route>
-        {/* <Route path="/boards" element={<Navigate to="/" replace />} /> */}
         <Route path="/signin" element={<ProtectedRoute outlet={<LogInForm />} />} />
         <Route path="/signup" element={<ProtectedRoute outlet={<LogInForm />} />} />
         <Route path="/welcome" element={<WelcomPage />} />
