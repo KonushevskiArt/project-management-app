@@ -1,26 +1,12 @@
-import { AxiosData } from 'pages/LogIn/iterfaces';
 import React, { createContext, Dispatch, ReactNode, useReducer } from 'react';
 
 type UpdateActionBoolean = {
-  type: 'isLoaded' | 'setNotFound' | 'setLogInLogOut' | 'setSingUp';
+  type: 'setLogInSucsess';
   payload: boolean;
 };
 
-type UpdateActionDataForLogIn = {
-  type: 'setRequestData';
-  payload: AxiosData;
-};
-
-type Reset = {
-  type: 'reset';
-};
-
 type ContextState = {
-  signUp: boolean;
-  isLoaded: boolean;
-  notFound: boolean;
-  logInProces: boolean;
-  requestData: AxiosData;
+  logInSucsess: boolean;
 };
 
 type AppContextProviderProps = {
@@ -32,31 +18,16 @@ type ContextType = {
   dispatch: Dispatch<CounterAction>;
 };
 
-type CounterAction = UpdateActionBoolean | UpdateActionDataForLogIn | Reset;
+type CounterAction = UpdateActionBoolean;
 
 const initialState = {
-  signUp: false,
-  logInProces: false,
-  isLoaded: false,
-  notFound: false,
-  requestData: {} as AxiosData,
+  logInSucsess: false,
 };
 
 const reducer = (state: ContextState, action: CounterAction) => {
   switch (action.type) {
-    case 'isLoaded':
-      return { ...state, isLoaded: action.payload };
-    case 'setNotFound':
-      return { ...state, notFound: action.payload };
-    case 'setLogInLogOut':
-      return { ...state, logInProces: action.payload };
-    case 'setRequestData':
-      return { ...state, requestData: action.payload };
-    case 'setSingUp':
-      return { ...state, signUp: action.payload };
-    case 'reset': {
-      return initialState;
-    }
+    case 'setLogInSucsess':
+      return { ...state, logInSucsess: action.payload };
     default:
       return state;
   }
