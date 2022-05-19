@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { pathRoutes } from 'utils/pathRoutes';
-import { IUserResponse, IUser } from '../../interfaces';
+import { IUserResponse, IUserUpdate } from '../../interfaces';
 
 export const UserService = {
   async getAll() {
@@ -11,9 +11,10 @@ export const UserService = {
       .get<IUserResponse>(pathRoutes.user.getOneById.absolute(id))
       .then((data) => data.data);
   },
-  async updateUserById(id: string, user: IUser) {
+  async updateUserById(id: string, newData: IUserUpdate) {
+    console.log(pathRoutes.user.updateOneById.absolute(id));
     return axios
-      .put<IUserResponse>(pathRoutes.user.getOneById.absolute(id), user)
+      .put<IUserUpdate>(pathRoutes.user.updateOneById.absolute(id), newData)
       .then((data) => data.data);
   },
   async deleteUserById(id: string) {

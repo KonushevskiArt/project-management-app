@@ -5,7 +5,7 @@ type Props = {
   children: JSX.Element;
 };
 
-const Lauout = ({ children }: Props) => {
+const Layout = ({ children }: Props) => {
   return (
     <div className={s.wrapper__box}>
       <div className={s.wrapper}>{children}</div>
@@ -13,4 +13,4 @@ const Lauout = ({ children }: Props) => {
   );
 };
 
-export default Lauout;
+export default Layout;

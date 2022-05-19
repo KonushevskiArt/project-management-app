@@ -6,8 +6,9 @@ import CardBoard from './CardBoard';
 import s from './style.module.scss';
 import LinearProgress from '@mui/material/LinearProgress';
 import BoardCreater from './BoardCreater';
+import Layout from 'components/Layout';
 
-const MyHomePage = () => {
+const MainPage = () => {
   const { isLoading, error, data } = useQuery(
     pathRoutes.board.getAll.absolute(),
     () => BoardService.getAll(),
@@ -17,22 +18,24 @@ const MyHomePage = () => {
   );
 
   return (
-    <div className={s.page}>
-      <>
-        <h2 className={s.title}>Main page</h2>
-        {isLoading && <LinearProgress />}
-        {error && <p>loading error...</p>}
-        {data?.length && (
-          <div className={s.container}>
-            {data?.map(({ title, id }) => (
-              <CardBoard id={id} title={title} key={id} />
-            ))}
-            <BoardCreater />
-          </div>
-        )}
-      </>
-    </div>
+    <Layout>
+      <div className={s.page}>
+        <>
+          <h2 className={s.title}>Main page</h2>
+          {isLoading && <LinearProgress />}
+          {error && <p>loading error...</p>}
+          {data?.length && (
+            <div className={s.container}>
+              {data?.map(({ title, id }) => (
+                <CardBoard id={id} title={title} key={id} />
+              ))}
+              <BoardCreater />
+            </div>
+          )}
+        </>
+      </div>
+    </Layout>
   );
 };
 
-export default MyHomePage;
+export default MainPage;

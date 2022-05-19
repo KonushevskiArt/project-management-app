@@ -5,9 +5,11 @@ import { useNavigate } from 'react-router';
 
 export const ErrorPage = () => {
   const navigate = useNavigate();
+
   setTimeout(() => {
-    navigate('/');
-  }, 3000);
+    navigate('/welcome');
+  }, 1500);
+
   return (
     <Container
       maxWidth={false}
