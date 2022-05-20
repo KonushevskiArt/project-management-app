@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router';
 import Button from '@mui/material/Button';
 import Cookies from 'js-cookie';
 import { AppContext } from 'App/context';
+import s from './style.module.scss';
+import HomeIcon from '@mui/icons-material/Home';
+import { Link } from 'react-router-dom';
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -102,6 +105,11 @@ export const Header = () => {
             >
               Create new board
             </Button>
+            <Link to="/">
+              <button className={s.toHome}>
+                <HomeIcon fontSize="large" />
+              </button>
+            </Link>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Typography color={switchColor('ru')}>Ru</Typography>
               <Switch checked={checked} onChange={handleChange} name="lang" color="default" />

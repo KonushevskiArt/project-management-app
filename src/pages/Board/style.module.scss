@@ -1,11 +1,21 @@
 .container {
+  padding-top: 20px;
+  padding-left: 20px;
   display: flex;
+  flex-direction: column;
 }
 .board {
-  padding: 40px;
+  padding: 30px 30px 0 30px;
   background-color: var(--main-color);
   flex-grow: 1;
-  height: 100vh;
-  width: auto;
+  min-height: 80vh;
+  overflow: auto;
+  // width: 95vw;
   color: var(--text-color-white)
+}
+.title {
+  font-size: 24px;
+  font-style: italic;
+  text-decoration: underline;
+  color: var(--text-color-white-hover)
 }
