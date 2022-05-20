@@ -195,7 +195,7 @@ export const LogInForm = () => {
           )}
           <Button variant="contained" color="success" type="submit">
             {LogInProces ? (
-              <CircularProgress color="info" />
+              <CircularProgress color="info" size="24px" />
             ) : location.pathname === '/update' ? (
               'Update'
             ) : (

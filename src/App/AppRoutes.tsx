@@ -1,4 +1,3 @@
-import MyHomePage from 'pages/Main';
 import { LogInForm } from 'pages/LogIn';
 import { Routes, Route, Navigate } from 'react-router';
 import { ErrorPage } from 'pages/ErrorPage/ErrorPage';
