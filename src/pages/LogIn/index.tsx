@@ -109,8 +109,37 @@ export const LogInForm = () => {
     show ? setShow(false) : setShow(true);
   }
 
+  const But = () => {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          width: '100%',
+        }}
+      >
+        <Button
+          variant="contained"
+          color="inherit"
+          sx={{
+            color: 'black',
+            marginTop: '10px',
+            marginRight: '10px',
+          }}
+          onClick={() => {
+            navigate('/welcome');
+          }}
+        >
+          Welcome Page
+        </Button>
+      </Box>
+    );
+  };
+
   return (
     <Box>
+      {location.pathname === '/signin' && <But />}
+      {location.pathname === '/signup' && <But />}
       {location.pathname === '/update' && <Delete />}
       <Box
         sx={{
