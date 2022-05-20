@@ -20,13 +20,11 @@ function App() {
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <ContextProvider>
-          <RequestInterceptor>
-            <div className="wrapper">
-              <div className="wrapper__box">
-                <AppRoutes />
-              </div>
+          <div className="wrapper">
+            <div className="wrapper__box">
+              <AppRoutes />
             </div>
-          </RequestInterceptor>
+          </div>
         </ContextProvider>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>

@@ -28,7 +28,6 @@ const Textarea = ({
         className={styles.textarea}
         placeholder={placeholder}
         defaultValue=""
-        autoFocus
         ref={textareaEl}
         disabled={isDisabled}
       />
