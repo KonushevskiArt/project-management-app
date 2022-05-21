@@ -1,9 +1,5 @@
-import React from 'react';
 import styles from './columns.module.scss';
 import ColumnCreater from '../ColumnCreater';
-import { useQuery } from 'react-query';
-import { pathRoutes } from 'utils/pathRoutes';
-import { ColumnService } from 'utils/services/Column.service';
 import { IColumn } from 'interfaces';
 import Column from 'pages/Board/components/Columns/Column';
 

@@ -16,7 +16,6 @@ const TaskContentHeader = ({ title, columnTitle, onCloseClick }: IProps) => {
 
   const onChange: FormEventHandler<HTMLTextAreaElement> = (e) => {
     setValue((e.target as HTMLTextAreaElement).value);
-    /* console.log((e.target as HTMLTextAreaElement).value); */
   };
   const onBlur: FormEventHandler<HTMLTextAreaElement> = () => {
     setIsTitleEdit(false);
@@ -35,11 +34,9 @@ const TaskContentHeader = ({ title, columnTitle, onCloseClick }: IProps) => {
           {title}
         </h2>
       )}
-
       <p className={styles.subtext}>
         in list <span className={styles.column}>{columnTitle}</span>{' '}
       </p>
-
       <span className={styles.close} onClick={onCloseClick}>
         <CloseIcon className={styles['close-icon']} />
       </span>

@@ -24,7 +24,7 @@ const TaskContent = () => {
     initialData: () => getQueryData(routes.columns.absolute(boardId, columnId)),
   });
 
-  const task = column?.tasks?.find(({ id }: { id: string }) => id === taskId) as ITask | undefined;
+  const task: ITask | undefined = column?.tasks?.find(({ id }: { id: string }) => id === taskId);
 
   const navigate = useNavigate();
   const onCloseClick = () => navigate(`/boards/${boardId}`);
@@ -51,4 +51,3 @@ const TaskContent = () => {
 };
 
 export default TaskContent;
-//queryFn: () => ColumnService.getOneById(columnId, boardId),

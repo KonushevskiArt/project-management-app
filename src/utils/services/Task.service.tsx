@@ -5,6 +5,27 @@ import { Navigate, useNavigate } from 'react-router';
 import { pathRoutes } from 'utils/pathRoutes';
 import { INewTask, ITask, IUpdataTask } from '../../interfaces';
 
+const F = () => {
+  const token = Cookies.get('token') || null;
+
+  console.log('ProtectedRoute');
+  console.log(token);
+  if (!token) {
+    return false;
+  }
+
+  const setHeaders = (config: AxiosRequestConfig<unknown>) => {
+    config.headers = {
+      ...config.headers,
+      Authorization: `Bearer ${token}`,
+    };
+
+    return config;
+  };
+
+  return axios.interceptors.request.use(setHeaders);
+};
+
 export const TaskService = {
   getAll(boardId: string, columnId: string) {
     return axios
@@ -17,10 +38,15 @@ export const TaskService = {
       .then((data) => data.data);
   },
   async create({ boardId, columnId, body }: ICreatTask) {
-    const { data } = await axios.post<ITask>(pathRoutes.task.create.absolute(boardId, columnId), {
-      ...body,
-    });
-    return data;
+    try {
+      const { data } = await axios.post<ITask>(pathRoutes.task.create.absolute(boardId, columnId), {
+        ...body,
+      });
+      return data;
+    } catch (error) {
+      // console.log(error);
+      throw Error('err');
+    }
   },
   async updateOneById(taskId: string, props: IUpdataTask) {
     console.log(pathRoutes.task.getOneById.absolute(props.boardId, props.columnId, taskId));

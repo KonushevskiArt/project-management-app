@@ -18,6 +18,7 @@ export const Request = (reset: UseFormReset<UserData>) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log(' useEffect');
     axios({
       method: appContext.state.requestData.method,
       url: `${baseUrl}${appContext.state.requestData.urlProp}`,

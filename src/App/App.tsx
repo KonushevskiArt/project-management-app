@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import AppRoutes from './AppRoutes';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -22,7 +21,9 @@ function App() {
         <ContextProvider>
           <div className="wrapper">
             <div className="wrapper__box">
-              <AppRoutes />
+              <RequestInterceptor>
+                <AppRoutes />
+              </RequestInterceptor>
             </div>
           </div>
         </ContextProvider>

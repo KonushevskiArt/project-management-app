@@ -8,9 +8,7 @@ interface IProps {
 }
 
 const ColumnHeader = ({ title, boardId, columnId }: IProps) => {
-  const { mutate } = useDeleteColumnById(boardId, columnId);
-
-  const removeColumnHandler = () => mutate();
+  const { removeColumnHandler } = useDeleteColumnById(boardId, columnId);
 
   return (
     <div className={styles.container}>

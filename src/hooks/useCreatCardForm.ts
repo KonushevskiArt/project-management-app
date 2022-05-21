@@ -1,3 +1,4 @@
+import { IColumn } from 'interfaces';
 import { useEffect, useRef } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router';
@@ -40,6 +41,10 @@ const useCreatCardForm = () => {
       textareaEl.current.focus();
     }
   });
+
+  const column = queryClient.getQueryData<IColumn | undefined>(
+    routes.columns.absolute(boardId, columnId)
+  );
 
   const submitValue = async (value: string) => {
     const newTaskBody = await getNewTaskBody({

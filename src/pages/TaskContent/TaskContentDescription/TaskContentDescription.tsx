@@ -1,5 +1,4 @@
 import useTaskDescriptionEdit from 'hooks/useTaskDescriptionEdit';
-import { FormEventHandler, useState } from 'react';
 import { IoMdList as DescriptionIcon } from 'react-icons/io';
 import styles from '../task-content.module.scss';
 import TaskContentDescriptionEdit from './TaskContentDescriptionEdit';

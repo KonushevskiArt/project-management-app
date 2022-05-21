@@ -4,7 +4,8 @@ import { IBoard } from '../../interfaces';
 
 export const BoardService = {
   async getAll() {
-    return axios.get<IBoard[]>(pathRoutes.board.getAll.absolute()).then((data) => data.data);
+    const { data } = await axios.get<IBoard[]>(pathRoutes.board.getAll.absolute());
+    return data;
   },
   async getOneById(id: string) {
     return axios.get<IBoard>(pathRoutes.board.getOneById.absolute(id)).then((data) => data.data);

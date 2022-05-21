@@ -34,7 +34,6 @@ export const LogInForm = () => {
     };
     appContext.dispatch({ type: 'setRequestData', payload: requestData });
     appContext.dispatch({ type: 'setLogInLogOut', payload: true });
-    console.log(requestData);
   }
 
   function checkText() {

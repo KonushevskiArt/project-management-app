@@ -27,7 +27,7 @@ export const getNewTaskBody = async ({
       title,
       description,
       order: getLastOrder(tasks) + 1,
-      userId: 'fc8ea0b3-e7e9-44d7-9e3f-ee23c95116e3',
+      userId: '459afce1-7552-4e06-8e49-c34a54bae33f',
     },
   };
 };

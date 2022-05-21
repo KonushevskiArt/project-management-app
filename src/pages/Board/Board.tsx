@@ -5,13 +5,10 @@ import React from 'react';
 import { useQuery } from 'react-query';
 import { Route, Routes, useParams } from 'react-router';
 import { Link } from 'react-router-dom';
-import { pathRoutes } from 'utils/pathRoutes';
 import { routes } from 'utils/routes';
 import { BoardService } from 'utils/services/Board.service';
 import Columns from './components/Columns';
 import styles from './board.module.scss';
-
-console.log(routes.boards.absolute());
 
 const Board: React.FC = () => {
   const { boardId = '' } = useParams();
