@@ -4,6 +4,7 @@ import { ToastOptions, toast } from 'react-toastify';
 import { pathRoutes } from 'utils/pathRoutes';
 import { ColumnService } from 'utils/services/Column.service';
 import { INewColumn } from 'interfaces';
+import { routes } from 'utils/routes';
 
 export const useCreateColumn = (
   boardId: string,
@@ -29,8 +30,7 @@ export const useCreateColumn = (
       onSuccess: () => {
         setIsAddingColumn(false);
         toast.success('Column created successfuly!', toastOption);
-        // queryClient.invalidateQueries(pathRoutes.column.getAll.absolute(boardId));
-        queryClient.invalidateQueries(pathRoutes.board.getOneById.absolute(boardId));
+        queryClient.invalidateQueries(routes.boards.absolute(boardId));
       },
     }
   );

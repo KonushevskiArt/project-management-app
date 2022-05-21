@@ -1,34 +1,53 @@
-import { ICreateTask } from 'interfaces';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router';
 import { pathRoutes } from 'utils/pathRoutes';
+import { routes } from 'utils/routes';
 import { TaskService } from 'utils/services/Task.service';
+import { getNewTaskBody } from 'utils/tasksService';
+
+export interface IGetBoardById {
+  boardId: string;
+}
+export interface IGetColumnById extends IGetBoardById {
+  columnId: string;
+}
+
+export interface ICreatTask extends IGetColumnById {
+  body: {
+    title: string;
+    order: number;
+    description: string;
+    userId: string;
+  };
+}
+export interface IGetTaskById extends IGetColumnById {
+  taskId: string;
+}
 
 const useCreatCardForm = () => {
-  const textareaEl = useRef(null);
+  const textareaEl = useRef<HTMLTextAreaElement>(null);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { boardId = '', columnId = '' } = useParams();
 
   const { isLoading, isSuccess, isError, mutate } = useMutation({
-    mutationFn: ({ boardId, columnId, body }: ICreateTask) =>
-      TaskService.create(boardId, columnId, body),
-    onSuccess: () => queryClient.invalidateQueries(pathRoutes.task.relative(boardId, columnId)),
+    mutationFn: (props: ICreatTask) => TaskService.create(props),
+    onSuccess: () => queryClient.invalidateQueries(routes.columns.absolute(boardId, columnId)),
+  });
+  useEffect(() => {
+    if (textareaEl && textareaEl.current) {
+      textareaEl.current.focus();
+    }
   });
 
-  const submitValue = (value: string) => {
-    console.log(`submit: ${value}`);
-    mutate({
+  const submitValue = async (value: string) => {
+    const newTaskBody = await getNewTaskBody({
       boardId,
       columnId,
-      body: {
-        title: value,
-        order: 5,
-        description: 'description',
-        userId: '',
-      },
+      title: value,
     });
+    mutate(newTaskBody);
   };
 
   const onSubmit = (event: { preventDefault: () => void }) => {
@@ -36,12 +55,11 @@ const useCreatCardForm = () => {
 
     const textarea: HTMLTextAreaElement | null = textareaEl.current;
     if (textarea) {
-      const value = (textarea as HTMLTextAreaElement).value.trim();
+      const value = textarea.value.trim();
       if (value) {
         submitValue(value);
-        (textarea as HTMLTextAreaElement).value = '';
+        textarea.value = '';
       }
-      (textarea as HTMLTextAreaElement).focus();
     }
   };
 

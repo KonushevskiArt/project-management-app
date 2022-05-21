@@ -11,35 +11,36 @@ import { QueryClient, useQuery, useQueryClient } from 'react-query';
 import { pathRoutes } from 'utils/pathRoutes';
 import { ColumnService } from 'utils/services/Column.service';
 import { ITask } from 'interfaces';
+import { routes } from 'utils/routes';
 
 const TaskContent = () => {
   const { boardId = '', columnId = '', taskId = '' } = useParams();
 
   const { getQueryData } = useQueryClient();
-  console.log(taskId);
+
   const { data: column } = useQuery({
-    queryKey: pathRoutes.column.getOneById.absolute(boardId, columnId),
-    queryFn: () => ColumnService.getOneById(columnId, boardId),
-    initialData: () => getQueryData(['columns', boardId, columnId]),
+    queryKey: routes.columns.absolute(boardId, columnId),
+    queryFn: () => ColumnService.getOneById(boardId, columnId),
+    initialData: () => getQueryData(routes.columns.absolute(boardId, columnId)),
   });
+
+  const task = column?.tasks?.find(({ id }: { id: string }) => id === taskId) as ITask | undefined;
+
   const navigate = useNavigate();
+  const onCloseClick = () => navigate(`/boards/${boardId}`);
 
-  const card = column?.tasks.find(({ id }) => id === taskId) as unknown as ITask;
-  if (!card) return <NotFound />;
-
-  const onCloseClick = () => navigate(`/boards/${card.boardId}`);
-
+  if (!task) return <NotFound />;
   return (
     <Modal handleClickOutside={onCloseClick}>
       <div className={`${styles.wrapper} ${styles.open}`}>
         <TaskContentHeader
           columnTitle={column?.title}
-          title={card.title}
+          title={task.title}
           onCloseClick={onCloseClick}
         />
         <div className={styles.main}>
           <div className={styles.body}>
-            <TaskContentDescription description={card.description} />
+            <TaskContentDescription description={task.description} />
             <TaskContentActivity />
           </div>
           <TaskContentSidebar />
@@ -50,3 +51,4 @@ const TaskContent = () => {
 };
 
 export default TaskContent;
+//queryFn: () => ColumnService.getOneById(columnId, boardId),

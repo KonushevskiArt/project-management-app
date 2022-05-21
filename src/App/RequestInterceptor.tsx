@@ -1,7 +1,6 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie';
-import React from 'react';
-import { useNavigate } from 'react-router';
+import { Navigate, useLocation, useNavigate } from 'react-router';
 import { pathRoutes } from 'utils/pathRoutes';
 
 type Props = {
@@ -10,6 +9,24 @@ type Props = {
 
 const RequestInterceptor = ({ children }: Props) => {
   const navigate = useNavigate();
+  const token = Cookies.get('token') || null;
+  // console.log(children);
+  // console.log('ProtectedRoute');
+  // if (!token) {
+  //   return <Navigate to="/signin" />;
+  // }
+
+  const setHeaders = (config: AxiosRequestConfig<unknown>) => {
+    config.headers = {
+      ...config.headers,
+      Authorization: `Bearer ${token}`,
+    };
+
+    return config;
+  };
+
+  // axios.interceptors.request.use(setHeaders);
+
   axios.interceptors.request.use((config) => {
     const url = config.url as string;
     const innerPath = url.split(pathRoutes.root);
@@ -31,7 +48,7 @@ const RequestInterceptor = ({ children }: Props) => {
     return config;
   });
 
-  return <>{children}</>;
+  return children;
 };
 
 export default RequestInterceptor;

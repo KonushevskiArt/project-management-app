@@ -9,8 +9,6 @@ export const ColumnService = {
       .then((data) => data.data);
   },
   async getOneById(boardId: string, columnId: string) {
-    console.log(boardId, columnId);
-
     return axios
       .get<IColumn>(pathRoutes.column.getOneById.absolute(boardId, columnId))
       .then((data) => data.data);

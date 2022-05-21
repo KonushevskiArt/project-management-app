@@ -2,13 +2,14 @@ import TaskContent from 'pages/TaskContent';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { Route, Routes, useParams } from 'react-router';
-import { pathRoutes } from 'utils/pathRoutes';
+import { routes } from 'utils/routes';
 import { BoardService } from 'utils/services/Board.service';
-import ListOfColumns from './components/ListOfColumns';
+// import ListOfColumns from './components/ListOfColumns';
 import s from './style.module.scss';
 import LinearProgress from '@mui/material/LinearProgress';
+import Columns from './components/Columns';
 
-const BoardPage: React.FC = () => {
+const Board: React.FC = () => {
   const { boardId = '' } = useParams();
 
   const {
@@ -16,7 +17,7 @@ const BoardPage: React.FC = () => {
     error,
     data: board,
   } = useQuery({
-    queryKey: pathRoutes.board.getOneById.absolute(boardId),
+    queryKey: routes.boards.absolute(boardId),
     queryFn: () => BoardService.getOneById(boardId),
   });
 
@@ -29,15 +30,16 @@ const BoardPage: React.FC = () => {
         <>
           <h4 className={s.title}>{board.title}</h4>
           <div className={s.board}>
-            <ListOfColumns columns={board.columns} boardId={boardId} />
+            {/* <ListOfColumns columns={board.columns} boardId={boardId} /> */}
+            {board.columns && <Columns columns={board.columns} boardId={boardId} />}
           </div>
         </>
       )}
       <Routes>
-        <Route path="columns/:columnId/tasks/:taskId/content" element={<TaskContent />} />
+        <Route path={routes.tasks.content.absolute()} element={<TaskContent />} />
       </Routes>
     </div>
   );
 };
 
-export default BoardPage;
+export default Board;

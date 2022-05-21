@@ -2,7 +2,7 @@ import React from 'react';
 import s from './style.module.scss';
 import ColumnCreater from '../ColumnCreater';
 import { IColumn } from 'interfaces';
-import Column from 'pages/Board/components/Column';
+import Column from '../Columns/Column';
 
 interface IProps {
   columns: IColumn[];
@@ -16,7 +16,7 @@ const ListOfColumns = ({ columns, boardId }: IProps) => {
     <ul className={s.columnList}>
       {columns.map((column) => (
         <li key={column.title + Math.random()}>
-          <Column column={column} />
+          <Column column={column} boardId={boardId} />
         </li>
       ))}
       <li>
