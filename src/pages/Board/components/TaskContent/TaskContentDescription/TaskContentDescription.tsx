@@ -10,17 +10,17 @@ interface IProps {
 export const defaultDescription = 'Add a more detailed description...';
 
 const TaskContentDescription = ({ description }: IProps) => {
-  const { value, isEdit, isLoading, handlers } = useTaskDescriptionEdit(
-    description === '_' ? '' : description
+  const { newDescription, isEdit, isLoading, handlers } = useTaskDescriptionEdit(
+    description === ' ' ? '' : description
   );
-
+  console.log(newDescription);
   return (
     <section className={styles.description}>
       <DescriptionIcon className={styles.icon} />
       <h3 className={styles.subtitle}>Description</h3>
       {isEdit ? (
         <TaskContentDescriptionEdit
-          value={value}
+          value={newDescription}
           placeholder={defaultDescription}
           onChange={handlers.onChange}
           onCancelClick={handlers.onCancelClick}
@@ -29,7 +29,7 @@ const TaskContentDescription = ({ description }: IProps) => {
         />
       ) : (
         <div className={styles.description_text} onClick={handlers.onClick}>
-          {description === '_' ? defaultDescription : description}
+          {newDescription === '' ? defaultDescription : description}
         </div>
       )}
     </section>

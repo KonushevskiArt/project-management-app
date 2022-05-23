@@ -29,7 +29,7 @@ const TaskContentDescriptionEdit = ({
       <textarea
         className={styles.edit_form}
         placeholder={placeholder}
-        defaultValue={value}
+        value={value}
         onChange={onChange}
         autoFocus
         ref={textareaEl}
@@ -48,4 +48,3 @@ const TaskContentDescriptionEdit = ({
 };
 
 export default TaskContentDescriptionEdit;
-//'Add a more detailed description...'

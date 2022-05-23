@@ -36,12 +36,12 @@ export interface ITask {
   id: string;
   title: string;
   order: number;
-  done: boolean;
   description: string;
   userId: string;
+  boardId: string;
+  columnId: string;
   files?: IFiles[] | [];
 }
-
 export interface IUpdataTask {
   title: string;
   order: number;
@@ -83,5 +83,4 @@ export interface ICreateTask {
 
 export interface INewColumn {
   title: string;
-  order: number;
 }

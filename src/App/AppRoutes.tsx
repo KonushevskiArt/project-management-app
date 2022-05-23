@@ -4,7 +4,7 @@ import { Routes, Route, Navigate } from 'react-router';
 import { pathRoutes } from 'utils/pathRoutes';
 import { ErrorPage } from 'pages/ErrorPage/ErrorPage';
 import CreatTask from 'pages/Board/components/CreatTask';
-import TaskContent from 'pages/TaskContent';
+import TaskContent from 'pages/Board/components/TaskContent';
 import Board from 'pages/Board';
 import { routes } from 'utils/routes';
 

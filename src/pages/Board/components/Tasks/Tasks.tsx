@@ -1,9 +1,4 @@
 import { ITask } from 'interfaces';
-import { memo } from 'react';
-import { useQuery } from 'react-query';
-import { useParams } from 'react-router';
-import { pathRoutes } from 'utils/pathRoutes';
-import { TaskService } from 'utils/services/Task.service';
 import Task from './Task';
 import styles from './tasks.module.scss';
 

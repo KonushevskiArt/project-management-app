@@ -1,14 +1,11 @@
 import CreatTask from 'pages/Board/components/CreatTask';
-import { useDeleteColumnById } from 'hooks/columns/useDeleteColumnById';
 import { useQuery } from 'react-query';
 import { pathRoutes } from 'utils/pathRoutes';
 import { ColumnService } from 'utils/services/Column.service';
-
 import styles from './column.module.scss';
 import { IColumn } from 'interfaces';
 import Tasks from '../../Tasks';
 import ColumnHeader from './ColumnHeader';
-import { routes } from 'utils/routes';
 
 interface IProps {
   column: IColumn;
@@ -16,7 +13,7 @@ interface IProps {
 }
 const Column = ({ column: initialColumn, boardId }: IProps) => {
   const { error, data: column } = useQuery({
-    queryKey: routes.columns.absolute(boardId, initialColumn.id),
+    queryKey: pathRoutes.columns.getOneById.absolute(boardId, initialColumn.id),
     queryFn: () => ColumnService.getOneById(boardId, initialColumn.id),
     initialData: () => initialColumn,
   });

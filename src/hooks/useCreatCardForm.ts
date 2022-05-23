@@ -1,9 +1,8 @@
-import { IColumn } from 'interfaces';
 import { useEffect, useRef } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router';
+import { toast, ToastOptions } from 'react-toastify';
 import { pathRoutes } from 'utils/pathRoutes';
-import { routes } from 'utils/routes';
 import { TaskService } from 'utils/services/Task.service';
 import { getNewTaskBody } from 'utils/tasksService';
 
@@ -17,7 +16,6 @@ export interface IGetColumnById extends IGetBoardById {
 export interface ICreatTask extends IGetColumnById {
   body: {
     title: string;
-    order: number;
     description: string;
     userId: string;
   };
@@ -26,25 +24,32 @@ export interface IGetTaskById extends IGetColumnById {
   taskId: string;
 }
 
+const toastOption: ToastOptions = {
+  position: 'bottom-right',
+  hideProgressBar: true,
+  autoClose: 2000,
+};
+
 const useCreatCardForm = () => {
   const textareaEl = useRef<HTMLTextAreaElement>(null);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { boardId = '', columnId = '' } = useParams();
 
-  const { isLoading, isSuccess, isError, mutate } = useMutation({
+  const { isLoading, mutate } = useMutation({
     mutationFn: (props: ICreatTask) => TaskService.create(props),
-    onSuccess: () => queryClient.invalidateQueries(routes.columns.absolute(boardId, columnId)),
+    onSuccess: () => {
+      queryClient.invalidateQueries(pathRoutes.columns.getOneById.absolute(boardId, columnId));
+    },
+    onError: () => {
+      toast.error('Failed to create task!', toastOption);
+    },
   });
   useEffect(() => {
     if (textareaEl && textareaEl.current) {
       textareaEl.current.focus();
     }
   });
-
-  const column = queryClient.getQueryData<IColumn | undefined>(
-    routes.columns.absolute(boardId, columnId)
-  );
 
   const submitValue = async (value: string) => {
     const newTaskBody = await getNewTaskBody({

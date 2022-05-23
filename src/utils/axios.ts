@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router';
 import { UserData } from 'pages/LogIn/iterfaces';
 import { UseFormReset } from 'react-hook-form';
+import { pathRoutes } from './pathRoutes';
 
 const checkToken = () => {
   if (!Cookies.get('token')) return '';
@@ -13,12 +14,13 @@ const checkToken = () => {
 };
 
 export const Request = (reset: UseFormReset<UserData>) => {
-  const baseUrl = 'https://pure-cove-88107.herokuapp.com';
+  console.log('Request');
+  console.log(pathRoutes.root);
+  const baseUrl = pathRoutes.root;
   const appContext = useContext(AppContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(' useEffect');
     axios({
       method: appContext.state.requestData.method,
       url: `${baseUrl}${appContext.state.requestData.urlProp}`,

@@ -1,6 +1,6 @@
 import Loader from 'components/Loader';
 import NotFound from 'pages/NotFound';
-import TaskContent from 'pages/TaskContent';
+import TaskContent from 'pages/Board/components/TaskContent';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { Route, Routes, useParams } from 'react-router';
@@ -9,6 +9,7 @@ import { routes } from 'utils/routes';
 import { BoardService } from 'utils/services/Board.service';
 import Columns from './components/Columns';
 import styles from './board.module.scss';
+import { pathRoutes } from 'utils/pathRoutes';
 
 const Board: React.FC = () => {
   const { boardId = '' } = useParams();
@@ -18,7 +19,7 @@ const Board: React.FC = () => {
     error,
     data: board,
   } = useQuery({
-    queryKey: routes.boards.absolute(boardId),
+    queryKey: pathRoutes.board.getOneById.absolute(boardId),
     queryFn: () => BoardService.getOneById(boardId),
   });
 
@@ -31,9 +32,6 @@ const Board: React.FC = () => {
       <div className={styles.content}>
         {board?.columns && <Columns columns={board.columns} boardId={boardId} />}
       </div>
-      <Routes>
-        <Route path={routes.tasks.content.absolute()} element={<TaskContent />} />
-      </Routes>
     </div>
   );
 };

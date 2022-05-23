@@ -10,23 +10,22 @@ import { QueryClient, useQuery, useQueryClient } from 'react-query';
 
 import { pathRoutes } from 'utils/pathRoutes';
 import { ColumnService } from 'utils/services/Column.service';
-import { ITask } from 'interfaces';
-import { routes } from 'utils/routes';
+import { IColumn, ITask } from 'interfaces';
 
 const TaskContent = () => {
   const { boardId = '', columnId = '', taskId = '' } = useParams();
 
-  const { getQueryData } = useQueryClient();
-
-  const { data: column } = useQuery({
-    queryKey: routes.columns.absolute(boardId, columnId),
-    queryFn: () => ColumnService.getOneById(boardId, columnId),
-    initialData: () => getQueryData(routes.columns.absolute(boardId, columnId)),
-  });
-
-  const task: ITask | undefined = column?.tasks?.find(({ id }: { id: string }) => id === taskId);
-
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
+
+  const column: IColumn | undefined = queryClient.getQueryData(
+    pathRoutes.columns.getOneById.absolute(boardId, columnId)
+  );
+
+  const task: ITask | undefined = queryClient.getQueryData(
+    pathRoutes.task.getOneById.absolute(boardId, columnId, taskId)
+  );
+
   const onCloseClick = () => navigate(`/boards/${boardId}`);
 
   if (!task) return <NotFound />;

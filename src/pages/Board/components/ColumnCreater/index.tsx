@@ -28,7 +28,7 @@ const ColumnCreater = ({ lastColumnOrder }: IProps) => {
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     if (data.name.trim() && isLoading === false) {
-      mutate({ title: data.name, order: currentOrder + 1 });
+      mutate({ title: data.name });
       setCurrentOrder(currentOrder + 1);
       reset();
     }

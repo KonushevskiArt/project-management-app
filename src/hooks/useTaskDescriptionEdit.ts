@@ -2,27 +2,38 @@ import { IColumn, ITask, IUpdataTask } from 'interfaces';
 import { FormEventHandler, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useParams } from 'react-router';
-import { routes } from 'utils/routes';
+import { toast, ToastOptions } from 'react-toastify';
+import { pathRoutes } from 'utils/pathRoutes';
 import { TaskService } from 'utils/services/Task.service';
+
+const toastOption: ToastOptions = {
+  position: 'bottom-right',
+  hideProgressBar: true,
+  autoClose: 2000,
+};
 
 export default function (description: string) {
   const { boardId = '', columnId = '', taskId = '' } = useParams();
   const [isEdit, setIsEdit] = useState(false);
 
-  const [value, setValue] = useState(description);
+  const [newDescription, setValue] = useState(description);
 
   const queryClient = useQueryClient();
 
   const column = queryClient.getQueryData<IColumn | undefined>(
-    routes.columns.absolute(boardId, columnId)
+    pathRoutes.columns.getOneById.absolute(boardId, columnId)
   );
   const task = column?.tasks?.find(({ id }: { id: string }) => id === taskId) as ITask | undefined;
 
-  const { isLoading, isSuccess, isError, mutate } = useMutation({
+  const { isLoading, mutate } = useMutation({
     mutationFn: (props: IUpdataTask) => TaskService.updateOneById(taskId, props),
     onSuccess: () => {
       setIsEdit(false);
-      queryClient.invalidateQueries(routes.columns.absolute(boardId, columnId));
+      setValue(newDescription);
+      queryClient.invalidateQueries(pathRoutes.task.getOneById.absolute(boardId, columnId, taskId));
+    },
+    onError: () => {
+      toast.error('Failed to edit description!', toastOption);
     },
   });
 
@@ -35,25 +46,24 @@ export default function (description: string) {
     setValue(description);
     setIsEdit(false);
   };
+
   const onSaveClick = () => {
-    if (!value.trim()) {
-      return;
-    }
-    if (task) {
+    setValue(newDescription.trim());
+    if (task && newDescription) {
       mutate({
         title: task.title,
         order: task.order,
-        description: value.trim(),
+        description: newDescription,
         userId: task.userId,
         boardId,
         columnId,
       });
     }
-    setValue(value.trim());
+    if (!newDescription) setIsEdit(false);
   };
 
   return {
-    value,
+    newDescription,
     isEdit,
     isLoading,
     handlers: {
