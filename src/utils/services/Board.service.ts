@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { pathRoutes } from 'utils/pathRoutes';
-import { IBoard } from '../../interfaces';
+import { IBoard, IColumn } from '../../interfaces';
 
 export const BoardService = {
   async getAll() {
@@ -14,9 +14,14 @@ export const BoardService = {
       .post<IBoard>(pathRoutes.board.create.absolute(), { title })
       .then((data) => data.data);
   },
-  async updateOneById(id: string, title: string) {
+  async updateTitleOneById(id: string, title: string) {
     return axios
       .put<IBoard>(pathRoutes.board.getOneById.absolute(id), { title })
+      .then((data) => data.data);
+  },
+  async updateColumnsOneById(id: string, columns: IColumn[]) {
+    return axios
+      .put<IBoard>(pathRoutes.board.getOneById.absolute(id), { columns: columns })
       .then((data) => data.data);
   },
   async deleteOneById(id: string) {

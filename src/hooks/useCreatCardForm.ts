@@ -33,7 +33,7 @@ const useCreatCardForm = () => {
 
   const { isLoading, isSuccess, isError, mutate } = useMutation({
     mutationFn: (props: ICreatTask) => TaskService.create(props),
-    onSuccess: () => queryClient.invalidateQueries(routes.columns.absolute(boardId, columnId)),
+    onSuccess: () => queryClient.invalidateQueries(routes.boards.absolute(boardId)),
   });
   useEffect(() => {
     if (textareaEl && textareaEl.current) {

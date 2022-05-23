@@ -2,28 +2,34 @@
   background-color: #fff;
   border-radius: 3px;
   box-shadow: 0 1px 0 #091e4240;
-  cursor: pointer;
-  display: block;
   margin-bottom: 8px;
-
-  position: relative;
-
-  z-index: 0;
+  width: 252px;
   color: var(--text-color-gray);
-  transition: all 0.3s ease 0s;
+  transition: background-color 0.3s ease 0s;
+  cursor: grab;
   &:hover {
     background-color: #f4f5f7;
     .link {
       color: var(--text-color-dark);
     }
   }
+  & .dragging {
+    cursor: dragging;
+  }
+
 }
 .link {
-  display: block;
-  max-width: 300px;
   line-height: 32px;
   text-decoration: none;
   color: var(--text-color-gray);
-  transition: all 0.3s ease 0s;
+  transition: color 0.3s ease 0s;
   padding: 0px 8px;
+
+}
+.dragging {
+  background-color: var(--column-background);
+  border: 1px solid var(--main-color-light-hover);
+  & > span {
+    opacity: 0;
+  }
 }

@@ -1,4 +1,4 @@
-import { IColumn, ITask, IUpdataTask } from 'interfaces';
+import { IColumn, ITask, IUpdatedTask } from 'interfaces';
 import { FormEventHandler, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useParams } from 'react-router';
@@ -19,7 +19,8 @@ export default function (description: string) {
   const task = column?.tasks?.find(({ id }: { id: string }) => id === taskId) as ITask | undefined;
 
   const { isLoading, isSuccess, isError, mutate } = useMutation({
-    mutationFn: (props: IUpdataTask) => TaskService.updateOneById(taskId, props),
+    mutationFn: (props: IUpdatedTask) =>
+      TaskService.updateOneById(boardId, columnId, taskId, props),
     onSuccess: () => {
       setIsEdit(false);
       queryClient.invalidateQueries(routes.columns.absolute(boardId, columnId));

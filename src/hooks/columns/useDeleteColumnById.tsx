@@ -22,7 +22,7 @@ export const useDeleteColumnById = (boardId: string, columnId: string) => {
       },
       onSuccess: () => {
         toast.success('Column deleted successfuly!', toastOption);
-        queryClient.invalidateQueries(routes.boards.absolute(boardId));
+        queryClient.invalidateQueries(pathRoutes.board.getOneById.absolute(boardId));
       },
     }
   );

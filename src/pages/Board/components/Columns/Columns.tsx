@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styles from './columns.module.scss';
 import ColumnCreater from '../ColumnCreater';
 import { IColumn } from 'interfaces';
@@ -14,8 +14,8 @@ const Columns = ({ columns, boardId }: IProps) => {
 
   return (
     <div className={styles.container}>
-      {columns.map((column: IColumn) => (
-        <Column key={column.id} column={column} boardId={boardId} />
+      {columns.map((column: IColumn, columnIdx: number) => (
+        <Column key={column.id} column={column} boardId={boardId} columnIdx={columnIdx} />
       ))}
       <ColumnCreater lastColumnOrder={lastColumnOrder} />
     </div>

@@ -12,7 +12,7 @@ const queryClient = new QueryClient({
 });
 
 import { ContextProvider } from './context';
-import RequestInterceptor from './RequestInterceptor';
+import RequestInterceptor from '../utils/RequestInterceptor';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
 function App() {

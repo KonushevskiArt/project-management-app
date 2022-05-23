@@ -10,7 +10,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useUpdateBoardById } from 'hooks/boards/useUpdateBoard';
+import { useUpdateTitleBoardById } from 'hooks/boards/useUpdateTitleBoard';
 import { useDeleteBoardById } from 'hooks/boards/useDeleteBoard';
 
 interface IProps {
@@ -27,7 +27,7 @@ const CardBoard = ({ id, title }: IProps) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const menuClasses = isOpenMenu ? `${s.options} ${s.menuActive}` : s.options;
   const { register, handleSubmit, getValues } = useForm<Inputs>();
-  const { mutate: updateMutate, isLoading: isUpdateLoading } = useUpdateBoardById(
+  const { mutate: updateMutate, isLoading: isUpdateLoading } = useUpdateTitleBoardById(
     id as string,
     setIsEdit,
     setCurrentTitle

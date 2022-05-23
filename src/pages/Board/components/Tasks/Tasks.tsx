@@ -5,14 +5,15 @@ import styles from './tasks.module.scss';
 interface IProps {
   tasks: ITask[];
   columnId: string;
+  columnIdx: number;
 }
 
-const Tasks = ({ tasks, columnId }: IProps) => (
-  <ul className={styles.list}>
-    {tasks.map((task: ITask) => (
-      <Task key={task.id} task={task} columnId={columnId} />
+const Tasks = ({ tasks, columnId, columnIdx }: IProps) => (
+  <div className={styles.list}>
+    {tasks.map((task: ITask, taskIdx: number) => (
+      <Task key={task.id} task={task} columnId={columnId} columnIdx={columnIdx} taskIdx={taskIdx} />
     ))}
-  </ul>
+  </div>
 );
 
 export default Tasks;

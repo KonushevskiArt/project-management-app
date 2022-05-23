@@ -48,7 +48,7 @@ export interface ITask {
   files?: IFiles[] | [];
 }
 
-export interface IUpdataTask {
+export interface IUpdatedTask {
   title: string;
   order: number;
   description: string;
@@ -61,6 +61,10 @@ export interface IBoard {
   columns?: IColumn[] | [];
   id: string;
   title: string;
+}
+export interface IUpdatedBoardParams {
+  columns?: IColumn[];
+  title?: string;
 }
 
 export interface IColumn {
@@ -90,4 +94,9 @@ export interface ICreateTask {
 export interface INewColumn {
   title: string;
   order: number;
+}
+
+export interface IDragItemParams {
+  columnIdx: number;
+  taskIdx: number;
 }

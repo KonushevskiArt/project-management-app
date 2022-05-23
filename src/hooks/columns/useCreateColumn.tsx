@@ -30,7 +30,7 @@ export const useCreateColumn = (
       onSuccess: () => {
         setIsAddingColumn(false);
         toast.success('Column created successfuly!', toastOption);
-        queryClient.invalidateQueries(routes.boards.absolute(boardId));
+        queryClient.invalidateQueries(pathRoutes.board.getOneById.absolute(boardId));
       },
     }
   );
