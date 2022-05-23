@@ -8,6 +8,7 @@ import { AppContext } from 'App/context';
 import s from './style.module.scss';
 import HomeIcon from '@mui/icons-material/Home';
 import { Link } from 'react-router-dom';
+import LanguageSwitcher from 'components/LanguageSwitcher';
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -72,6 +73,7 @@ export const Header = () => {
           top: 0,
         }}
       >
+        <LanguageSwitcher />
         {Cookies.get('token') && (
           <Box sx={{ display: 'flex' }}>
             <Button
@@ -110,11 +112,11 @@ export const Header = () => {
                 <HomeIcon fontSize="large" />
               </button>
             </Link>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            {/*  <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Typography color={switchColor('ru')}>Ru</Typography>
               <Switch checked={checked} onChange={handleChange} name="lang" color="default" />
               <Typography color={switchColor('en')}>En</Typography>
-            </Box>
+            </Box> */}
           </Box>
         )}
       </Container>
