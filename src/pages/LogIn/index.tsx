@@ -43,6 +43,7 @@ export const LogInForm = () => {
   const [notFound, setNotFound] = useState(false);
   const [LogInProces, setLogInProces] = useState(false);
   const [userIsExist, setUserIsExist] = useState(false);
+  const [height, setHeight] = useState('calc(100vh - 110px)');
 
   function checkUser(data: IUser | IUserSignIn | IUserUpdate) {
     setLogInProces(true);
@@ -104,13 +105,46 @@ export const LogInForm = () => {
     if (location.pathname === '/signin') return 'Sign In ';
     if (location.pathname === '/signup') return 'Sign Up ';
   }
-
+  function chechHeight() {
+    if (location.pathname === '/signin') return 'calc(100vh - 75px)';
+    if (location.pathname === '/signup') return 'calc(100vh - 75px)';
+    if (location.pathname === '/update') return 'calc(100vh - 135px)';
+  }
   function showHidePassord() {
     show ? setShow(false) : setShow(true);
   }
 
+  const But = () => {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          width: '100%',
+        }}
+      >
+        <Button
+          variant="contained"
+          color="inherit"
+          sx={{
+            color: 'black',
+            marginTop: '10px',
+            marginRight: '10px',
+          }}
+          onClick={() => {
+            navigate('/welcome');
+          }}
+        >
+          Welcome Page
+        </Button>
+      </Box>
+    );
+  };
+
   return (
-    <Box>
+    <Box height={chechHeight()}>
+      {location.pathname === '/signin' && <But />}
+      {location.pathname === '/signup' && <But />}
       {location.pathname === '/update' && <Delete />}
       <Box
         sx={{
@@ -195,7 +229,7 @@ export const LogInForm = () => {
           )}
           <Button variant="contained" color="success" type="submit">
             {LogInProces ? (
-              <CircularProgress color="info" />
+              <CircularProgress color="info" size="24px" />
             ) : location.pathname === '/update' ? (
               'Update'
             ) : (
