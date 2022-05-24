@@ -10,6 +10,7 @@ import TaskContent from 'pages/TaskContent';
 import BoardPage from 'pages/Board';
 import Cookies from 'js-cookie';
 import MainPage from 'pages/Main';
+import { Footer } from 'pages/Footer/footer';
 
 const AppRoutes = () => {
   const appContext = useContext(AppContext);
@@ -26,14 +27,14 @@ const AppRoutes = () => {
     if (Cookies.get('token') || appContext.state.logInSucsess) return <LogInForm />;
     else return <Navigate to="errorPage" replace />;
   }
-  function TestHead() {
+  function PrivateHeader() {
     if (Cookies.get('token') || appContext.state.logInSucsess) return <Header />;
     else return <></>;
   }
-
+  console.log('dad2212');
   return (
     <>
-      <TestHead />
+      <PrivateHeader />
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="boards/*">
@@ -57,6 +58,7 @@ const AppRoutes = () => {
         <Route path="/errorPage/*" element={<ErrorPage />} />
         <Route path="/*" element={<Navigate to="/errorPage" replace />} />
       </Routes>
+      <Footer />
     </>
   );
 };

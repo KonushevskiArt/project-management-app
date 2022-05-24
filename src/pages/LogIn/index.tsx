@@ -43,6 +43,7 @@ export const LogInForm = () => {
   const [notFound, setNotFound] = useState(false);
   const [LogInProces, setLogInProces] = useState(false);
   const [userIsExist, setUserIsExist] = useState(false);
+  const [height, setHeight] = useState('calc(100vh - 110px)');
 
   function checkUser(data: IUser | IUserSignIn | IUserUpdate) {
     setLogInProces(true);
@@ -104,7 +105,11 @@ export const LogInForm = () => {
     if (location.pathname === '/signin') return 'Sign In ';
     if (location.pathname === '/signup') return 'Sign Up ';
   }
-
+  function chechHeight() {
+    if (location.pathname === '/signin') return 'calc(100vh - 75px)';
+    if (location.pathname === '/signup') return 'calc(100vh - 75px)';
+    if (location.pathname === '/update') return 'calc(100vh - 135px)';
+  }
   function showHidePassord() {
     show ? setShow(false) : setShow(true);
   }
@@ -137,7 +142,7 @@ export const LogInForm = () => {
   };
 
   return (
-    <Box>
+    <Box height={chechHeight()}>
       {location.pathname === '/signin' && <But />}
       {location.pathname === '/signup' && <But />}
       {location.pathname === '/update' && <Delete />}

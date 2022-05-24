@@ -71,7 +71,6 @@ export const WelcomPage = () => {
     <Container
       maxWidth={false}
       sx={{
-        height: '50px',
         width: '100%',
         display: 'flex',
         alignItems: 'center',
