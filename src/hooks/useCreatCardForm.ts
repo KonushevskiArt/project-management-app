@@ -57,6 +57,7 @@ const useCreatCardForm = () => {
       columnId,
       title: value,
     });
+
     mutate(newTaskBody);
   };
 

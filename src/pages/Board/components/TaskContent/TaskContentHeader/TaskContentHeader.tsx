@@ -1,4 +1,5 @@
-import { ITask, IUpdataTask } from 'interfaces';
+import { useLanguage } from 'hooks/useLanguage';
+import { ITask, ITEXT, IUpdataTask } from 'interfaces';
 import { FormEventHandler, useState } from 'react';
 import { AiFillCreditCard as TitleIcon } from 'react-icons/ai';
 import { IoMdClose as CloseIcon } from 'react-icons/io';
@@ -8,6 +9,13 @@ import { pathRoutes } from 'utils/pathRoutes';
 import { TaskService } from 'utils/services/Task.service';
 import styles from '../task-content.module.scss';
 import TaskTitleEdit from './TaskTitleEdit';
+
+const TEXT_TASK_CONTENT_HEADER: ITEXT = {
+  inList: {
+    en: 'in list',
+    ru: 'в колонке',
+  },
+};
 
 interface IProps {
   title: string;
@@ -26,6 +34,7 @@ const TaskContentHeader = ({ title, columnTitle, onCloseClick }: IProps) => {
       queryClient.invalidateQueries(pathRoutes.task.getOneById.absolute(boardId, columnId, taskId));
     },
   });
+  const lang = useLanguage();
   const task = queryClient.getQueryData<ITask | undefined>(
     pathRoutes.task.getOneById.absolute(boardId, columnId, taskId)
   );
@@ -61,7 +70,7 @@ const TaskContentHeader = ({ title, columnTitle, onCloseClick }: IProps) => {
         </h2>
       )}
       <p className={styles.subtext}>
-        in list <span className={styles.column}>{columnTitle}</span>{' '}
+        {TEXT_TASK_CONTENT_HEADER.inList[lang]} <span className={styles.column}>{columnTitle}</span>{' '}
       </p>
       <span className={styles.close} onClick={onCloseClick}>
         <CloseIcon className={styles['close-icon']} />

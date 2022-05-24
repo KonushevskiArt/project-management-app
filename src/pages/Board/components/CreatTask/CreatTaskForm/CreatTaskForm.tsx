@@ -1,13 +1,22 @@
 import useCreatCardForm from 'hooks/useCreatCardForm';
 import Textarea from 'components/Textarea';
+import { ITEXT } from 'interfaces';
+import { useLanguage } from 'hooks/useLanguage';
 
-const TEXT_CREAT_CARD_FORM = {
-  placeholder: 'Enter a title for this card…',
-  addCardButton: 'Add card',
+const TEXT_CREAT_CARD_FORM: ITEXT = {
+  placeholder: {
+    en: 'Enter a title for this card…',
+    ru: 'Ввести заголовок для этой карточки',
+  },
+  button: {
+    en: 'Add card',
+    ru: 'Добавить карточку',
+  },
 };
 
 const CreatCardForm = () => {
   const { handlers, textareaEl, isDisabled } = useCreatCardForm();
+  const lang = useLanguage();
 
   return (
     <Textarea
@@ -15,8 +24,8 @@ const CreatCardForm = () => {
       onKeyDown={handlers.onKeyDown}
       onCloseClick={handlers.onCloseClick}
       textareaEl={textareaEl}
-      buttonTitle={TEXT_CREAT_CARD_FORM.addCardButton}
-      placeholder={TEXT_CREAT_CARD_FORM.placeholder}
+      buttonTitle={TEXT_CREAT_CARD_FORM.button[lang]}
+      placeholder={TEXT_CREAT_CARD_FORM.placeholder[lang]}
       isDisabled={isDisabled}
     />
   );

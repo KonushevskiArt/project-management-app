@@ -49,17 +49,16 @@ export default function (description: string) {
 
   const onSaveClick = () => {
     setValue(newDescription.trim());
-    if (task && newDescription) {
+    if (task) {
       mutate({
         title: task.title,
         order: task.order,
-        description: newDescription,
+        description: newDescription || ' ',
         userId: task.userId,
         boardId,
         columnId,
       });
     }
-    if (!newDescription) setIsEdit(false);
   };
 
   return {

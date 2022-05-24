@@ -6,10 +6,8 @@ import styles from './task-content.module.scss';
 import NotFound from 'pages/NotFound';
 import Modal from 'components/Modal';
 import { useNavigate, useParams } from 'react-router';
-import { QueryClient, useQuery, useQueryClient } from 'react-query';
-
+import { useQueryClient } from 'react-query';
 import { pathRoutes } from 'utils/pathRoutes';
-import { ColumnService } from 'utils/services/Column.service';
 import { IColumn, ITask } from 'interfaces';
 
 const TaskContent = () => {
@@ -40,7 +38,6 @@ const TaskContent = () => {
         <div className={styles.main}>
           <div className={styles.body}>
             <TaskContentDescription description={task.description} />
-            <TaskContentActivity />
           </div>
           <TaskContentSidebar />
         </div>

@@ -8,17 +8,13 @@ interface IProps {
   boardId: string;
 }
 
-const Columns = ({ columns, boardId }: IProps) => {
-  const lastColumnOrder = columns.length > 0 ? columns[columns.length - 1].order : 1;
-
-  return (
-    <div className={styles.container}>
-      {columns.map((column: IColumn) => (
-        <Column key={column.id} column={column} boardId={boardId} />
-      ))}
-      <ColumnCreater lastColumnOrder={lastColumnOrder} />
-    </div>
-  );
-};
+const Columns = ({ columns, boardId }: IProps) => (
+  <div className={styles.container}>
+    {columns.map((column: IColumn) => (
+      <Column key={column.id} column={column} boardId={boardId} />
+    ))}
+    <ColumnCreater />
+  </div>
+);
 
 export default Columns;

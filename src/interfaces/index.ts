@@ -23,16 +23,6 @@ export interface ISignInResponse {
   token: string;
 }
 
-/* export interface ITask {
-  title: string;
-  order: number;
-  description: string;
-  userId: string;
-  boardId: string;
-  columnId: string;
-  id: string;
-} */
-
 export interface IFiles {
   filename: string;
   fileSize: number;
@@ -89,4 +79,12 @@ export interface ICreateTask {
 
 export interface INewColumn {
   title: string;
+}
+
+interface ILANG {
+  [key: string]: string;
+}
+
+export interface ITEXT {
+  [key: string]: ILANG;
 }

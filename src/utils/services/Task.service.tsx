@@ -49,8 +49,6 @@ export const TaskService = {
     }
   },
   async updateOneById(taskId: string, props: IUpdataTask) {
-    console.log(pathRoutes.task.getOneById.absolute(props.boardId, props.columnId, taskId));
-    console.log(props);
     const { data } = await axios.put<ITask>(
       pathRoutes.task.getOneById.absolute(props.boardId, props.columnId, taskId),
       {
