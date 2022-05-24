@@ -3,9 +3,3 @@ export interface UserData {
   login: string;
   password: string;
 }
-
-export interface AxiosData {
-  method: string;
-  urlProp: string;
-  data?: UserData;
-}

@@ -31,7 +31,7 @@ const AppRoutes = () => {
     if (Cookies.get('token') || appContext.state.logInSucsess) return <Header />;
     else return <></>;
   }
-  console.log('dad2212');
+
   return (
     <>
       <PrivateHeader />

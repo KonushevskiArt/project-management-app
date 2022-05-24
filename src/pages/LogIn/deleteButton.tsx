@@ -7,12 +7,26 @@ import { UserService } from 'utils/services/User.service';
 import { notify } from '.';
 import { AppContext } from 'App/context';
 import './style.css';
+import { useLanguage } from 'hooks/useLanguage';
+import { ITEXT } from 'pages/Main';
+
+const TEXT_MAIN_PAGE: Readonly<ITEXT> = {
+  text: {
+    en: 'Are you sure you want to delete the user?',
+    ru: 'Вы уверены что хотите удалить пользователя?',
+  },
+  button: {
+    en: 'Delete User',
+    ru: 'Удалить пользователя',
+  },
+};
 
 export const Delete = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const appContext = useContext(AppContext);
   const [progress, setProgress] = useState(false);
+  const lang = useLanguage();
 
   const deleteUser = () => {
     setProgress(true);
@@ -46,7 +60,7 @@ export const Delete = () => {
             setIsOpen(true);
           }}
         >
-          Delete User
+          {TEXT_MAIN_PAGE.button[lang]}
         </Button>
       </Box>
       {isOpen && (
@@ -91,10 +105,14 @@ export const Delete = () => {
                   textAlign="center"
                   sx={{ marginBottom: '10px', maxWidth: '75%' }}
                 >
-                  Are you sure you want to delete the user?
+                  {TEXT_MAIN_PAGE.text[lang]}
                 </Typography>
                 <Button variant="contained" color="error" onClick={deleteUser}>
-                  {progress ? <CircularProgress color="info" /> : 'Delete'}
+                  {progress ? (
+                    <CircularProgress color="info" />
+                  ) : (
+                    TEXT_MAIN_PAGE.button[lang].split(' ')[0]
+                  )}
                 </Button>
               </Box>
             </div>
