@@ -6,6 +6,8 @@
   --main-color-light-hover: #4c94bd;
   --main-color-dark: #0066a0;
 
+  --header-color: #3f51b5;
+
   --column-background: #ebecf0;
   --task-background: #fff;
   --task-content-background: #f4f5f7;
@@ -14,6 +16,9 @@
   --error-color: rgb(223, 59, 59);
 
   --text-color-white: #fff;
+  --text-color-title: rgb(220, 223, 245);
+  --text-color-white-hover: rgb(220, 223, 245);
+
   --text-color-dark: #364765;
   --text-color-gray: #5e6c84;
   --bottom-border-task-color: #b3b6bd;
@@ -26,6 +31,8 @@ body {
     'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--main-color);
+  color: var(--text-color-white);
 }
 * {
   padding: 0px;
@@ -61,6 +68,7 @@ li {
   background-color: var(--main-color);
 }
 .wrapper__box {
-  max-width: 1400px;
+  width: 100%;
   margin: 0 auto;
 }
+

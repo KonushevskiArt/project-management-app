@@ -9,6 +9,12 @@ export interface IUserResponse {
   name: string;
 }
 
+export interface IUserUpdate {
+  name: string;
+  login: string;
+  password: string;
+}
+
 export interface IUserSignIn {
   login: string;
   password: string;

@@ -23,12 +23,12 @@ const Board: React.FC = () => {
     queryFn: () => BoardService.getOneById(boardId),
   });
 
-  if (isLoading) return <Loader />;
-  if (error || !board) return <NotFound />;
+  if (error) return <div>Network error...</div>;
+
   return (
     <div className={styles.container}>
       <Link to="/">Move to home</Link>
-      <h4>{board.title}</h4>
+      <h4>{board?.title}</h4>
       <div className={styles.content}>
         {board?.columns && <Columns columns={board.columns} boardId={boardId} />}
       </div>

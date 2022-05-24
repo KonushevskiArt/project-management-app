@@ -15,9 +15,9 @@ export const BoardService = {
       .post<IBoard>(pathRoutes.board.create.absolute(), { title })
       .then((data) => data.data);
   },
-  async updateOneById(id: string, board: IBoard) {
+  async updateOneById(id: string, title: string) {
     return axios
-      .put<IBoard>(pathRoutes.board.getOneById.absolute(id), board)
+      .put<IBoard>(pathRoutes.board.getOneById.absolute(id), { title })
       .then((data) => data.data);
   },
   async deleteOneById(id: string) {

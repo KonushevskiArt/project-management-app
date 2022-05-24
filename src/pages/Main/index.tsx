@@ -1,42 +1,58 @@
-import Loader from 'components/Loader';
+import React from 'react';
 import { useQuery } from 'react-query';
 import { pathRoutes } from 'utils/pathRoutes';
 import { BoardService } from 'utils/services/Board.service';
 import CardBoard from './CardBoard';
 import s from './style.module.scss';
+import LinearProgress from '@mui/material/LinearProgress';
+import BoardCreater from './BoardCreater';
+import Layout from 'components/Layout';
+import { useLanguage } from 'hooks/useLanguage';
 
-const MyHomePage = () => {
-  const { isLoading, error, data } = useQuery(pathRoutes.board.getAll.absolute(), () =>
-    BoardService.getAll()
+interface ILANG {
+  [key: string]: string;
+}
+
+interface ITEXT {
+  [key: string]: ILANG;
+}
+
+const TEXT_MAIN_PAGE: Readonly<ITEXT> = {
+  title: {
+    en: 'Main page',
+    ru: 'Главная страница',
+  },
+};
+
+const MainPage = () => {
+  const { isLoading, error, data } = useQuery(
+    pathRoutes.board.getAll.absolute(),
+    () => BoardService.getAll(),
+    {
+      staleTime: 1000 * 180,
+    }
   );
-  if (isLoading) return <Loader />;
-
-  // const { refetch: refetchSignIn } = useQuery('sign In', () => AuthService.signIn(userSignIn), {
-  //   enabled: false,
-  //   onSuccess: ({ token }) => {
-  //     Cookies.set('token', token);
-  //   },
-  // });
-
-  if (!data) return <h2>There is no data</h2>;
+  const lang = useLanguage();
 
   return (
-    <div className={s.page}>
-      <>
-        <h2>Main page</h2>
-        {/* <button onClick={() => refetchSignIn()}>Sign In</button> */}
-        {isLoading && <p>loading board...</p>}
-        {error && <p>loading error...</p>}
-        {data.length && (
-          <div className={s.container}>
-            {data?.map(({ title, id }) => (
-              <CardBoard id={id} title={title} key={id} />
-            ))}
-          </div>
-        )}
-      </>
-    </div>
+    <Layout>
+      <div className={s.page}>
+        <>
+          <h2 className={s.title}>{TEXT_MAIN_PAGE.title[lang]}</h2>
+          {isLoading && <LinearProgress />}
+          {error && <p>loading error...</p>}
+          {data?.length && (
+            <div className={s.container}>
+              {data?.map(({ title, id }) => (
+                <CardBoard id={id} title={title} key={id} />
+              ))}
+              <BoardCreater />
+            </div>
+          )}
+        </>
+      </div>
+    </Layout>
   );
 };
 
-export default MyHomePage;
+export default MainPage;

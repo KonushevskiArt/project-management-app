@@ -26,7 +26,7 @@ export const pathRoutes = {
       absolute: (id = ':id') => `${pathRoutes.root}/${pathRoutes.user.relative}/${id}`,
     },
     updateOneById: {
-      relative: '',
+      relative: 'users',
       absolute: (id = ':id') => `${pathRoutes.root}/${pathRoutes.user.relative}/${id}`,
     },
     deleteOneById: {

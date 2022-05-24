@@ -16,7 +16,11 @@ const RequestInterceptor = ({ children }: Props) => {
     const token = Cookies.get('token') || null;
 
     if (token === null) {
-      navigate(pathRoutes.auth.signin.relative);
+      if (location.pathname != '/signup' && location.pathname != '/signin') {
+        if (location.pathname != '/update') {
+          navigate('/welcome');
+        }
+      }
     } else if (!(innerPath[1] === 'signin' || innerPath[1] === 'signin')) {
       config.headers = {
         ...config.headers,

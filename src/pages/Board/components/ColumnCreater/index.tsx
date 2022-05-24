@@ -34,13 +34,9 @@ const ColumnCreater = ({ lastColumnOrder }: IProps) => {
     }
   };
 
-  const ref = useOnclickOutside(() => {
-    setIsAddingColumn(false);
-  });
+  const ref = useOnclickOutside(() => setIsAddingColumn(false));
 
-  const clickTriggerHandler = () => {
-    setIsAddingColumn(true);
-  };
+  const clickTriggerHandler = () => setIsAddingColumn(true);
 
   const addColumnBlockClassNames = isAddingColumn
     ? `${s.addColumnBlock} ${s.activeColumnBlock}`

@@ -39,8 +39,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "dist": "CI='' npm run build",
-    "test": "react-scripts test",
-    "dist": "CI='' npm run build"
+    "test": "react-scripts test"
   },
   "eslintConfig": {
     "extends": [
