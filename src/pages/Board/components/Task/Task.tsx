@@ -1,5 +1,5 @@
 import { useUpdateTaskById } from 'hooks/tasks/useUpdateTaskById';
-import { IDragItemParams, ITask } from 'interfaces';
+import { DragItem, IDragItemParams, ITask } from 'interfaces';
 import { BoardContext } from 'pages/Board/Board';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -24,11 +24,15 @@ const Task = ({ task, columnId, columnIdx, taskIdx }: IProps) => {
     dragNode,
     setColumns,
     setOldColumns,
+    typeDragItem,
+    setTypeDragItem,
   } = useContext(BoardContext);
 
   const { mutate } = useUpdateTaskById(board.id, columnId, task.id, setColumns, oldColumns);
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>, params: IDragItemParams) => {
+    e.stopPropagation();
+    setTypeDragItem(DragItem.task);
     dragItem.current = params;
     dragNode.current = e.target as HTMLDivElement;
     dragNode.current.addEventListener('dragend', handleDragEnd);
@@ -47,7 +51,7 @@ const Task = ({ task, columnId, columnIdx, taskIdx }: IProps) => {
       if (board.columns && dragItem.current && userId !== null) {
         const updatedTask = {
           title: task.title,
-          order: dragItem.current.taskIdx,
+          order: dragItem.current.taskIdx + 1,
           description: task.description,
           columnId: board.columns[dragItem.current?.columnIdx].id,
           boardId: board.id,
@@ -61,8 +65,9 @@ const Task = ({ task, columnId, columnIdx, taskIdx }: IProps) => {
   };
 
   const handleDragEnter = (e: React.DragEvent<HTMLDivElement>, params: IDragItemParams) => {
-    const currentItem = dragItem.current as IDragItemParams;
-    if (e.target !== dragNode.current) {
+    e.stopPropagation();
+    if (e.target !== dragNode.current && typeDragItem === DragItem.task) {
+      const currentItem = dragItem.current as IDragItemParams;
       setColumns((prevList) => {
         const newList = JSON.parse(JSON.stringify(prevList));
         const currentTask = newList[currentItem?.columnIdx].tasks.splice(currentItem.taskIdx, 1)[0];
@@ -78,7 +83,10 @@ const Task = ({ task, columnId, columnIdx, taskIdx }: IProps) => {
   };
 
   const taskClasses =
-    dragging && dragItem.current?.columnIdx === columnIdx && dragItem.current?.taskIdx === taskIdx
+    dragging &&
+    dragItem.current?.columnIdx === columnIdx &&
+    dragItem.current?.taskIdx === taskIdx &&
+    typeDragItem === 'task'
       ? `${styles.task} ${styles.dragging}`
       : styles.task;
 

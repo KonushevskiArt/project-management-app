@@ -3,6 +3,7 @@ export interface IUser {
   login: string;
   password: string;
 }
+
 export interface IUserResponse {
   id: string;
   login: string;
@@ -19,8 +20,14 @@ export interface IUserSignIn {
   login: string;
   password: string;
 }
+
 export interface ISignInResponse {
   token: string;
+}
+
+export interface IUpdatedColumn {
+  title: string;
+  order: number;
 }
 
 /* export interface ITask {
@@ -62,6 +69,12 @@ export interface IBoard {
   id: string;
   title: string;
 }
+
+export interface INewBoard {
+  title: string;
+  description: string;
+}
+
 export interface IUpdatedBoardParams {
   columns?: IColumn[];
   title?: string;
@@ -73,6 +86,7 @@ export interface IColumn {
   order: number;
   tasks?: [] | ITask[];
 }
+
 export interface IResponseNewColumn {
   id: string;
   title: string;
@@ -85,6 +99,7 @@ export interface INewTask {
   description: string;
   userId: string;
 }
+
 export interface ICreateTask {
   boardId: string;
   columnId: string;
@@ -93,10 +108,14 @@ export interface ICreateTask {
 
 export interface INewColumn {
   title: string;
-  order: number;
 }
 
 export interface IDragItemParams {
   columnIdx: number;
   taskIdx: number;
+}
+
+export enum DragItem {
+  task = 'task',
+  column = 'column',
 }

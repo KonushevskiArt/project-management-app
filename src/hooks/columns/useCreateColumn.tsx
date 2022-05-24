@@ -4,7 +4,6 @@ import { ToastOptions, toast } from 'react-toastify';
 import { pathRoutes } from 'utils/pathRoutes';
 import { ColumnService } from 'utils/services/Column.service';
 import { INewColumn } from 'interfaces';
-import { routes } from 'utils/routes';
 
 export const useCreateColumn = (
   boardId: string,
@@ -18,7 +17,7 @@ export const useCreateColumn = (
   } as ToastOptions;
 
   const { mutate, isLoading } = useMutation(
-    'add new column' + boardId + Math.random() + Date.now(),
+    pathRoutes.column.create.absolute(boardId),
     (newColumn: INewColumn) => {
       return ColumnService.create(boardId, newColumn);
     },

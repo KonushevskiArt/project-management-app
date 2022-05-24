@@ -6,7 +6,7 @@
   width: 252px;
   color: var(--text-color-gray);
   transition: background-color 0.3s ease 0s;
-  cursor: grab;
+  cursor: pointer;
   &:hover {
     background-color: #f4f5f7;
     .link {

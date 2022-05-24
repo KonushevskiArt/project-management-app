@@ -12,24 +12,17 @@ type Inputs = {
   name: string;
 };
 
-interface IProps {
-  lastColumnOrder: number;
-}
-
-const ColumnCreater = ({ lastColumnOrder }: IProps) => {
+const ColumnCreater = () => {
   const { boardId } = useParams();
 
   const [isAddingColumn, setIsAddingColumn] = useState(false);
   const { register, handleSubmit, reset } = useForm<Inputs>();
 
-  const [currentOrder, setCurrentOrder] = useState(lastColumnOrder);
-
   const { mutate, isLoading } = useCreateColumn(boardId as string, setIsAddingColumn);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     if (data.name.trim() && isLoading === false) {
-      mutate({ title: data.name, order: currentOrder + 1 });
-      setCurrentOrder(currentOrder + 1);
+      mutate({ title: data.name });
       reset();
     }
   };

@@ -1,7 +1,7 @@
 import { join } from 'path-browserify';
 
 export const pathRoutes = {
-  root: 'https://pure-cove-88107.herokuapp.com',
+  root: 'https://young-inlet-01140.herokuapp.com',
   docs: () => join(pathRoutes.root, 'docs'),
   auth: {
     relative: '',

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { pathRoutes } from 'utils/pathRoutes';
-import { IColumn, INewColumn, IResponseNewColumn } from '../../interfaces';
+import { IColumn, INewColumn, IResponseNewColumn, IUpdatedColumn } from '../../interfaces';
 
 export const ColumnService = {
   async getAll(boardId: string) {
@@ -13,15 +13,12 @@ export const ColumnService = {
       .get<IColumn>(pathRoutes.column.getOneById.absolute(boardId, columnId))
       .then((data) => data.data);
   },
-  async create(boardId: string, { title, order }: INewColumn) {
+  async create(boardId: string, params: INewColumn) {
     return axios
-      .post<IResponseNewColumn>(pathRoutes.column.create.absolute(boardId), {
-        title,
-        order,
-      })
+      .post<IResponseNewColumn>(pathRoutes.column.create.absolute(boardId), params)
       .then((data) => data.data);
   },
-  async updateOneById(boardId: string, columnId: string, column: IColumn) {
+  async updateOneById(boardId: string, columnId: string, column: IUpdatedColumn) {
     return axios
       .put<IColumn>(pathRoutes.column.getOneById.absolute(boardId, columnId), column)
       .then((data) => data.data);

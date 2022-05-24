@@ -8,7 +8,7 @@ import { BoardService } from 'utils/services/Board.service';
 import s from './style.module.scss';
 import LinearProgress from '@mui/material/LinearProgress';
 import Columns from './components/Columns';
-import { IBoard, IColumn, IDragItemParams } from 'interfaces';
+import { DragItem, IBoard, IColumn, IDragItemParams } from 'interfaces';
 import { pathRoutes } from 'utils/pathRoutes';
 import { SetUserIdInLocalStorage } from 'utils/setUserIdInLocalStorage';
 
@@ -17,9 +17,13 @@ type ContextType = {
   oldColumns: IColumn[];
   dragItem: React.MutableRefObject<IDragItemParams | undefined>;
   dragNode: React.MutableRefObject<HTMLDivElement | undefined>;
+  typeDragItem: DragItem;
+  setTypeDragItem: React.Dispatch<React.SetStateAction<DragItem>>;
   setColumns: React.Dispatch<React.SetStateAction<IColumn[]>>;
   setOldColumns: React.Dispatch<React.SetStateAction<IColumn[]>>;
   dragging: boolean;
+  idxOfDragColumn: number;
+  setIdxOfDragColumn: React.Dispatch<React.SetStateAction<number>>;
   setDragging: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
@@ -31,7 +35,9 @@ const Board: React.FC = () => {
   const dragNode = useRef<HTMLDivElement>();
   const [dragging, setDragging] = useState(false);
   const [columns, setColumns] = useState<IColumn[]>([]);
+  const [idxOfDragColumn, setIdxOfDragColumn] = useState(0);
   const [oldColumns, setOldColumns] = useState<IColumn[]>([]);
+  const [typeDragItem, setTypeDragItem] = useState<DragItem>(DragItem.task);
   SetUserIdInLocalStorage();
 
   const {
@@ -61,11 +67,14 @@ const Board: React.FC = () => {
               setDragging: setDragging,
               setOldColumns: setOldColumns,
               oldColumns: oldColumns,
+              typeDragItem: typeDragItem,
+              setTypeDragItem: setTypeDragItem,
+              idxOfDragColumn: idxOfDragColumn,
+              setIdxOfDragColumn: setIdxOfDragColumn,
             }}
           >
             <h4 className={s.title}>{board.title}</h4>
             <div className={s.board}>
-              {/* <ListOfColumns columns={board.columns} boardId={boardId} /> */}
               {columns && <Columns columns={columns} boardId={boardId} />}
             </div>
           </BoardContext.Provider>

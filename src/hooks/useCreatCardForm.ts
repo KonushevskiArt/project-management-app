@@ -16,7 +16,6 @@ export interface IGetColumnById extends IGetBoardById {
 export interface ICreatTask extends IGetColumnById {
   body: {
     title: string;
-    order: number;
     description: string;
     userId: string;
   };
@@ -33,7 +32,7 @@ const useCreatCardForm = () => {
 
   const { isLoading, isSuccess, isError, mutate } = useMutation({
     mutationFn: (props: ICreatTask) => TaskService.create(props),
-    onSuccess: () => queryClient.invalidateQueries(routes.boards.absolute(boardId)),
+    onSuccess: () => queryClient.invalidateQueries(pathRoutes.board.getOneById.absolute(boardId)),
   });
   useEffect(() => {
     if (textareaEl && textareaEl.current) {

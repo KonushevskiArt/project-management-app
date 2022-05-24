@@ -19,7 +19,7 @@ const BoardCreater = () => {
 
   const submitHandler: SubmitHandler<Inputs> = (data) => {
     if (data.title.trim() && isLoading === false) {
-      mutate(data.title);
+      mutate({ title: data.title, description: 'null' });
       setIsOpen(false);
       reset();
     }

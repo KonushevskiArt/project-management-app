@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import styles from './columns.module.scss';
 import ColumnCreater from '../ColumnCreater';
 import { IColumn } from 'interfaces';
@@ -10,14 +10,12 @@ interface IProps {
 }
 
 const Columns = ({ columns, boardId }: IProps) => {
-  const lastColumnOrder = columns.length > 0 ? columns[columns.length - 1].order : 1;
-
   return (
     <div className={styles.container}>
       {columns.map((column: IColumn, columnIdx: number) => (
         <Column key={column.id} column={column} boardId={boardId} columnIdx={columnIdx} />
       ))}
-      <ColumnCreater lastColumnOrder={lastColumnOrder} />
+      <ColumnCreater />
     </div>
   );
 };
