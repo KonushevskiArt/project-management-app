@@ -57,13 +57,19 @@ const TaskContentHeader = ({ title, columnTitle, onCloseClick }: IProps) => {
     setIsTitleEdit(false);
   };
 
+  const onKeyDown: FormEventHandler<HTMLInputElement> = (event) => {
+    if ((event as { key?: string }).key === 'Enter') {
+      onBlur(event);
+    }
+  };
+
   const onClick = () => setIsTitleEdit(true);
 
   return (
     <header className={styles.header}>
       <TitleIcon className={styles.icon} />
       {isTitleEdit ? (
-        <TaskTitleEdit value={value} onChange={onChange} onBlur={onBlur} />
+        <TaskTitleEdit value={value} onChange={onChange} onBlur={onBlur} onKeyDown={onKeyDown} />
       ) : (
         <h2 className={styles.title} onClick={onClick}>
           {value}

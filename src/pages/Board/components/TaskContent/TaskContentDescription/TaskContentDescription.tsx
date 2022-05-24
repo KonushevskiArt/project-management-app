@@ -1,5 +1,5 @@
 import { useLanguage } from 'hooks/useLanguage';
-import useTaskDescriptionEdit from 'hooks/useTaskDescriptionEdit';
+import useTaskDescriptionEdit from 'hooks/tasks/useTaskDescriptionEdit';
 import { ITEXT } from 'interfaces';
 import { IoMdList as DescriptionIcon } from 'react-icons/io';
 import styles from '../task-content.module.scss';

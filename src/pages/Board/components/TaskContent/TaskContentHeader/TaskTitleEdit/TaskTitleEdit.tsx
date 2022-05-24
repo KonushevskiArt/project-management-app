@@ -5,9 +5,10 @@ interface IProps {
   value: string;
   onChange: FormEventHandler<HTMLInputElement>;
   onBlur: FormEventHandler<HTMLInputElement>;
+  onKeyDown: FormEventHandler<HTMLInputElement>;
 }
 
-const TaskTitleEdit = ({ value, onChange, onBlur }: IProps) => {
+const TaskTitleEdit = ({ value, onChange, onBlur, onKeyDown }: IProps) => {
   const textareaEl = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -22,6 +23,7 @@ const TaskTitleEdit = ({ value, onChange, onBlur }: IProps) => {
       defaultValue={value}
       onChange={onChange}
       onBlur={onBlur}
+      onKeyDown={onKeyDown}
       autoFocus
       ref={textareaEl}
     ></input>
