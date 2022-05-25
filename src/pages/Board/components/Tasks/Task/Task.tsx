@@ -5,6 +5,7 @@ import { Link, Route, Routes, useParams } from 'react-router-dom';
 import { pathRoutes } from 'utils/pathRoutes';
 import { routes } from 'utils/routes';
 import { TaskService } from 'utils/services/Task.service';
+import RemoveTask from './RemoveTask';
 import styles from './task.module.scss';
 
 interface IProps {
@@ -24,6 +25,7 @@ const Task = ({ task: initialTask, columnId }: IProps) => {
       <Link className={styles.link} to={routes.tasks.content.absolute(columnId, task?.id)}>
         {task?.title}
       </Link>
+      <RemoveTask taskId={initialTask.id} columnId={columnId} />
       <Routes>
         {taskId === task?.id && (
           <Route path={routes.tasks.content.absolute()} element={<TaskContent />} />

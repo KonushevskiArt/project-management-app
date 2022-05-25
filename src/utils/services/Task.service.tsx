@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { ICreatTask } from 'hooks/useCreatCardForm';
+import { ICreatTask } from 'hooks/tasks/useCreatCardForm';
 import Cookies from 'js-cookie';
 import { Navigate, useNavigate } from 'react-router';
 import { pathRoutes } from 'utils/pathRoutes';

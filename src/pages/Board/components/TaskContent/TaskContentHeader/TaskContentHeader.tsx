@@ -1,3 +1,4 @@
+import useTaskTitleEdit from 'hooks/tasks/useTaskTitleEdit';
 import { useLanguage } from 'hooks/useLanguage';
 import { ITask, ITEXT, IUpdataTask } from 'interfaces';
 import { FormEventHandler, useState } from 'react';
@@ -24,55 +25,23 @@ interface IProps {
 }
 
 const TaskContentHeader = ({ title, columnTitle, onCloseClick }: IProps) => {
-  const { boardId = '', columnId = '', taskId = '' } = useParams();
-  const [value, setValue] = useState(title);
-  const [isTitleEdit, setIsTitleEdit] = useState(false);
-  const queryClient = useQueryClient();
-  const { mutate } = useMutation({
-    mutationFn: (props: IUpdataTask) => TaskService.updateOneById(taskId, props),
-    onSuccess: () => {
-      queryClient.invalidateQueries(pathRoutes.task.getOneById.absolute(boardId, columnId, taskId));
-    },
-  });
+  const { newTitle, isTitleEdit, handlers } = useTaskTitleEdit(title);
+
   const lang = useLanguage();
-  const task = queryClient.getQueryData<ITask | undefined>(
-    pathRoutes.task.getOneById.absolute(boardId, columnId, taskId)
-  );
-  const onChange: FormEventHandler<HTMLInputElement> = (e) => {
-    setValue((e.target as HTMLTextAreaElement).value);
-  };
-
-  const onBlur: FormEventHandler<HTMLInputElement> = () => {
-    if (task && value.trim()) {
-      mutate({
-        title: value.trim(),
-        order: task.order,
-        description: task.description,
-        userId: task.userId,
-        boardId,
-        columnId,
-      });
-    }
-    setValue(value.trim());
-    setIsTitleEdit(false);
-  };
-
-  const onKeyDown: FormEventHandler<HTMLInputElement> = (event) => {
-    if ((event as { key?: string }).key === 'Enter') {
-      onBlur(event);
-    }
-  };
-
-  const onClick = () => setIsTitleEdit(true);
 
   return (
     <header className={styles.header}>
       <TitleIcon className={styles.icon} />
       {isTitleEdit ? (
-        <TaskTitleEdit value={value} onChange={onChange} onBlur={onBlur} onKeyDown={onKeyDown} />
+        <TaskTitleEdit
+          value={newTitle}
+          onChange={handlers.onChange}
+          onBlur={handlers.onBlur}
+          onKeyDown={handlers.onKeyDown}
+        />
       ) : (
-        <h2 className={styles.title} onClick={onClick}>
-          {value}
+        <h2 className={styles.title} onClick={handlers.onClick}>
+          {newTitle}
         </h2>
       )}
       <p className={styles.subtext}>
