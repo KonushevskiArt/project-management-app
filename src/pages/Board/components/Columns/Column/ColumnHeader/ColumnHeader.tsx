@@ -1,6 +1,7 @@
 import { useDeleteColumnById } from 'hooks/columns/useDeleteColumnById';
 import { useLanguage } from 'hooks/useLanguage';
 import { ITEXT } from 'interfaces';
+import ColumnControl from '../ColumnControl';
 import styles from './column-header.module.scss';
 
 const TEXT_COLUMN_HEADER: ITEXT = {
@@ -17,15 +18,15 @@ interface IProps {
 }
 
 const ColumnHeader = ({ title, boardId, columnId }: IProps) => {
-  const { removeColumnHandler } = useDeleteColumnById(boardId, columnId);
   const lang = useLanguage();
 
   return (
     <div className={styles.container}>
       <h3 className={styles.title}>{title}</h3>
-      <button className={styles.remove} onClick={removeColumnHandler}>
+      <ColumnControl boardId={boardId} columnId={columnId} />
+      {/* <button className={styles.remove} onClick={removeColumnHandler}>
         {TEXT_COLUMN_HEADER.remove[lang]}
-      </button>
+      </button> */}
     </div>
   );
 };

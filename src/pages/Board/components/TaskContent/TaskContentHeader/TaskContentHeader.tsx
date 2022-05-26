@@ -1,13 +1,8 @@
 import useTaskTitleEdit from 'hooks/tasks/useTaskTitleEdit';
 import { useLanguage } from 'hooks/useLanguage';
-import { ITask, ITEXT, IUpdataTask } from 'interfaces';
-import { FormEventHandler, useState } from 'react';
+import { ITEXT } from 'interfaces';
 import { AiFillCreditCard as TitleIcon } from 'react-icons/ai';
 import { IoMdClose as CloseIcon } from 'react-icons/io';
-import { useMutation, useQueryClient } from 'react-query';
-import { useParams } from 'react-router';
-import { pathRoutes } from 'utils/pathRoutes';
-import { TaskService } from 'utils/services/Task.service';
 import styles from '../task-content.module.scss';
 import TaskTitleEdit from './TaskTitleEdit';
 
