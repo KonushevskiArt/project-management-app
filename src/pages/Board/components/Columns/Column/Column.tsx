@@ -98,6 +98,9 @@ const Column = ({ column, boardId, columnIdx }: IProps) => {
           setColumns((prevList) => {
             const newList = JSON.parse(JSON.stringify(prevList)) as IColumn[];
             const currentColumn = newList.splice(currentItem.columnIdx, 1)[0];
+            if (board.columns && dragItem.current) {
+              currentColumn.order = board.columns[dragItem.current.columnIdx].order;
+            }
             newList.splice(params.columnIdx, 0, currentColumn);
             dragItem.current = params;
             return newList;

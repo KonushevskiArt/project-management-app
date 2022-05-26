@@ -55,9 +55,9 @@ const Task = ({ task, columnId, columnIdx, taskIdx }: IProps) => {
       currentNode.removeEventListener('dragend', handleDragEnd);
       const userId = localStorage.getItem('userId');
       if (board.columns && dragItem.current && userId !== null) {
-        const numberOfTasks = board.columns[dragItem.current?.columnIdx].tasks!.length;
-        const currentTask =
-          board.columns[dragItem.current?.columnIdx].tasks![dragItem.current.taskIdx];
+        const tasks = board.columns[dragItem.current.columnIdx].tasks || [];
+        const numberOfTasks = tasks.length;
+        const currentTask = tasks[dragItem.current.taskIdx];
         const updatedTask = {
           title: task.title,
           description: task.description,
