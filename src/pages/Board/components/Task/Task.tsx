@@ -58,6 +58,7 @@ const Task = ({ task, columnId, columnIdx, taskIdx }: IProps) => {
         const tasks = board.columns[dragItem.current.columnIdx].tasks || [];
         const numberOfTasks = tasks.length;
         const currentTask = tasks[dragItem.current.taskIdx];
+        console.log(currentTask ? currentTask.order : numberOfTasks + 1);
         const updatedTask = {
           title: task.title,
           description: task.description,
@@ -79,8 +80,11 @@ const Task = ({ task, columnId, columnIdx, taskIdx }: IProps) => {
       const currentItem = dragItem.current as IDragItemParams;
       setColumns((prevList) => {
         const newList = JSON.parse(JSON.stringify(prevList));
-        const currentTask = newList[currentItem?.columnIdx].tasks.splice(currentItem.taskIdx, 1)[0];
+        const currentTask = newList[currentItem.columnIdx].tasks.splice(currentItem.taskIdx, 1)[0];
         newList[params.columnIdx].tasks.splice(params.taskIdx, 0, currentTask);
+        const stateTasks = board.columns![params.columnIdx].tasks;
+        const stateTask = stateTasks![params.taskIdx];
+        currentTask.order = stateTask ? stateTask.order : stateTasks!.length + 1;
         dragItem.current = params;
         return newList;
       });
