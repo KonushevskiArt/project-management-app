@@ -18,55 +18,64 @@ const Task = ({ task, columnId, columnIdx, taskIdx }: IProps) => {
   const {
     board,
     oldColumns,
-    dragging,
-    setDragging,
+    isDragging,
+    setIsDragging,
     dragItem,
     dragNode,
     setColumns,
-    setOldColumns,
     typeDragItem,
-    setTypeDragItem,
+    idDraggingTask,
   } = useContext(BoardContext);
 
-  const { mutate } = useUpdateTaskById(board.id, columnId, task.id, setColumns, oldColumns);
+  const { mutate } = useUpdateTaskById(
+    board.id,
+    columnId,
+    idDraggingTask.current,
+    setColumns,
+    oldColumns.current
+  );
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>, params: IDragItemParams) => {
     e.stopPropagation();
-    setTypeDragItem(DragItem.task);
+    typeDragItem.current = DragItem.task;
     dragItem.current = params;
+    idDraggingTask.current = task.id;
     dragNode.current = e.target as HTMLDivElement;
     dragNode.current.addEventListener('dragend', handleDragEnd);
-    setOldColumns(board.columns || []);
+    oldColumns.current = board.columns || [];
     setTimeout(() => {
-      setDragging(true);
+      setIsDragging(true);
     }, 0);
   };
 
   const handleDragEnd = () => {
-    setDragging(false);
+    setIsDragging(false);
     if (dragNode.current) {
       const currentNode = dragNode.current as HTMLDivElement;
       currentNode.removeEventListener('dragend', handleDragEnd);
       const userId = localStorage.getItem('userId');
       if (board.columns && dragItem.current && userId !== null) {
+        const numberOfTasks = board.columns[dragItem.current?.columnIdx].tasks!.length;
+        const currentTask =
+          board.columns[dragItem.current?.columnIdx].tasks![dragItem.current.taskIdx];
         const updatedTask = {
           title: task.title,
-          order: dragItem.current.taskIdx + 1,
           description: task.description,
-          columnId: board.columns[dragItem.current?.columnIdx].id,
           boardId: board.id,
           userId: userId,
+          order: currentTask ? currentTask.order : numberOfTasks + 1,
+          columnId: board.columns[dragItem.current?.columnIdx].id,
         };
         mutate(updatedTask);
       }
-      dragItem.current = undefined;
-      dragNode.current = undefined;
+      dragItem.current = null;
+      dragNode.current = null;
     }
   };
 
   const handleDragEnter = (e: React.DragEvent<HTMLDivElement>, params: IDragItemParams) => {
     e.stopPropagation();
-    if (e.target !== dragNode.current && typeDragItem === DragItem.task) {
+    if (e.target !== dragNode.current && typeDragItem.current === DragItem.task) {
       const currentItem = dragItem.current as IDragItemParams;
       setColumns((prevList) => {
         const newList = JSON.parse(JSON.stringify(prevList));
@@ -83,10 +92,10 @@ const Task = ({ task, columnId, columnIdx, taskIdx }: IProps) => {
   };
 
   const taskClasses =
-    dragging &&
+    isDragging &&
     dragItem.current?.columnIdx === columnIdx &&
     dragItem.current?.taskIdx === taskIdx &&
-    typeDragItem === 'task'
+    typeDragItem.current === DragItem.task
       ? `${styles.task} ${styles.dragging}`
       : styles.task;
 

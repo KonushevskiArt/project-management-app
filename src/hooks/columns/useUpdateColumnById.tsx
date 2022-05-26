@@ -30,7 +30,7 @@ export const useUpdateColumnById = (
       },
       onSuccess: () => {
         toast.success('Column updated successfuly!', toastOption);
-        queryClient.invalidateQueries(routes.boards.absolute(boardId));
+        queryClient.invalidateQueries(pathRoutes.board.getOneById.absolute(boardId));
       },
     }
   );

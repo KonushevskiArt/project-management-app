@@ -24,7 +24,7 @@ function App() {
             <AppRoutes />
           </RequestInterceptor>
         </ContextProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </QueryClientProvider>
       <ToastContainer />
     </BrowserRouter>

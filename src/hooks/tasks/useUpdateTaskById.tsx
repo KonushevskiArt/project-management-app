@@ -2,7 +2,6 @@ import { IColumn, IUpdatedTask } from 'interfaces';
 import { useMutation, useQueryClient } from 'react-query';
 import { toast, ToastOptions } from 'react-toastify';
 import { pathRoutes } from 'utils/pathRoutes';
-import { routes } from 'utils/routes';
 import { TaskService } from 'utils/services/Task.service';
 
 export const useUpdateTaskById = (
@@ -31,7 +30,7 @@ export const useUpdateTaskById = (
       },
       onSuccess: () => {
         toast.success('Task updated successfuly!', toastOption);
-        queryClient.invalidateQueries(routes.boards.absolute(boardId));
+        queryClient.invalidateQueries(pathRoutes.board.getOneById.absolute(boardId));
       },
     }
   );

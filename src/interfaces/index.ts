@@ -63,6 +63,13 @@ export interface IUpdatedTask {
   boardId: string;
   columnId: string;
 }
+export interface IStatePreviousTask {
+  columnId: string;
+  order: number;
+  title: string;
+  description: string;
+  taskId: string;
+}
 
 export interface IBoard {
   columns?: IColumn[] | [];

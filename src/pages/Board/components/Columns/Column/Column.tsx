@@ -19,17 +19,20 @@ const Column = ({ column, boardId, columnIdx }: IProps) => {
   const {
     board,
     oldColumns,
-    dragging,
-    setDragging,
+    isDragging,
     dragItem,
     dragNode,
     setColumns,
-    setOldColumns,
-    setTypeDragItem,
+    idDraggingColumn,
+    setIsDragging,
     typeDragItem,
-    setIdxOfDragColumn,
   } = useContext(BoardContext);
-  const { mutate } = useUpdateColumnById(board.id, column.id, setColumns, oldColumns);
+  const { mutate } = useUpdateColumnById(
+    board.id,
+    idDraggingColumn.current,
+    setColumns,
+    oldColumns.current
+  );
 
   const { error } = useQuery({
     queryKey: routes.columns.absolute(boardId, column.id),
@@ -40,36 +43,41 @@ const Column = ({ column, boardId, columnIdx }: IProps) => {
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>, params: IDragItemParams) => {
     // e.stopPropagation();
     dragItem.current = params;
+    idDraggingColumn.current = column.id;
     dragNode.current = e.target as HTMLDivElement;
     dragNode.current.addEventListener('dragend', handleDragEnd);
-    setIdxOfDragColumn(columnIdx);
-    setOldColumns(board.columns || []);
-    setTypeDragItem(DragItem.column);
+    oldColumns.current = board.columns || [];
+    typeDragItem.current = DragItem.column;
     setTimeout(() => {
-      setDragging(true);
+      setIsDragging(true);
     }, 0);
   };
 
   const handleDragEnd = () => {
-    setDragging(false);
+    setIsDragging(false);
     if (dragNode.current) {
       const currentNode = dragNode.current as HTMLDivElement;
       currentNode.removeEventListener('dragend', handleDragEnd);
       if (board.columns && dragItem.current) {
         const updatedColumn = {
           title: column.title,
-          order: dragItem.current.columnIdx + 1,
+          order: board.columns[dragItem.current.columnIdx].order,
         };
         mutate(updatedColumn);
       }
-      dragItem.current = undefined;
-      dragNode.current = undefined;
+      dragItem.current = null;
+      dragNode.current = null;
     }
   };
 
   const handleDragEnter = (e: React.DragEvent<HTMLDivElement>, params: IDragItemParams) => {
     e.stopPropagation();
-    if (dragging && column.tasks && !column.tasks.length && typeDragItem === DragItem.task) {
+    if (
+      isDragging &&
+      column.tasks &&
+      !column.tasks.length &&
+      typeDragItem.current === DragItem.task
+    ) {
       if (e.target !== dragNode.current) {
         const currentItem = dragItem.current as IDragItemParams;
         setColumns((prevList) => {
@@ -84,7 +92,7 @@ const Column = ({ column, boardId, columnIdx }: IProps) => {
         });
       }
     } else {
-      if (typeDragItem === DragItem.column) {
+      if (typeDragItem.current === DragItem.column) {
         const currentItem = dragItem.current as IDragItemParams;
         if (e.target !== dragNode.current) {
           setColumns((prevList) => {
@@ -100,9 +108,10 @@ const Column = ({ column, boardId, columnIdx }: IProps) => {
   };
 
   if (error || !column) return <div>{`No data :(`}</div>;
-
   const taskClasses =
-    dragging && dragItem.current?.columnIdx === columnIdx && typeDragItem === DragItem.column
+    isDragging &&
+    dragItem.current?.columnIdx === columnIdx &&
+    typeDragItem.current === DragItem.column
       ? `${styles.column} ${styles.dragging}`
       : styles.column;
 

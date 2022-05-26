@@ -4,7 +4,6 @@ import { useQuery } from 'react-query';
 import { Route, Routes, useParams } from 'react-router';
 import { routes } from 'utils/routes';
 import { BoardService } from 'utils/services/Board.service';
-// import ListOfColumns from './components/ListOfColumns';
 import s from './style.module.scss';
 import LinearProgress from '@mui/material/LinearProgress';
 import Columns from './components/Columns';
@@ -14,30 +13,30 @@ import { SetUserIdInLocalStorage } from 'utils/setUserIdInLocalStorage';
 
 type ContextType = {
   board: IBoard;
-  oldColumns: IColumn[];
-  dragItem: React.MutableRefObject<IDragItemParams | undefined>;
-  dragNode: React.MutableRefObject<HTMLDivElement | undefined>;
-  typeDragItem: DragItem;
-  setTypeDragItem: React.Dispatch<React.SetStateAction<DragItem>>;
+  oldColumns: React.MutableRefObject<IColumn[]>;
+  dragItem: React.MutableRefObject<IDragItemParams | null>;
+  dragNode: React.MutableRefObject<HTMLDivElement | null>;
+  typeDragItem: React.MutableRefObject<DragItem>;
   setColumns: React.Dispatch<React.SetStateAction<IColumn[]>>;
-  setOldColumns: React.Dispatch<React.SetStateAction<IColumn[]>>;
-  dragging: boolean;
-  idxOfDragColumn: number;
-  setIdxOfDragColumn: React.Dispatch<React.SetStateAction<number>>;
-  setDragging: React.Dispatch<React.SetStateAction<boolean>>;
+  isDragging: boolean;
+  setIsDragging: React.Dispatch<React.SetStateAction<boolean>>;
+  idDraggingTask: React.MutableRefObject<string>;
+  idDraggingColumn: React.MutableRefObject<string>;
 };
 
 export const BoardContext = createContext({} as ContextType);
 
 const Board: React.FC = () => {
   const { boardId = '' } = useParams();
-  const dragItem = useRef<IDragItemParams>();
-  const dragNode = useRef<HTMLDivElement>();
-  const [dragging, setDragging] = useState(false);
+  const dragItem = useRef<IDragItemParams>(null);
+  const dragNode = useRef<HTMLDivElement>(null);
+  const idDraggingTask = useRef<string>('');
+  const idDraggingColumn = useRef<string>('');
+  const [isDragging, setIsDragging] = useState<boolean>(false);
   const [columns, setColumns] = useState<IColumn[]>([]);
-  const [idxOfDragColumn, setIdxOfDragColumn] = useState(0);
-  const [oldColumns, setOldColumns] = useState<IColumn[]>([]);
-  const [typeDragItem, setTypeDragItem] = useState<DragItem>(DragItem.task);
+  const oldColumns = useRef<IColumn[]>([]);
+  const typeDragItem = useRef<DragItem>(DragItem.task);
+
   SetUserIdInLocalStorage();
 
   const {
@@ -63,14 +62,12 @@ const Board: React.FC = () => {
               dragItem: dragItem,
               dragNode: dragNode,
               setColumns: setColumns,
-              dragging: dragging,
-              setDragging: setDragging,
-              setOldColumns: setOldColumns,
+              isDragging: isDragging,
+              setIsDragging: setIsDragging,
+              idDraggingTask: idDraggingTask,
               oldColumns: oldColumns,
               typeDragItem: typeDragItem,
-              setTypeDragItem: setTypeDragItem,
-              idxOfDragColumn: idxOfDragColumn,
-              setIdxOfDragColumn: setIdxOfDragColumn,
+              idDraggingColumn: idDraggingColumn,
             }}
           >
             <h4 className={s.title}>{board.title}</h4>

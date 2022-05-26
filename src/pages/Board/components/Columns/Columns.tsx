@@ -12,9 +12,11 @@ interface IProps {
 const Columns = ({ columns, boardId }: IProps) => {
   return (
     <div className={styles.container}>
-      {columns.map((column: IColumn, columnIdx: number) => (
-        <Column key={column.id} column={column} boardId={boardId} columnIdx={columnIdx} />
-      ))}
+      {columns
+        .sort((column1, column2) => column1.order - column2.order)
+        .map((column: IColumn, columnIdx: number) => (
+          <Column key={column.id} column={column} boardId={boardId} columnIdx={columnIdx} />
+        ))}
       <ColumnCreater />
     </div>
   );
