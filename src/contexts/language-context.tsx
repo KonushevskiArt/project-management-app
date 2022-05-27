@@ -15,7 +15,7 @@ const defaultValue: {
   setLang: React.Dispatch<SetStateAction<string>>;
   languages: { key: string; label: string }[];
 } = {
-  lang: 'ru',
+  lang: 'en',
   setLang: (lang) => lang,
   languages,
 };

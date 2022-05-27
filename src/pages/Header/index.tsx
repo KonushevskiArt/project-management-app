@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Box, Switch, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import Container from '@mui/material/Container';
 import { useNavigate } from 'react-router';
 import Button from '@mui/material/Button';
@@ -9,12 +9,31 @@ import s from './style.module.scss';
 import HomeIcon from '@mui/icons-material/Home';
 import { Link } from 'react-router-dom';
 import LanguageSwitcher from 'components/LanguageSwitcher';
+import { useLanguage } from 'hooks/useLanguage';
+import { ITEXT } from 'pages/Main';
+import languageContext from 'contexts/language-context';
+
+const TEXT_MAIN_PAGE: Readonly<ITEXT> = {
+  edit: {
+    en: 'Edit profile',
+    ru: 'Редактировать профиль',
+  },
+  out: {
+    en: 'Sign Out',
+    ru: 'Выйти',
+  },
+  newBoard: {
+    en: 'Create new board',
+    ru: 'Создать новую доску',
+  },
+};
 
 export const Header = () => {
   const navigate = useNavigate();
   const [scroll, setScroll] = useState(false);
-  const [checked, setChecked] = useState(true);
   const appContext = useContext(AppContext);
+  const lang = useLanguage();
+  const { setLang } = useContext(languageContext);
 
   window.onscroll = function () {
     if (window.pageYOffset > 0) {
@@ -41,21 +60,12 @@ export const Header = () => {
     return fixStyle;
   };
 
-  const handleChange = () => {
-    setChecked(!checked);
-  };
-
   const signOut = () => {
+    setLang('en');
     Cookies.remove('token', { path: '' });
     localStorage.removeItem('user');
     appContext.dispatch({ type: 'setLogInSucsess', payload: false });
     navigate('/welcome');
-  };
-
-  const switchColor = (lang: string) => {
-    if (checked && lang === 'en') return 'white';
-    if (!checked && lang === 'ru') return 'white';
-    return 'black';
   };
 
   return (
@@ -85,7 +95,7 @@ export const Header = () => {
                 navigate('/update');
               }}
             >
-              Edit profile
+              {TEXT_MAIN_PAGE.edit[lang]}
             </Button>
             <Button
               variant="contained"
@@ -94,7 +104,7 @@ export const Header = () => {
               sx={{ marginRight: '10px', color: 'black' }}
               onClick={signOut}
             >
-              Sign Out
+              {TEXT_MAIN_PAGE.out[lang]}
             </Button>
             <Button
               variant="contained"
@@ -105,18 +115,13 @@ export const Header = () => {
                 navigate('/');
               }}
             >
-              Create new board
+              {TEXT_MAIN_PAGE.newBoard[lang]}
             </Button>
             <Link to="/">
               <button className={s.toHome}>
                 <HomeIcon fontSize="large" />
               </button>
             </Link>
-            {/*  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Typography color={switchColor('ru')}>Ru</Typography>
-              <Switch checked={checked} onChange={handleChange} name="lang" color="default" />
-              <Typography color={switchColor('en')}>En</Typography>
-            </Box> */}
           </Box>
         )}
       </Container>

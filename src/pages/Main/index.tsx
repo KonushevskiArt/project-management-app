@@ -13,7 +13,7 @@ interface ILANG {
   [key: string]: string;
 }
 
-interface ITEXT {
+export interface ITEXT {
   [key: string]: ILANG;
 }
 
