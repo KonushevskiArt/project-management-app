@@ -1,8 +1,7 @@
 import styles from './column-control.module.scss';
 import { FaEllipsisH as ControlIcon } from 'react-icons/fa';
 import ColumnControlDropdown from '../ColumnControlDropdown';
-import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
-import { useDeleteColumnById } from 'hooks/columns/useDeleteColumnById';
+import { Dispatch, SetStateAction } from 'react';
 import Modal from 'components/Modal';
 import ConfirmPopup from 'components/ConfirmPopup';
 import { ITEXT } from 'interfaces';
@@ -23,14 +22,19 @@ const TEXT_COLUMN_CONTROL: ITEXT = {
 interface IProps {
   boardId: string;
   columnId: string;
+  setIsTitleEdit: Dispatch<SetStateAction<boolean>>;
 }
 
-const ColumnControl = ({ boardId, columnId }: IProps) => {
-  const { controlRef, isControlOpen, isRemove, handlers } = useControlColumn(boardId, columnId);
+const ColumnControl = ({ boardId, columnId, setIsTitleEdit }: IProps) => {
+  const { isControlOpen, isRemove, handlers } = useControlColumn(boardId, columnId);
   const lang = useLanguage();
+  const onEdit = () => {
+    setIsTitleEdit(true);
+    handlers.onEditClick();
+  };
 
   return (
-    <div className={styles.container} ref={controlRef} data-id={columnId}>
+    <div className={styles.container} data-id={columnId}>
       <button className={styles.button} disabled={isControlOpen} onClick={handlers.onOpenClick}>
         <ControlIcon className={styles.icon} />
       </button>
@@ -38,7 +42,7 @@ const ColumnControl = ({ boardId, columnId }: IProps) => {
         <ColumnControlDropdown
           title={TEXT_COLUMN_CONTROL.title[lang]}
           onCloseClick={handlers.onCloseClick}
-          onEditClick={handlers.onEditClick}
+          onEditClick={onEdit}
           onRemoveClick={handlers.onRemoveClick}
         />
       )}

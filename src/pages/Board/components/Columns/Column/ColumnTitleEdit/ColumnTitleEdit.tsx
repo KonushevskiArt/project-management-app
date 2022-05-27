@@ -1,5 +1,5 @@
-import { FormEventHandler, useEffect, useRef, useState } from 'react';
-import styles from './task-title-edit.module.scss';
+import { FormEventHandler } from 'react';
+import styles from './styles.module.scss';
 
 interface IProps {
   value: string;
@@ -9,15 +9,7 @@ interface IProps {
   onCancel: () => void;
 }
 
-const TaskTitleEdit = ({ value, onChange, onKeyDown, onSubmit, onCancel }: IProps) => {
-  const textareaEl = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (textareaEl && textareaEl.current) {
-      textareaEl.current.selectionStart = value.length;
-      textareaEl.current.selectionEnd = value.length;
-    }
-  }, []);
+const ColumnTitleEdit = ({ value, onChange, onKeyDown, onSubmit, onCancel }: IProps) => {
   return (
     <div className={styles.wrapper}>
       <input
@@ -26,7 +18,6 @@ const TaskTitleEdit = ({ value, onChange, onKeyDown, onSubmit, onCancel }: IProp
         onChange={onChange}
         onKeyDown={onKeyDown}
         autoFocus
-        ref={textareaEl}
       ></input>
       <div className={styles.buttons}>
         <button className={styles.button_save} onClick={onSubmit}>
@@ -40,4 +31,4 @@ const TaskTitleEdit = ({ value, onChange, onKeyDown, onSubmit, onCancel }: IProp
   );
 };
 
-export default TaskTitleEdit;
+export default ColumnTitleEdit;

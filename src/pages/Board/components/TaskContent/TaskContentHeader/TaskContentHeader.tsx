@@ -31,11 +31,12 @@ const TaskContentHeader = ({ title, columnTitle, onCloseClick }: IProps) => {
         <TaskTitleEdit
           value={newTitle}
           onChange={handlers.onChange}
-          onBlur={handlers.onBlur}
+          onSubmit={handlers.onSubmit}
           onKeyDown={handlers.onKeyDown}
+          onCancel={handlers.onCancel}
         />
       ) : (
-        <h2 className={styles.title} onClick={handlers.onClick}>
+        <h2 className={styles.header_title} onClick={handlers.onClick}>
           {newTitle}
         </h2>
       )}

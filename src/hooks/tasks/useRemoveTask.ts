@@ -20,9 +20,12 @@ export default function (columnId: string, taskId: string) {
 
   const { mutate } = useMutation({
     mutationFn: () => TaskService.deleteOneById(boardId, columnId, taskId),
-    onMutate: () => {
+    onSuccess: () => {
+      queryClient.invalidateQueries(pathRoutes.board.getOneById.absolute(boardId));
+    },
+    /*   onMutate: () => {
       const column: IColumn | undefined = queryClient.getQueryData(
-        pathRoutes.columns.getOneById.absolute(boardId, columnId)
+        pathRoutes.board.getOneById.absolute(boardId)
       );
       const tasks = column?.tasks;
       const newTasks = tasks?.filter((task) => taskId !== task.id);
@@ -36,7 +39,7 @@ export default function (columnId: string, taskId: string) {
           updater
         );
       }
-    },
+    }, */
     onError: () => {
       toast.error('Failed to remove task!', toastOption);
     },

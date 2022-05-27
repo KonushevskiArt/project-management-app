@@ -1,5 +1,6 @@
 import { ITask } from 'interfaces';
 import TaskContent from 'pages/Board/components/TaskContent';
+import { memo } from 'react';
 import { useQuery } from 'react-query';
 import { Link, Route, Routes, useParams } from 'react-router-dom';
 import { pathRoutes } from 'utils/pathRoutes';

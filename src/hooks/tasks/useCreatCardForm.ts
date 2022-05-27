@@ -39,7 +39,7 @@ const useCreatCardForm = () => {
   const { isLoading, mutate } = useMutation({
     mutationFn: (props: ICreatTask) => TaskService.create(props),
     onSuccess: () => {
-      queryClient.invalidateQueries(pathRoutes.columns.getOneById.absolute(boardId, columnId));
+      queryClient.invalidateQueries(pathRoutes.board.getOneById.absolute(boardId));
     },
     onError: () => {
       toast.error('Failed to create task!', toastOption);

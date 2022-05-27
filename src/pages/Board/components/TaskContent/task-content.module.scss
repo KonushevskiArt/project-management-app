@@ -82,6 +82,25 @@
   height: 32px;
   line-height: 24px;
 }
+.header_title{
+  font-size: 20px;
+  line-height: 25px;
+  height: 33px;
+  padding-left: 6px;
+  color: var(--text-color-dark);
+  margin: 0px;
+  font-weight: 600;
+  height: 32px;
+  line-height: 24px;
+  cursor: pointer;
+  width: calc(100% - 40px);
+  border-radius: 3px;
+  transition: all 0.3s ease 0s;
+  &:hover{
+    background-color: var(--dark-button-hover);
+    color: var(--text-color-dark);
+  }
+}
 
 .close {
   width: 40px;

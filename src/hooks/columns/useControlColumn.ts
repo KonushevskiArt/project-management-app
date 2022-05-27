@@ -1,11 +1,10 @@
-import { RefObject, useRef, useState } from 'react';
+import { useState } from 'react';
 import { useDeleteColumnById } from './useDeleteColumnById';
 
 export default function (boardId: string, columnId: string) {
   const { removeColumnHandler: onRemoveColumn } = useDeleteColumnById(boardId, columnId);
   const [isControlOpen, setIsControlOpen] = useState(false);
   const [isRemove, setIsRemove] = useState(false);
-  const controlRef: RefObject<HTMLDivElement> = useRef(null);
 
   const onClickOutside = (ev: MouseEvent) => {
     const target: HTMLDivElement | null = (ev.target as HTMLDivElement)?.closest(`[ data-id]`);
@@ -25,7 +24,7 @@ export default function (boardId: string, columnId: string) {
     setIsControlOpen(false);
   };
   const onEditClick = () => {
-    console.log('onEditClick');
+    onCloseClick();
   };
   const onRemoveClick = () => {
     setIsRemove(true);
@@ -38,7 +37,6 @@ export default function (boardId: string, columnId: string) {
   };
 
   return {
-    controlRef,
     isControlOpen,
     isRemove,
     handlers: {

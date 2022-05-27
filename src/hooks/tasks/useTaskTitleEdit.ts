@@ -24,7 +24,18 @@ export default function (title: string) {
     setValue((e.target as HTMLTextAreaElement).value);
   };
 
-  const onBlur: FormEventHandler<HTMLInputElement> = () => {
+  const onKeyDown: FormEventHandler<HTMLInputElement> = (event) => {
+    if ((event as { key?: string }).key === 'Enter') {
+      onSubmit();
+    }
+  };
+
+  const onCancel = () => {
+    setValue(title);
+    setIsTitleEdit(false);
+  };
+
+  const onSubmit = () => {
     if (task && newTitle.trim()) {
       mutate({
         title: newTitle.trim(),
@@ -39,22 +50,18 @@ export default function (title: string) {
     setIsTitleEdit(false);
   };
 
-  const onKeyDown: FormEventHandler<HTMLInputElement> = (event) => {
-    if ((event as { key?: string }).key === 'Enter') {
-      onBlur(event);
-    }
-  };
-
   const onClick = () => setIsTitleEdit(true);
 
   return {
     newTitle,
     isTitleEdit,
+    setIsTitleEdit,
     handlers: {
       onKeyDown,
-      onBlur,
       onChange,
       onClick,
+      onCancel,
+      onSubmit,
     },
   };
 }
