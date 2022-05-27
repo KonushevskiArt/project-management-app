@@ -7,13 +7,38 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useCreateColumn } from 'hooks/columns/useCreateColumn';
+import { useLanguage } from 'hooks/useLanguage';
 
 type Inputs = {
   name: string;
 };
 
+interface ILANG {
+  [key: string]: string;
+}
+
+interface ITEXT {
+  [key: string]: ILANG;
+}
+
+const TEXT_PAGE: Readonly<ITEXT> = {
+  button: {
+    en: 'Add another list',
+    ru: 'Добавить новый список',
+  },
+  placeholder: {
+    en: 'List title...',
+    ru: 'Название списка',
+  },
+  hidedButton: {
+    en: 'Add list',
+    ru: 'Добавить список',
+  },
+};
+
 const ColumnCreater = () => {
   const { boardId } = useParams();
+  const lang = useLanguage();
 
   const [isAddingColumn, setIsAddingColumn] = useState(false);
   const { register, handleSubmit, reset } = useForm<Inputs>();
@@ -45,14 +70,14 @@ const ColumnCreater = () => {
               className={`${s.triggerAddColumn} ${s.buttonAdd}`}
             >
               <AddIcon sx={{ fontSize: 22, color: 'var(--text-color-white)' }} />
-              <span>Add another list</span>
+              <span>{TEXT_PAGE.button[lang]}</span>
             </button>
           ) : (
             <input
               {...register('name')}
               autoFocus
               maxLength={120}
-              placeholder="Enter list title..."
+              placeholder={TEXT_PAGE.placeholder[lang]}
               className={s.textInput}
             ></input>
           )}
@@ -62,7 +87,7 @@ const ColumnCreater = () => {
                 {isLoading ? (
                   <CircularProgress size={20} sx={{ color: 'var(--text-color-white)' }} />
                 ) : (
-                  'Add list'
+                  <>{TEXT_PAGE.hidedButton[lang]}</>
                 )}
               </button>
               <button onClick={() => setIsAddingColumn(false)} className={s.transparentButton}>

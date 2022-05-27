@@ -58,7 +58,6 @@ const Task = ({ task, columnId, columnIdx, taskIdx }: IProps) => {
         const tasks = board.columns[dragItem.current.columnIdx].tasks || [];
         const numberOfTasks = tasks.length;
         const currentTask = tasks[dragItem.current.taskIdx];
-        console.log(currentTask ? currentTask.order : numberOfTasks + 1);
         const updatedTask = {
           title: task.title,
           description: task.description,
