@@ -4,6 +4,12 @@ import { toast, ToastOptions } from 'react-toastify';
 import { pathRoutes } from 'utils/pathRoutes';
 import { ColumnService } from 'utils/services/Column.service';
 
+const toastOption = {
+  position: 'bottom-right',
+  hideProgressBar: true,
+  autoClose: 2000,
+} as ToastOptions;
+
 export const useUpdateColumnById = (
   boardId: string,
   columnId: string,
@@ -11,23 +17,16 @@ export const useUpdateColumnById = (
   oldColumns: IColumn[]
 ) => {
   const queryClient = useQueryClient();
-  const toastOption = {
-    position: 'bottom-right',
-    hideProgressBar: true,
-    autoClose: 3000,
-  } as ToastOptions;
 
   const { mutate, isLoading } = useMutation(
     pathRoutes.columns.updateOneById.absolute(boardId, columnId),
     (updatedColumn: IUpdateColumn) => ColumnService.updateOneById(boardId, columnId, updatedColumn),
     {
-      onError: (error: Error) => {
-        console.log(error);
+      onError: () => {
         setColumns(oldColumns);
         toast.error('Column updating failed by network error!', toastOption);
       },
       onSuccess: () => {
-        toast.success('Column updated successfuly!', toastOption);
         queryClient.invalidateQueries(pathRoutes.board.getOneById.absolute(boardId));
       },
     }

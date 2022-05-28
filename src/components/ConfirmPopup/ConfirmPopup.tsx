@@ -28,15 +28,15 @@ const ConfirmPopup = ({ title, onLeftClick, onRightClick }: IProps) => {
         <input
           type="submit"
           className={styles.button}
-          onClick={onLeftClick}
-          value={TEXT_CONFIRM_POPUP.cancel[lang]}
+          onClick={onRightClick}
+          value={TEXT_CONFIRM_POPUP.ok[lang]}
+          autoFocus={true}
         />
         <input
           type="submit"
           className={styles.button}
-          onClick={onRightClick}
-          value={TEXT_CONFIRM_POPUP.ok[lang]}
-          autoFocus={true}
+          onClick={onLeftClick}
+          value={TEXT_CONFIRM_POPUP.cancel[lang]}
         />
       </div>
     </div>

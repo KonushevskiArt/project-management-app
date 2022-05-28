@@ -10,10 +10,9 @@ export default function (task: ITask) {
   const [newTitle, setValue] = useState(task.title);
   const [isTitleEdit, setIsTitleEdit] = useState(false);
   const queryClient = useQueryClient();
-  const { mutate, data } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: (props: IUpdateTask) => TaskService.updateOneById(boardId, columnId, taskId, props),
     onSuccess: () => {
-      console.log(data);
       queryClient.invalidateQueries(pathRoutes.board.getOneById.absolute(boardId));
     },
   });
@@ -34,7 +33,6 @@ export default function (task: ITask) {
   };
 
   const onSubmit = () => {
-    console.log('onSubmit');
     if (task && newTitle.trim()) {
       mutate({
         title: newTitle.trim(),

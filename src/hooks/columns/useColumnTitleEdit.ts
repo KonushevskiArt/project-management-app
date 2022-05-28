@@ -12,10 +12,9 @@ export default function (column: IColumn) {
   const [newTitle, setValue] = useState(title);
   const [isTitleEdit, setIsTitleEdit] = useState(false);
 
-  const { mutate, data } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: (props: IUpdateColumn) => ColumnService.updateOneById(boardId, columnId, props),
     onSuccess: () => {
-      console.log(data);
       queryClient.invalidateQueries(pathRoutes.board.getOneById.absolute(boardId));
     },
   });
@@ -36,7 +35,6 @@ export default function (column: IColumn) {
   };
 
   const onSubmit = () => {
-    console.log('onSubmit');
     if (column && newTitle?.trim()) {
       mutate({
         title: newTitle.trim(),
