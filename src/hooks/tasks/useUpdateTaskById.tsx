@@ -1,8 +1,24 @@
+import { useLanguage } from 'hooks/useLanguage';
 import { IColumn, IUpdateTask } from 'interfaces';
 import { useMutation, useQueryClient } from 'react-query';
 import { toast, ToastOptions } from 'react-toastify';
 import { pathRoutes } from 'utils/pathRoutes';
 import { TaskService } from 'utils/services/Task.service';
+
+interface ILANG {
+  [key: string]: string;
+}
+
+interface ITEXT {
+  [key: string]: ILANG;
+}
+
+const TEXT_PAGE: Readonly<ITEXT> = {
+  errorMessage: {
+    en: 'Task updating failed by network error!',
+    ru: 'Обновление задачи не удалось из-за сетевой ошибки!',
+  },
+};
 
 const toastOption = {
   position: 'bottom-right',
@@ -18,6 +34,7 @@ export const useUpdateTaskById = (
   oldColumns: IColumn[]
 ) => {
   const queryClient = useQueryClient();
+  const lang = useLanguage();
 
   const { mutate, isLoading } = useMutation(
     pathRoutes.task.updateOneById.absolute(boardId, columnId, taskId),
@@ -25,7 +42,7 @@ export const useUpdateTaskById = (
     {
       onError: () => {
         setColumns(oldColumns);
-        toast.error('Task updating failed by network error!', toastOption);
+        toast.error(TEXT_PAGE.errorMessage[lang], toastOption);
       },
       onSuccess: () => {
         queryClient.invalidateQueries(pathRoutes.board.getOneById.absolute(boardId));

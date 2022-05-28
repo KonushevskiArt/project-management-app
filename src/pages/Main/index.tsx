@@ -41,10 +41,11 @@ const MainPage = () => {
           <h2 className={s.title}>{TEXT_MAIN_PAGE.title[lang]}</h2>
           {isLoading && <LinearProgress />}
           {error && <p>loading error...</p>}
-          {data?.length && (
+
+          {data && (
             <div className={s.container}>
-              {data?.map(({ title, id }) => (
-                <CardBoard id={id} title={title} key={id} />
+              {data.map(({ title, id, description }) => (
+                <CardBoard id={id} description={description} title={title} key={id} />
               ))}
               <BoardCreater />
             </div>

@@ -3,6 +3,7 @@
   display: grid;
   justify-content: center;
   grid-template-columns: 280px;
+  grid-template-rows: min-content;
   gap: 30px;
 }
 .page {
