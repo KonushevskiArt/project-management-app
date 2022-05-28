@@ -1,9 +1,10 @@
+import { IUpdatedBoardParams } from 'interfaces';
 import { useMutation } from 'react-query';
 import { toast, ToastOptions } from 'react-toastify';
 import { pathRoutes } from 'utils/pathRoutes';
 import { BoardService } from 'utils/services/Board.service';
 
-export const useUpdateBoardById = (
+export const useUpdateTitleBoardById = (
   boardId: string,
   setIsEditBoard: React.Dispatch<React.SetStateAction<boolean>>,
   setCurrentTitle: React.Dispatch<React.SetStateAction<string>>
@@ -16,7 +17,7 @@ export const useUpdateBoardById = (
 
   const { mutate, isLoading } = useMutation(
     pathRoutes.board.updateOneById.absolute(boardId),
-    (title: string) => BoardService.updateOneById(boardId, title),
+    (title: string) => BoardService.updateTitleOneById(boardId, title),
     {
       onError: (error: Error) => {
         setIsEditBoard(false);

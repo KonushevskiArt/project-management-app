@@ -1,4 +1,4 @@
-import { IColumn, ITask, IUpdataTask } from 'interfaces';
+import { IColumn, ITask, IUpdatedTask, IUpdataTask } from 'interfaces';
 import { FormEventHandler, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useParams } from 'react-router';
@@ -12,7 +12,8 @@ const toastOption: ToastOptions = {
   autoClose: 2000,
 };
 
-export default function (description: string) {
+export default function (task: ITask) {
+  const { description } = task;
   const { boardId = '', columnId = '', taskId = '' } = useParams();
   const [isEdit, setIsEdit] = useState(false);
 
@@ -20,17 +21,12 @@ export default function (description: string) {
 
   const queryClient = useQueryClient();
 
-  const column = queryClient.getQueryData<IColumn | undefined>(
-    pathRoutes.columns.getOneById.absolute(boardId, columnId)
-  );
-  const task = column?.tasks?.find(({ id }: { id: string }) => id === taskId) as ITask | undefined;
-
   const { isLoading, mutate } = useMutation({
     mutationFn: (props: IUpdataTask) => TaskService.updateOneById(taskId, props),
     onSuccess: () => {
       setIsEdit(false);
       setValue(newDescription);
-      queryClient.invalidateQueries(pathRoutes.task.getOneById.absolute(boardId, columnId, taskId));
+      queryClient.invalidateQueries(pathRoutes.board.getOneById.absolute(boardId));
     },
     onError: () => {
       toast.error('Failed to edit description!', toastOption);

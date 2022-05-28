@@ -11,7 +11,8 @@
   position: relative;
   z-index: 0;
   color: var(--text-color-gray);
-  transition: all 0.3s ease 0s;
+  transition: background-color 0.3s ease 0s;
+  cursor: pointer;
   &:hover {
     background-color: #f4f5f7;
     .link {
@@ -21,7 +22,13 @@
       opacity: 0.9;
     }
   }
+  &.dragging {
+    cursor: grab;
+  }
+ 
 }
+
+
 .link {
   flex-grow: 1;
   display: block;
@@ -29,14 +36,26 @@
   line-height: 32px;
   text-decoration: none;
   color: var(--text-color-gray);
-  transition: all 0.3s ease 0s;
+  transition: color 0.3s ease 0s;
   padding: 0px 8px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+}
+.dragging {
+  background-color: var(--column-background);
+  border: 1px solid var(--main-color-light-hover);
+   span {
+    opacity: 0;
+  }
 }
 
 .remove{
   width: 20px;
   height: 20px;
-  opacity: 0.6;
+  opacity: 0.4;
   transition: opacity 0.2s ease 0s;
   margin-right: 5px;
   &:hover {
@@ -45,3 +64,5 @@
   }
   padding: 3px;
 }
+
+

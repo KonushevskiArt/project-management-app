@@ -27,7 +27,7 @@ const CreatTask = ({ columnId }: IProps) => {
       <Route
         path="/*"
         element={
-          <Link to={routes.tasks.creat.absolute(columnId)}>
+          <Link draggable={false} to={routes.tasks.creat.absolute(columnId)}>
             <CreatTaskLabel label={TEXT_CREAT_CARD.label[lang]} />
           </Link>
         }

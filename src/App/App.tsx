@@ -4,8 +4,8 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { ContextProvider } from './context';
-import RequestInterceptor from './RequestInterceptor';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import RequestInterceptor from 'utils/RequestInterceptor';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,7 +22,7 @@ function App() {
             <AppRoutes />
           </RequestInterceptor>
         </ContextProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </QueryClientProvider>
       <ToastContainer />
     </BrowserRouter>
