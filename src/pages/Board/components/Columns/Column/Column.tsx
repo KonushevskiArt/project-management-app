@@ -106,7 +106,6 @@ const Column = ({ column, boardId, columnIdx }: IProps) => {
     typeDragItem.current === DragItem.column
       ? `${styles.column} ${styles.dragging}`
       : styles.column;
-
   return (
     <div
       draggable={true}
@@ -115,7 +114,7 @@ const Column = ({ column, boardId, columnIdx }: IProps) => {
       onDragStart={(e) => handleDragStart(e, { columnIdx, taskIdx: 0 })}
       className={taskClasses}
     >
-      <div className={styles.body}>
+      <div className={styles.wrapper}>
         <ColumnHeader column={column} boardId={boardId} />
         {column?.tasks && <Tasks columnId={column.id} tasks={column.tasks} columnIdx={columnIdx} />}
         <CreatTask columnId={column.id} />
