@@ -21,7 +21,6 @@ export const useDeleteBoardById = (boardId: string) => {
         toast.error('Failed remove board by network error!', toastOption);
       },
       onSuccess: (data) => {
-        console.log(data);
         toast.success('Board removed successfuly!', toastOption);
         queryClient.invalidateQueries(pathRoutes.board.getAll.absolute());
       },

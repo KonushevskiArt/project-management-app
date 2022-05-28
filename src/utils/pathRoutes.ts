@@ -1,7 +1,8 @@
 import { join } from 'path-browserify';
 
 export const pathRoutes = {
-  root: 'https://pure-cove-88107.herokuapp.com',
+  // root: 'https://pure-cove-88107.herokuapp.com',
+  root: 'https://young-inlet-01140.herokuapp.com',
   docs: () => join(pathRoutes.root, 'docs'),
   auth: {
     relative: '',
@@ -56,37 +57,37 @@ export const pathRoutes = {
       absolute: (id = ':id') => `${pathRoutes.root}/${pathRoutes.board.relative}/${id}`,
     },
   },
-  column: {
+  columns: {
     relative: (boardId = ':id') => {
       return `${pathRoutes.root}/${pathRoutes.board.relative}/${boardId}/columns`;
     },
     getAll: {
       relative: '',
-      absolute: (boardId = ':id') => pathRoutes.column.relative(boardId),
+      absolute: (boardId = ':id') => pathRoutes.columns.relative(boardId),
     },
     getOneById: {
       relative: '',
       absolute: (boardId = 'id', columnId = ':id') =>
-        `${pathRoutes.column.relative(boardId)}/${columnId}`,
+        `${pathRoutes.columns.relative(boardId)}/${columnId}`,
     },
     create: {
       relative: '',
-      absolute: (boardId = ':id') => pathRoutes.column.relative(boardId),
+      absolute: (boardId = ':id') => pathRoutes.columns.relative(boardId),
     },
     updateOneById: {
       relative: '',
       absolute: (boardId = 'id', columnId = ':id') =>
-        `${pathRoutes.column.relative(boardId)}/${columnId}`,
+        `${pathRoutes.columns.relative(boardId)}/${columnId}`,
     },
     deleteOneById: {
       relative: '',
       absolute: (boardId = 'id', columnId = ':id') =>
-        `${pathRoutes.column.relative(boardId)}/${columnId}`,
+        `${pathRoutes.columns.relative(boardId)}/${columnId}`,
     },
   },
   task: {
     relative: (boardId = ':id', columnId = ':id') =>
-      `${pathRoutes.column.relative(boardId)}/${columnId}`,
+      `${pathRoutes.columns.relative(boardId)}/${columnId}`,
     getAll: {
       relative: '',
       absolute: (boardId = ':id', columnId = ':id') =>

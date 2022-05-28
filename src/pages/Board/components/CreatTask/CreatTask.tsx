@@ -1,9 +1,15 @@
+import { useLanguage } from 'hooks/useLanguage';
+import { ITEXT } from 'interfaces';
 import { Link, Route, Routes, useParams } from 'react-router-dom';
+import { routes } from 'utils/routes';
 import CreatTaskForm from './CreatTaskForm';
 import CreatTaskLabel from './CreatTaskLabel';
 
-const TEXT_CREAT_CARD = {
-  label: 'Add a card',
+const TEXT_CREAT_CARD: ITEXT = {
+  label: {
+    en: 'Add a card',
+    ru: 'Добавить карточку',
+  },
 };
 
 interface IProps {
@@ -12,17 +18,17 @@ interface IProps {
 
 const CreatTask = ({ columnId }: IProps) => {
   const { columnId: id } = useParams();
-
+  const lang = useLanguage();
   return (
     <Routes>
       {columnId === id && (
-        <Route path={`columns/${columnId}/tasks/creat-task`} element={<CreatTaskForm />} />
+        <Route path={routes.tasks.creat.absolute()} element={<CreatTaskForm />} />
       )}
       <Route
         path="/*"
         element={
-          <Link to={`columns/${columnId}/tasks/creat-task`}>
-            <CreatTaskLabel label={TEXT_CREAT_CARD.label} />
+          <Link draggable={false} to={routes.tasks.creat.absolute(columnId)}>
+            <CreatTaskLabel label={TEXT_CREAT_CARD.label[lang]} />
           </Link>
         }
       />

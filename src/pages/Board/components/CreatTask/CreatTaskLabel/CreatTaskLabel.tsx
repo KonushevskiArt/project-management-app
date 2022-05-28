@@ -6,9 +6,11 @@ interface IProps {
 }
 
 const CreatTaskLabel = ({ label }: IProps) => (
-  <span className={styles.box}>
+  <span draggable={false} className={styles.box}>
     <PlusIcon className={styles.icon} />
-    <span className={styles.text}>{label}</span>
+    <span draggable={false} className={styles.text}>
+      {label}
+    </span>
   </span>
 );
 export default CreatTaskLabel;

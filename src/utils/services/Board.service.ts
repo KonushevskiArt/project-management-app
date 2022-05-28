@@ -1,22 +1,26 @@
 import axios from 'axios';
 import { pathRoutes } from 'utils/pathRoutes';
-import { IBoard } from '../../interfaces';
+import { IBoard, IColumn, INewBoard } from '../../interfaces';
 
 export const BoardService = {
   async getAll() {
-    return axios.get<IBoard[]>(pathRoutes.board.getAll.absolute()).then((data) => data.data);
+    const { data } = await axios.get<IBoard[]>(pathRoutes.board.getAll.absolute());
+    return data;
   },
   async getOneById(id: string) {
     return axios.get<IBoard>(pathRoutes.board.getOneById.absolute(id)).then((data) => data.data);
   },
-  async create(title: string) {
-    return axios
-      .post<IBoard>(pathRoutes.board.create.absolute(), { title })
-      .then((data) => data.data);
+  async create(params: INewBoard) {
+    return axios.post<IBoard>(pathRoutes.board.create.absolute(), params).then((data) => data.data);
   },
-  async updateOneById(id: string, title: string) {
+  async updateTitleOneById(id: string, title: string) {
     return axios
       .put<IBoard>(pathRoutes.board.getOneById.absolute(id), { title })
+      .then((data) => data.data);
+  },
+  async updateColumnsOneById(id: string, columns: IColumn[]) {
+    return axios
+      .put<IBoard>(pathRoutes.board.getOneById.absolute(id), { columns: columns })
       .then((data) => data.data);
   },
   async deleteOneById(id: string) {
