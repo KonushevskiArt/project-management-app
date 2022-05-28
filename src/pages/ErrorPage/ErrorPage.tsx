@@ -2,9 +2,19 @@ import React from 'react';
 import { Box } from '@mui/material';
 import Container from '@mui/material/Container';
 import { useNavigate } from 'react-router';
+import { ITEXT } from 'pages/Main';
+import { useLanguage } from 'hooks/useLanguage';
+
+const TEXT_MAIN_PAGE: Readonly<ITEXT> = {
+  text: {
+    en: 'Page not found!',
+    ru: 'Страница не найдена',
+  },
+};
 
 export const ErrorPage = () => {
   const navigate = useNavigate();
+  const lang = useLanguage();
 
   setTimeout(() => {
     navigate('/welcome');
@@ -32,7 +42,7 @@ export const ErrorPage = () => {
         }}
       >
         <Box sx={{ fontSize: '5rem' }}>404</Box>
-        <Box>Page not found!</Box>
+        <Box>{TEXT_MAIN_PAGE.text[lang]}</Box>
       </Container>
     </Container>
   );

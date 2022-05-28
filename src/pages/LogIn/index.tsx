@@ -15,6 +15,8 @@ import { UserService } from 'utils/services/User.service';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Delete } from './deleteButton';
+import { useLanguage } from 'hooks/useLanguage';
+import { TEXT_MAIN_PAGE } from './translate';
 
 export const notify = (name: string) =>
   toast.success(name, {
@@ -43,7 +45,7 @@ export const LogInForm = () => {
   const [notFound, setNotFound] = useState(false);
   const [LogInProces, setLogInProces] = useState(false);
   const [userIsExist, setUserIsExist] = useState(false);
-  const [height, setHeight] = useState('calc(100vh - 110px)');
+  const lang = useLanguage();
 
   function checkUser(data: IUser | IUserSignIn | IUserUpdate) {
     setLogInProces(true);
@@ -102,8 +104,9 @@ export const LogInForm = () => {
   }
 
   function checkText() {
-    if (location.pathname === '/signin') return 'Sign In ';
-    if (location.pathname === '/signup') return 'Sign Up ';
+    if (location.pathname === '/signin') return TEXT_MAIN_PAGE.signIn[lang];
+    if (location.pathname === '/signup') return TEXT_MAIN_PAGE.signUp[lang];
+    if (location.pathname === '/update') return TEXT_MAIN_PAGE.update[lang];
   }
   function chechHeight() {
     if (location.pathname === '/signin') return 'calc(100vh - 75px)';
@@ -135,7 +138,7 @@ export const LogInForm = () => {
             navigate('/welcome');
           }}
         >
-          Welcome Page
+          {TEXT_MAIN_PAGE.welcome[lang]}
         </Button>
       </Box>
     );
@@ -156,7 +159,9 @@ export const LogInForm = () => {
         }}
       >
         <Typography variant="h4">
-          {location.pathname === '/update' ? 'Update User' : checkText() + 'to App'}
+          {location.pathname === '/update'
+            ? TEXT_MAIN_PAGE.update[lang]
+            : checkText() + TEXT_MAIN_PAGE.title[lang]}
         </Typography>
         <form
           onChange={() => {
@@ -175,10 +180,10 @@ export const LogInForm = () => {
                 {...register('name', {
                   required: true,
                 })}
-                placeholder="Enter name"
+                placeholder={TEXT_MAIN_PAGE.name[lang]}
                 className={`text-input ${errors?.name ? 'error-border' : ''}`}
               />
-              {errors?.name && <p className="error-text">Field must be filled</p>}
+              {errors?.name && <p className="error-text">{TEXT_MAIN_PAGE.nameError[lang]}</p>}
             </Box>
           )}
           <Box sx={{ position: 'relative', width: '100%' }}>
@@ -188,13 +193,13 @@ export const LogInForm = () => {
                 required: true,
                 pattern: {
                   value: /^.{4,}$/i,
-                  message: 'Min length 4',
+                  message: '',
                 },
               })}
-              placeholder="Enter login"
+              placeholder={TEXT_MAIN_PAGE.login[lang]}
               className={`text-input ${errors?.login ? 'error-border' : ''}`}
             />
-            {errors?.login && <p className="error-text">{errors.login.message}</p>}
+            {errors?.login && <p className="error-text">{TEXT_MAIN_PAGE.loginError[lang]}</p>}
           </Box>
           <Box sx={{ position: 'relative', width: '100%' }}>
             <input
@@ -203,10 +208,10 @@ export const LogInForm = () => {
                 required: true,
                 pattern: {
                   value: /^.{6,}$/i,
-                  message: 'Min length 6',
+                  message: '',
                 },
               })}
-              placeholder="Enter password"
+              placeholder={TEXT_MAIN_PAGE.password[lang]}
               className={`text-input ${errors?.password ? 'error-border' : ''}`}
               type={`${show ? 'text' : 'password'}`}
             />
@@ -215,7 +220,7 @@ export const LogInForm = () => {
             ) : (
               <Visibility className="icon" onClick={showHidePassord} color="action" />
             )}
-            {errors?.password && <p className="error-text">{errors.password.message}</p>}
+            {errors?.password && <p className="error-text">{TEXT_MAIN_PAGE.passwordError[lang]}</p>}
           </Box>
           {notFound && (
             <Typography color="red" sx={{ marginTop: '-16px' }}>
@@ -231,7 +236,7 @@ export const LogInForm = () => {
             {LogInProces ? (
               <CircularProgress color="info" size="24px" />
             ) : location.pathname === '/update' ? (
-              'Update'
+              TEXT_MAIN_PAGE.update[lang].split(' ')[0]
             ) : (
               checkText()
             )}

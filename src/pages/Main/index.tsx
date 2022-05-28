@@ -8,7 +8,14 @@ import LinearProgress from '@mui/material/LinearProgress';
 import BoardCreater from './BoardCreater';
 import Layout from 'components/Layout';
 import { useLanguage } from 'hooks/useLanguage';
-import { ITEXT } from 'interfaces';
+
+interface ILANG {
+  [key: string]: string;
+}
+
+export interface ITEXT {
+  [key: string]: ILANG;
+}
 
 const TEXT_MAIN_PAGE: Readonly<ITEXT> = {
   title: {
