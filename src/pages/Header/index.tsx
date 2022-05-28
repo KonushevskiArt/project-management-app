@@ -112,6 +112,7 @@ export const Header = () => {
               size="small"
               sx={{ marginRight: '10px', color: 'black' }}
               onClick={() => {
+                appContext.setCreatingNewBoard(true);
                 navigate('/');
               }}
             >

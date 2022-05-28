@@ -1,13 +1,14 @@
 .card {
   position: relative;
   width: 280px;
-  height: 175px;
+  height: 250px;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 30px;
   min-height: 100px;
-  border-radius: 5px 5px 5px 45px;
+  cursor: pointer;
+  border-radius: 5px 5px 5px 55px;
   background: var(--main-color-light);
   background: linear-gradient(0deg, var(--main-color-dark) 0%, var(--main-color-light) 100%);
   color: var(--text-color-white);
@@ -19,18 +20,42 @@
   }
 }
 .title {
-  font-size: 20px;
+  font-size: 22px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
   width: 220px;
   text-align: center;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
   color: var(--text-color-title);
 }
-.editTitle {
+.description {
+  font-style: italic;
+  letter-spacing: 1.2px;
   margin-bottom: 25px;
-  padding: 7px;
+  font-size: 16px;
+  border-top: 1px solid var(--text-color-white);
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-height: 1.3em;
+  height: 70px;
+}
+.editTitle {
+  border-radius: 3px;
+  padding: 5px;
+  width: 100%;
+  margin-bottom: 25px;
+}
+.editDescription {
+  border-radius: 3px;
+  padding: 5px;
+  resize: vertical;
+  max-height: 115px;
+  width: 100%;
 }
 .removeBtn {
   position: absolute;
@@ -98,4 +123,36 @@
 .error {
   margin-top: 10px;
   color: var(--error-color);
+}
+.buttonsWrapper {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  gap: 10px;
+}
+.btnSave {
+  color: var(--main-color-dark);
+  font-size: 18px;
+  display: inline-block;
+  padding: 2px 22px 2px 22px;
+  display: flex;
+  align-items: center;
+  border-radius: 2px;
+  border: 1px solid var(--main-color);
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s;
+  &:hover {
+    color: var(--text-color-white);
+    background: var(--main-color-dark);
+    border: 1px solid var(--text-color-white);
+  }
+}
+.btnClose {
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-color-white);
+  padding: 3px;
+  &:hover {
+    color: var(--dark-button-hover);
+  }
 }

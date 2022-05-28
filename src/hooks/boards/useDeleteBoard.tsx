@@ -1,10 +1,12 @@
 import { IBoard } from 'interfaces';
+import { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { toast, ToastOptions } from 'react-toastify';
 import { pathRoutes } from 'utils/pathRoutes';
 import { BoardService } from 'utils/services/Board.service';
 
 export const useDeleteBoardById = (boardId: string) => {
+  const [isShowModalConfirm, setShowPopupConfirm] = useState(false);
   const queryClient = useQueryClient();
   const toastOption = {
     position: 'bottom-center',
@@ -27,5 +29,18 @@ export const useDeleteBoardById = (boardId: string) => {
     }
   );
 
-  return { mutate, isLoading };
+  const hideModal = () => {
+    setShowPopupConfirm(false);
+  };
+
+  const showModal = () => {
+    setShowPopupConfirm(true);
+  };
+
+  const onDeleteBoard = () => {
+    mutate();
+    setShowPopupConfirm(false);
+  };
+
+  return { isLoading, onDeleteBoard, showModal, hideModal, isShowModalConfirm };
 };

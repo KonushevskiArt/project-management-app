@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import s from './style.module.scss';
 import AddIcon from '@mui/icons-material/Add';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useCreateBoard } from 'hooks/boards/useCraeteBoard';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { useLanguage } from 'hooks/useLanguage';
+import { AppContext } from 'App/context';
 
 type Inputs = {
   title: string;
@@ -27,15 +28,26 @@ const TEXT_PAGE: Readonly<ITEXT> = {
     en: 'Title of new board',
     ru: 'Имя доски задач',
   },
+  textAreaPlaceholder: {
+    en: 'Description of new board',
+    ru: 'Описание доски задач',
+  },
 };
 
 const BoardCreater = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isCreatingNewBoard, setCreatingNewBoard } = useContext(AppContext);
+  const [isOpen, setIsOpen] = useState(isCreatingNewBoard);
+  useEffect(() => {
+    setIsOpen(isCreatingNewBoard);
+  }, [isCreatingNewBoard]);
   const { register, handleSubmit, reset } = useForm<Inputs>();
   const wrapperClasses = isOpen ? `${s.wrapper} ${s.wrapperActive}` : s.wrapper;
   const boardCreater = isOpen ? `${s.boardCreater} ${s.boardCreaterActive}` : s.boardCreater;
   const { mutate, isLoading } = useCreateBoard();
-  const ref = useOnclickOutside(() => setIsOpen(false));
+  const ref = useOnclickOutside(() => {
+    setCreatingNewBoard(false);
+    setIsOpen(false);
+  });
 
   const lang = useLanguage();
 
@@ -43,6 +55,7 @@ const BoardCreater = () => {
     if (data.title.trim() && isLoading === false) {
       mutate({ title: data.title, description: 'null' });
       setIsOpen(false);
+      setCreatingNewBoard(false);
       reset();
     }
   };
@@ -64,6 +77,12 @@ const BoardCreater = () => {
               autoFocus={true}
               placeholder={TEXT_PAGE.inputPlaceholder[lang]}
               type="text"
+            />
+            <textarea
+              {...register('title')}
+              className={s.textAreaAdd}
+              maxLength={240}
+              placeholder={TEXT_PAGE.textAreaPlaceholder[lang]}
             />
             <button type="submit" className={s.createBtn}>
               {TEXT_PAGE.createButton[lang]}

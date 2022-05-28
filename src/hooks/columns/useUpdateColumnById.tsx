@@ -1,3 +1,4 @@
+import { useLanguage } from 'hooks/useLanguage';
 import { IColumn, IUpdateColumn } from 'interfaces';
 import { useMutation, useQueryClient } from 'react-query';
 import { toast, ToastOptions } from 'react-toastify';
@@ -10,6 +11,21 @@ const toastOption = {
   autoClose: 2000,
 } as ToastOptions;
 
+interface ILANG {
+  [key: string]: string;
+}
+
+interface ITEXT {
+  [key: string]: ILANG;
+}
+
+const TEXT_PAGE: Readonly<ITEXT> = {
+  errorMessage: {
+    en: 'Column updating failed by network error!',
+    ru: 'Обновление колонки не удалось из-за сетевой ошибки!',
+  },
+};
+
 export const useUpdateColumnById = (
   boardId: string,
   columnId: string,
@@ -17,6 +33,7 @@ export const useUpdateColumnById = (
   oldColumns: IColumn[]
 ) => {
   const queryClient = useQueryClient();
+  const lang = useLanguage();
 
   const { mutate, isLoading } = useMutation(
     pathRoutes.columns.updateOneById.absolute(boardId, columnId),
@@ -24,7 +41,7 @@ export const useUpdateColumnById = (
     {
       onError: () => {
         setColumns(oldColumns);
-        toast.error('Column updating failed by network error!', toastOption);
+        toast.error(TEXT_PAGE.errorMessage[lang], toastOption);
       },
       onSuccess: () => {
         queryClient.invalidateQueries(pathRoutes.board.getOneById.absolute(boardId));

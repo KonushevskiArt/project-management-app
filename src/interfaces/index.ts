@@ -66,6 +66,7 @@ export interface IBoard {
   columns?: IColumn[] | [];
   id: string;
   title: string;
+  description: string;
 }
 
 export interface INewBoard {
@@ -74,8 +75,8 @@ export interface INewBoard {
 }
 
 export interface IUpdatedBoardParams {
-  columns?: IColumn[];
-  title?: string;
+  description: string;
+  title: string;
 }
 
 export interface IColumn {

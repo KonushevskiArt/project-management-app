@@ -1,4 +1,4 @@
-import React, { createContext, Dispatch, ReactNode, useReducer } from 'react';
+import React, { createContext, Dispatch, ReactNode, useReducer, useState } from 'react';
 
 type UpdateActionBoolean = {
   type: 'setLogInSucsess';
@@ -16,6 +16,8 @@ type AppContextProviderProps = {
 type ContextType = {
   state: ContextState;
   dispatch: Dispatch<CounterAction>;
+  isCreatingNewBoard: boolean;
+  setCreatingNewBoard: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 type CounterAction = UpdateActionBoolean;
@@ -37,11 +39,14 @@ export const AppContext = createContext({} as ContextType);
 
 export const ContextProvider = ({ children }: AppContextProviderProps) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [isCreatingNewBoard, setCreatingNewBoard] = useState(false);
   return (
     <AppContext.Provider
       value={{
         state,
         dispatch,
+        isCreatingNewBoard,
+        setCreatingNewBoard,
       }}
     >
       {children}

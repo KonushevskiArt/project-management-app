@@ -4,10 +4,11 @@ import { toast, ToastOptions } from 'react-toastify';
 import { pathRoutes } from 'utils/pathRoutes';
 import { BoardService } from 'utils/services/Board.service';
 
-export const useUpdateTitleBoardById = (
+export const useUpdateBoardById = (
   boardId: string,
   setIsEditBoard: React.Dispatch<React.SetStateAction<boolean>>,
-  setCurrentTitle: React.Dispatch<React.SetStateAction<string>>
+  setCurrentTitle: React.Dispatch<React.SetStateAction<string>>,
+  setCurrentDescription: React.Dispatch<React.SetStateAction<string>>
 ) => {
   const toastOption = {
     position: 'bottom-center',
@@ -17,7 +18,7 @@ export const useUpdateTitleBoardById = (
 
   const { mutate, isLoading } = useMutation(
     pathRoutes.board.updateOneById.absolute(boardId),
-    (title: string) => BoardService.updateTitleOneById(boardId, title),
+    (params: IUpdatedBoardParams) => BoardService.updateOneById(boardId, params),
     {
       onError: (error: Error) => {
         setIsEditBoard(false);
@@ -27,6 +28,7 @@ export const useUpdateTitleBoardById = (
       onSuccess: (data) => {
         setIsEditBoard(false);
         setCurrentTitle(data.title);
+        setCurrentDescription(data.description);
         toast.success("Board's title updated successfuly!", toastOption);
       },
     }
