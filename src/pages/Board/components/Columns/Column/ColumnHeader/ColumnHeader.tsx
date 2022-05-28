@@ -1,27 +1,16 @@
-import { useDeleteColumnById } from 'hooks/columns/useDeleteColumnById';
-import useTaskTitleEdit from 'hooks/tasks/useTaskTitleEdit';
-import { useLanguage } from 'hooks/useLanguage';
-import { ITEXT } from 'interfaces';
-import { useState } from 'react';
+import useColumnTitleEdit from 'hooks/columns/useColumnTitleEdit';
+import { IColumn } from 'interfaces';
 import ColumnControl from '../ColumnControl';
-import ColumnTitleEdit from '../ColumnTitleEdit';
-import styles from './column-header.module.scss';
-
-const TEXT_COLUMN_HEADER: ITEXT = {
-  remove: {
-    en: 'remove',
-    ru: 'удалить',
-  },
-};
+import ColumnTitleEdit from '../ColumnHeaderEdit';
+import styles from './styles.module.scss';
 
 interface IProps {
-  title: string;
+  column: IColumn;
   boardId: string;
-  columnId: string;
 }
 
-const ColumnHeader = ({ title, boardId, columnId }: IProps) => {
-  const { newTitle, isTitleEdit, setIsTitleEdit, handlers } = useTaskTitleEdit(title);
+const ColumnHeader = ({ column, boardId }: IProps) => {
+  const { newTitle = '', isTitleEdit, setIsTitleEdit, handlers } = useColumnTitleEdit(column);
 
   return (
     <div className={styles.container}>
@@ -35,10 +24,10 @@ const ColumnHeader = ({ title, boardId, columnId }: IProps) => {
         />
       ) : (
         <h3 className={styles.title} onClick={handlers.onClick}>
-          {title}
+          {newTitle}
         </h3>
       )}
-      <ColumnControl boardId={boardId} columnId={columnId} setIsTitleEdit={setIsTitleEdit} />
+      <ColumnControl boardId={boardId} columnId={column.id} setIsTitleEdit={setIsTitleEdit} />
     </div>
   );
 };

@@ -9,7 +9,6 @@ import CreatTask from 'pages/Board/components/CreatTask';
 import TaskContent from 'pages/Board/components/TaskContent';
 import Board from 'pages/Board';
 import { routes } from 'utils/routes';
-import { pathRoutes } from 'utils/pathRoutes';
 import MainPage from 'pages/Main';
 import Cookies from 'js-cookie';
 
@@ -32,7 +31,7 @@ const AppRoutes = () => {
     if (Cookies.get('token') || appContext.state.logInSucsess) return <Header />;
     else return <></>;
   }
-  console.log('dad2212');
+
   return (
     <>
       <PrivateHeader />

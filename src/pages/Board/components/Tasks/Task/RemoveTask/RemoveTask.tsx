@@ -26,7 +26,7 @@ const RemoveTask = ({ columnId, taskId }: IProps) => {
   );
 
   return (
-    <span>
+    <div>
       <RemoveIcon className={styles.remove} onClick={onLabelClick} />
       {isRemove && (
         <Modal handleClickOutside={onClickOutside}>
@@ -37,7 +37,7 @@ const RemoveTask = ({ columnId, taskId }: IProps) => {
           />
         </Modal>
       )}
-    </span>
+    </div>
   );
 };
 

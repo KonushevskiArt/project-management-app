@@ -3,13 +3,13 @@ import { useQuery } from 'react-query';
 import { Route, Routes, useParams } from 'react-router';
 import { routes } from 'utils/routes';
 import { BoardService } from 'utils/services/Board.service';
-import s from './style.module.scss';
-import LinearProgress from '@mui/material/LinearProgress';
+import styles from './styles.module.scss';
 import Columns from './components/Columns';
 import { DragItem, IBoard, IColumn, IDragItemParams } from 'interfaces';
 import { pathRoutes } from 'utils/pathRoutes';
 import { SetUserIdInLocalStorage } from 'utils/setUserIdInLocalStorage';
 import TaskContent from './components/TaskContent';
+import Loader from 'components/Loader';
 
 type ContextType = {
   board: IBoard;
@@ -49,33 +49,30 @@ const Board: React.FC = () => {
     onSuccess: (data) => setColumns(data.columns as IColumn[]),
   });
 
+  if (isLoading) return <Loader />;
   if (error) return <div>Network error...</div>;
-  console.log(board?.columns);
   return (
-    <div className={s.container}>
-      {isLoading && <LinearProgress />}
+    <div className={styles.container}>
       {board && (
-        <>
-          <BoardContext.Provider
-            value={{
-              board: board,
-              dragItem: dragItem,
-              dragNode: dragNode,
-              setColumns: setColumns,
-              isDragging: isDragging,
-              setIsDragging: setIsDragging,
-              idDraggingTask: idDraggingTask,
-              oldColumns: oldColumns,
-              typeDragItem: typeDragItem,
-              idDraggingColumn: idDraggingColumn,
-            }}
-          >
-            <h4 className={s.title}>{board.title}</h4>
-            <div className={s.board}>
-              {columns && <Columns columns={columns} boardId={boardId} />}
-            </div>
-          </BoardContext.Provider>
-        </>
+        <BoardContext.Provider
+          value={{
+            board: board,
+            dragItem: dragItem,
+            dragNode: dragNode,
+            setColumns: setColumns,
+            isDragging: isDragging,
+            setIsDragging: setIsDragging,
+            idDraggingTask: idDraggingTask,
+            oldColumns: oldColumns,
+            typeDragItem: typeDragItem,
+            idDraggingColumn: idDraggingColumn,
+          }}
+        >
+          <h4 className={styles.title}>{board.title}</h4>
+          <div className={styles.board}>
+            {columns && <Columns columns={columns} boardId={boardId} />}
+          </div>
+        </BoardContext.Provider>
       )}
       <Routes>
         <Route path={routes.tasks.content.absolute()} element={<TaskContent />} />

@@ -1,9 +1,9 @@
 import useTaskTitleEdit from 'hooks/tasks/useTaskTitleEdit';
 import { useLanguage } from 'hooks/useLanguage';
-import { ITEXT } from 'interfaces';
+import { ITask, ITEXT } from 'interfaces';
 import { AiFillCreditCard as TitleIcon } from 'react-icons/ai';
 import { IoMdClose as CloseIcon } from 'react-icons/io';
-import styles from '../task-content.module.scss';
+import styles from '../styles.module.scss';
 import TaskTitleEdit from './TaskTitleEdit';
 
 const TEXT_TASK_CONTENT_HEADER: ITEXT = {
@@ -14,13 +14,13 @@ const TEXT_TASK_CONTENT_HEADER: ITEXT = {
 };
 
 interface IProps {
-  title: string;
+  task: ITask;
   columnTitle?: string;
   onCloseClick: () => void;
 }
 
-const TaskContentHeader = ({ title, columnTitle, onCloseClick }: IProps) => {
-  const { newTitle, isTitleEdit, handlers } = useTaskTitleEdit(title);
+const TaskContentHeader = ({ task, columnTitle, onCloseClick }: IProps) => {
+  const { newTitle, isTitleEdit, handlers } = useTaskTitleEdit(task);
 
   const lang = useLanguage();
 

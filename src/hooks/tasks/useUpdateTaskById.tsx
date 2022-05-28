@@ -1,4 +1,4 @@
-import { IColumn, IUpdatedTask } from 'interfaces';
+import { IColumn, IUpdateTask } from 'interfaces';
 import { useMutation, useQueryClient } from 'react-query';
 import { toast, ToastOptions } from 'react-toastify';
 import { pathRoutes } from 'utils/pathRoutes';
@@ -20,8 +20,7 @@ export const useUpdateTaskById = (
 
   const { mutate, isLoading } = useMutation(
     pathRoutes.task.updateOneById.absolute(boardId, columnId, taskId),
-    (updatedTask: IUpdatedTask) =>
-      TaskService.updateOneById(boardId, columnId, taskId, updatedTask),
+    (updatedTask: IUpdateTask) => TaskService.updateOneById(boardId, columnId, taskId, updatedTask),
     {
       onError: (error: Error) => {
         console.log(error);

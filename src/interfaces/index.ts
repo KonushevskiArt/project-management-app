@@ -3,7 +3,7 @@ export interface IUser {
   login: string;
   password: string;
 }
-export interface IUpdatedTask {
+export interface IUpdateTask {
   title: string;
   order: number;
   description: string;
@@ -12,7 +12,7 @@ export interface IUpdatedTask {
   columnId: string;
 }
 
-export interface IUpdatedColumn {
+export interface IUpdateColumn {
   title: string;
   order: number;
 }
@@ -53,14 +53,7 @@ export interface ITask {
   columnId: string;
   files?: IFiles[] | [];
 }
-export interface IUpdataTask {
-  title: string;
-  order: number;
-  description: string;
-  userId: string;
-  boardId: string;
-  columnId: string;
-}
+
 export interface IStatePreviousTask {
   columnId: string;
   order: number;

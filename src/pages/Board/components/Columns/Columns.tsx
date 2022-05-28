@@ -1,4 +1,4 @@
-import styles from './columns.module.scss';
+import styles from './styles.module.scss';
 import ColumnCreater from '../ColumnCreater';
 import { IColumn } from 'interfaces';
 import Column from './Column';

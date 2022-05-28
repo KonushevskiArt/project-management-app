@@ -1,5 +1,18 @@
-import { FormEventHandler, useEffect, useRef, useState } from 'react';
-import styles from './task-title-edit.module.scss';
+import { useLanguage } from 'hooks/useLanguage';
+import { ITEXT } from 'interfaces';
+import { FormEventHandler, useEffect, useRef } from 'react';
+import styles from './styles.module.scss';
+
+const TEXT_TASK_TITLE_EDIT: ITEXT = {
+  save: {
+    en: 'save',
+    ru: 'сохранить',
+  },
+  cancel: {
+    en: 'cancel',
+    ru: 'отмена',
+  },
+};
 
 interface IProps {
   value: string;
@@ -17,7 +30,10 @@ const TaskTitleEdit = ({ value, onChange, onKeyDown, onSubmit, onCancel }: IProp
       textareaEl.current.selectionStart = value.length;
       textareaEl.current.selectionEnd = value.length;
     }
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const lang = useLanguage();
+
   return (
     <div className={styles.wrapper}>
       <input
@@ -30,10 +46,10 @@ const TaskTitleEdit = ({ value, onChange, onKeyDown, onSubmit, onCancel }: IProp
       ></input>
       <div className={styles.buttons}>
         <button className={styles.button_save} onClick={onSubmit}>
-          save
+          {TEXT_TASK_TITLE_EDIT.save[lang]}
         </button>
         <button className={styles.button_cancel} onClick={onCancel}>
-          cancel
+          {TEXT_TASK_TITLE_EDIT.cancel[lang]}
         </button>
       </div>
     </div>

@@ -1,8 +1,7 @@
-import { IColumn, IUpdatedColumn } from 'interfaces';
+import { IColumn, IUpdateColumn } from 'interfaces';
 import { useMutation, useQueryClient } from 'react-query';
 import { toast, ToastOptions } from 'react-toastify';
 import { pathRoutes } from 'utils/pathRoutes';
-import { routes } from 'utils/routes';
 import { ColumnService } from 'utils/services/Column.service';
 
 export const useUpdateColumnById = (
@@ -19,9 +18,8 @@ export const useUpdateColumnById = (
   } as ToastOptions;
 
   const { mutate, isLoading } = useMutation(
-    pathRoutes.column.updateOneById.absolute(boardId, columnId),
-    (updatedColumn: IUpdatedColumn) =>
-      ColumnService.updateOneById(boardId, columnId, updatedColumn),
+    pathRoutes.columns.updateOneById.absolute(boardId, columnId),
+    (updatedColumn: IUpdateColumn) => ColumnService.updateOneById(boardId, columnId, updatedColumn),
     {
       onError: (error: Error) => {
         console.log(error);

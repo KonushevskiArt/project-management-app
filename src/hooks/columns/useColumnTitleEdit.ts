@@ -1,17 +1,19 @@
-import { ITask, IUpdateTask } from 'interfaces';
+import { IColumn, IUpdateColumn } from 'interfaces';
 import { FormEventHandler, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useParams } from 'react-router';
 import { pathRoutes } from 'utils/pathRoutes';
-import { TaskService } from 'utils/services/Task.service';
+import { ColumnService } from 'utils/services/Column.service';
 
-export default function (task: ITask) {
-  const { boardId = '', columnId = '', taskId = '' } = useParams();
-  const [newTitle, setValue] = useState(task.title);
-  const [isTitleEdit, setIsTitleEdit] = useState(false);
+export default function (column: IColumn) {
+  const { boardId = '' } = useParams();
   const queryClient = useQueryClient();
+  const { title, id: columnId } = column;
+  const [newTitle, setValue] = useState(title);
+  const [isTitleEdit, setIsTitleEdit] = useState(false);
+
   const { mutate, data } = useMutation({
-    mutationFn: (props: IUpdateTask) => TaskService.updateOneById(boardId, columnId, taskId, props),
+    mutationFn: (props: IUpdateColumn) => ColumnService.updateOneById(boardId, columnId, props),
     onSuccess: () => {
       console.log(data);
       queryClient.invalidateQueries(pathRoutes.board.getOneById.absolute(boardId));
@@ -29,23 +31,19 @@ export default function (task: ITask) {
   };
 
   const onCancel = () => {
-    setValue(task.title);
+    setValue(title);
     setIsTitleEdit(false);
   };
 
   const onSubmit = () => {
     console.log('onSubmit');
-    if (task && newTitle.trim()) {
+    if (column && newTitle?.trim()) {
       mutate({
         title: newTitle.trim(),
-        order: task.order,
-        description: task.description,
-        userId: task.userId,
-        boardId,
-        columnId,
+        order: column.order,
       });
     }
-    setValue(newTitle.trim());
+    setValue(newTitle?.trim());
     setIsTitleEdit(false);
   };
 

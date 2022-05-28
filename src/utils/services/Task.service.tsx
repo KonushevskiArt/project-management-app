@@ -1,9 +1,7 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import { ICreatTask } from 'hooks/tasks/useCreatCardForm';
-import Cookies from 'js-cookie';
-import { Navigate, useNavigate } from 'react-router';
 import { pathRoutes } from 'utils/pathRoutes';
-import { ITask, IUpdataTask, IUpdatedTask } from '../../interfaces';
+import { ITask, IUpdateTask } from '../../interfaces';
 
 export const TaskService = {
   async getAll(boardId: string, columnId: string) {
@@ -23,31 +21,17 @@ export const TaskService = {
       });
       return data;
     } catch (error) {
-      // console.log(error);
       throw Error('err');
     }
   },
-  async updateOneById(taskId: string, props: IUpdataTask) {
-    console.log(taskId);
-    console.log(props);
-    const { data } = await axios.put<ITask>(
-      pathRoutes.task.getOneById.absolute(props.boardId, props.columnId, taskId),
-      {
-        ...props,
-      }
-    );
-    console.log(data);
-    return data;
-  },
-  /*------------------------------ */
-  async updateById(boardId: string, columnId: string, taskId: string, updatedTask: IUpdatedTask) {
+  async updateOneById(boardId: string, columnId: string, taskId: string, updatedTask: IUpdateTask) {
     return await axios
       .put<ITask>(pathRoutes.task.getOneById.absolute(boardId, columnId, taskId), {
         ...updatedTask,
       })
       .then((data) => data.data);
   },
-  /*------------------------------ */
+
   async deleteOneById(boardId: string, columnId: string, taskId: string) {
     return axios
       .delete(pathRoutes.task.deleteOneById.absolute(boardId, columnId, taskId))

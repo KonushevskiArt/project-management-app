@@ -1,14 +1,13 @@
 import TaskContentHeader from './TaskContentHeader';
 import TaskContentSidebar from './TaskContentSidebar';
 import TaskContentDescription from './TaskContentDescription';
-import TaskContentActivity from './TaskContentActivity';
-import styles from './task-content.module.scss';
+import styles from './styles.module.scss';
 import NotFound from 'pages/NotFound';
 import Modal from 'components/Modal';
 import { useNavigate, useParams } from 'react-router';
 import { useQueryClient } from 'react-query';
 import { pathRoutes } from 'utils/pathRoutes';
-import { IColumn, ITask } from 'interfaces';
+import { IBoard } from 'interfaces';
 
 const TaskContent = () => {
   const { boardId = '', columnId = '', taskId = '' } = useParams();
@@ -16,13 +15,13 @@ const TaskContent = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const column: IColumn | undefined = queryClient.getQueryData(
-    pathRoutes.columns.getOneById.absolute(boardId, columnId)
+  const board: IBoard | undefined = queryClient.getQueryData(
+    pathRoutes.board.getOneById.absolute(boardId)
   );
 
-  const task: ITask | undefined = queryClient.getQueryData(
-    pathRoutes.task.getOneById.absolute(boardId, columnId, taskId)
-  );
+  const column = board?.columns?.find(({ id }) => id === columnId);
+
+  const task = column?.tasks?.find(({ id }) => id === taskId);
 
   const onCloseClick = () => navigate(`/boards/${boardId}`);
 
@@ -30,14 +29,10 @@ const TaskContent = () => {
   return (
     <Modal handleClickOutside={onCloseClick}>
       <div className={`${styles.wrapper} ${styles.open}`}>
-        <TaskContentHeader
-          columnTitle={column?.title}
-          title={task.title}
-          onCloseClick={onCloseClick}
-        />
+        <TaskContentHeader columnTitle={column?.title} task={task} onCloseClick={onCloseClick} />
         <div className={styles.main}>
           <div className={styles.body}>
-            <TaskContentDescription description={task.description} />
+            <TaskContentDescription task={task} />
           </div>
           <TaskContentSidebar />
         </div>

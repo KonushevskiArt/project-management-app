@@ -1,4 +1,4 @@
-import styles from './column-control.module.scss';
+import styles from './styles.module.scss';
 import { FaEllipsisH as ControlIcon } from 'react-icons/fa';
 import ColumnControlDropdown from '../ColumnControlDropdown';
 import { Dispatch, SetStateAction } from 'react';

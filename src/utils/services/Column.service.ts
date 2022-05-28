@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { pathRoutes } from 'utils/pathRoutes';
-import { IColumn, INewColumn, IResponseNewColumn, IUpdatedColumn } from '../../interfaces';
+import { IColumn, INewColumn, IResponseNewColumn, IUpdateColumn } from '../../interfaces';
 
 export const ColumnService = {
   async getAll(boardId: string) {
@@ -20,7 +20,7 @@ export const ColumnService = {
       })
       .then((data) => data.data);
   },
-  async updateOneById(boardId: string, columnId: string, column: IUpdatedColumn) {
+  async updateOneById(boardId: string, columnId: string, column: IUpdateColumn) {
     return axios
       .put<IColumn>(pathRoutes.columns.getOneById.absolute(boardId, columnId), column)
       .then((data) => data.data);

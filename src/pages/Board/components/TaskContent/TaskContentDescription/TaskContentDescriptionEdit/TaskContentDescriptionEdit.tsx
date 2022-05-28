@@ -1,5 +1,7 @@
+import { useLanguage } from 'hooks/useLanguage';
+import { ITEXT } from 'interfaces';
 import { FormEventHandler, useEffect, useRef } from 'react';
-import styles from '../task-content-discription.module.scss';
+import styles from '../styles.module.scss';
 
 interface IProps {
   placeholder: string;
@@ -9,6 +11,17 @@ interface IProps {
   onCancelClick: () => void;
   onSaveClick: () => void;
 }
+
+const TEXT_TASK_CONTENT_DISCRIPTION_EDIT: ITEXT = {
+  save: {
+    en: 'save',
+    ru: 'сохранить',
+  },
+  cancel: {
+    en: 'cancel',
+    ru: 'отмена',
+  },
+};
 
 const TaskContentDescriptionEdit = ({
   placeholder,
@@ -23,7 +36,8 @@ const TaskContentDescriptionEdit = ({
     if (textareaEl && textareaEl.current) {
       textareaEl.current.selectionStart = value.length;
     }
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  const lang = useLanguage();
   return (
     <div>
       <textarea
@@ -37,10 +51,10 @@ const TaskContentDescriptionEdit = ({
       ></textarea>
       <div className={styles.buttons}>
         <button className={styles.button_save} onClick={onSaveClick} disabled={isDisabled}>
-          Save
+          {TEXT_TASK_CONTENT_DISCRIPTION_EDIT.save[lang]}
         </button>
         <button className={styles.button_cancel} onClick={onCancelClick} disabled={isDisabled}>
-          Cancel
+          {TEXT_TASK_CONTENT_DISCRIPTION_EDIT.cancel[lang]}
         </button>
       </div>
     </div>

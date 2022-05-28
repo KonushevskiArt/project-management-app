@@ -1,11 +1,8 @@
 import CreatTask from 'pages/Board/components/CreatTask';
-import { useQuery } from 'react-query';
-import { ColumnService } from 'utils/services/Column.service';
-import styles from './column.module.scss';
+import styles from './styles.module.scss';
 import { DragItem, IColumn, IDragItemParams } from 'interfaces';
 import Tasks from '../../Tasks';
 import ColumnHeader from './ColumnHeader';
-import { routes } from 'utils/routes';
 import { useContext } from 'react';
 import { BoardContext } from 'pages/Board/Board';
 import { useUpdateColumnById } from 'hooks/columns/useUpdateColumnById';
@@ -33,12 +30,6 @@ const Column = ({ column, boardId, columnIdx }: IProps) => {
     setColumns,
     oldColumns.current
   );
-
-  const { error } = useQuery({
-    queryKey: routes.columns.absolute(boardId, column.id),
-    queryFn: () => ColumnService.getOneById(boardId, column.id),
-    initialData: () => column,
-  });
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>, params: IDragItemParams) => {
     // e.stopPropagation();

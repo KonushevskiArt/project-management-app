@@ -1,4 +1,4 @@
-import { IColumn, ITask, IUpdatedTask, IUpdataTask } from 'interfaces';
+import { ITask, IUpdateTask } from 'interfaces';
 import { FormEventHandler, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useParams } from 'react-router';
@@ -22,7 +22,7 @@ export default function (task: ITask) {
   const queryClient = useQueryClient();
 
   const { isLoading, mutate } = useMutation({
-    mutationFn: (props: IUpdataTask) => TaskService.updateOneById(taskId, props),
+    mutationFn: (props: IUpdateTask) => TaskService.updateOneById(boardId, columnId, taskId, props),
     onSuccess: () => {
       setIsEdit(false);
       setValue(newDescription);
