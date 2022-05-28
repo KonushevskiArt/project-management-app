@@ -10,6 +10,7 @@
 
   --column-background: #ebecf0;
   --task-background: #fff;
+  --task-content-background: #f4f5f7;
 
   --success-color: rgb(53, 177, 111);
   --error-color: rgb(223, 59, 59);
@@ -37,6 +38,7 @@ body {
   padding: 0px;
   margin: 0px;
   border: 0px;
+  box-sizing: border-box;
 }
 *,
 *:before,

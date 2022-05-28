@@ -11,21 +11,17 @@ export const useDeleteColumnById = (boardId: string, columnId: string) => {
     autoClose: 5000,
   } as ToastOptions;
 
-  const { mutate, isLoading } = useMutation(
-    'delete column' + columnId,
-    () => ColumnService.deleteOneById(boardId, columnId),
-    {
-      onError: (error: Error) => {
-        console.log(error);
-        toast.error('Failed remove by network error!', toastOption);
-      },
-      onSuccess: () => {
-        toast.success('Column deleted successfuly!', toastOption);
-        // queryClient.invalidateQueries(pathRoutes.column.getAll.absolute(boardId));
-        queryClient.invalidateQueries(pathRoutes.board.getOneById.absolute(boardId));
-      },
-    }
-  );
+  const { mutate, isLoading } = useMutation(() => ColumnService.deleteOneById(boardId, columnId), {
+    onError: () => {
+      toast.error('Failed remove by network error!', toastOption);
+    },
+    onSuccess: () => {
+      toast.success('Column deleted successfuly!', toastOption);
+      queryClient.invalidateQueries(pathRoutes.board.getOneById.absolute(boardId));
+    },
+  });
 
-  return { mutate, isLoading };
+  const removeColumnHandler = () => mutate();
+
+  return { removeColumnHandler, isLoading };
 };

@@ -6,11 +6,11 @@ import { WelcomPage } from 'pages/WelcomPage';
 import { useContext } from 'react';
 import { AppContext } from './context';
 import CreatTask from 'pages/Board/components/CreatTask';
-import TaskContent from 'pages/TaskContent';
-import BoardPage from 'pages/Board';
-import Cookies from 'js-cookie';
+import TaskContent from 'pages/Board/components/TaskContent';
+import Board from 'pages/Board';
+import { routes } from 'utils/routes';
 import MainPage from 'pages/Main';
-import { Footer } from 'pages/Footer/footer';
+import Cookies from 'js-cookie';
 
 const AppRoutes = () => {
   const appContext = useContext(AppContext);
@@ -36,20 +36,10 @@ const AppRoutes = () => {
     <>
       <PrivateHeader />
       <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="boards/*">
-          <Route path=":boardId/*" element={<BoardPage />}>
-            <Route path="columns/*">
-              <Route path=":columnId/*">
-                <Route path="tasks/*">
-                  <Route path="creat-task" element={<CreatTask />} />
-                  <Route path=":taskId/*">
-                    <Route path="content" element={<TaskContent />} />
-                  </Route>
-                </Route>
-              </Route>
-            </Route>
-          </Route>
+        <Route path={'/'} element={<MainPage />} />
+        <Route path={`${routes.boards.absolute()}/*`} element={<Board />}>
+          <Route path={routes.tasks.creat.absolute()} element={<CreatTask />} />
+          <Route path={routes.tasks.content.absolute()} element={<TaskContent />} />
         </Route>
         <Route path="/signin" element={<ProtectedRoute outlet={<LogInForm />} />} />
         <Route path="/signup" element={<ProtectedRoute outlet={<LogInForm />} />} />
@@ -58,7 +48,6 @@ const AppRoutes = () => {
         <Route path="/errorPage/*" element={<ErrorPage />} />
         <Route path="/*" element={<Navigate to="/errorPage" replace />} />
       </Routes>
-      <Footer />
     </>
   );
 };

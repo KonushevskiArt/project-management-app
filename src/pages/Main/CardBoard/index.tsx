@@ -10,8 +10,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useUpdateBoardById } from 'hooks/boards/useUpdateBoard';
+import { useUpdateTitleBoardById } from 'hooks/boards/useUpdateTitleBoard';
 import { useDeleteBoardById } from 'hooks/boards/useDeleteBoard';
+import { useLanguage } from 'hooks/useLanguage';
 
 interface IProps {
   id: string;
@@ -21,19 +22,43 @@ type Inputs = {
   title: string;
 };
 
+interface ILANG {
+  [key: string]: string;
+}
+
+interface ITEXT {
+  [key: string]: ILANG;
+}
+
+const TEXT_PAGE: Readonly<ITEXT> = {
+  titleDelete: {
+    en: 'delete',
+    ru: 'удалить',
+  },
+  titleEdit: {
+    en: 'edit',
+    ru: 'редактировать',
+  },
+  link: {
+    en: 'move to board',
+    ru: 'перейти на доску задач',
+  },
+};
+
 const CardBoard = ({ id, title }: IProps) => {
   const [isEdit, setIsEdit] = useState(false);
   const [currentTitle, setCurrentTitle] = useState(title);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const menuClasses = isOpenMenu ? `${s.options} ${s.menuActive}` : s.options;
   const { register, handleSubmit, getValues } = useForm<Inputs>();
-  const { mutate: updateMutate, isLoading: isUpdateLoading } = useUpdateBoardById(
+  const { mutate: updateMutate, isLoading: isUpdateLoading } = useUpdateTitleBoardById(
     id as string,
     setIsEdit,
     setCurrentTitle
   );
   const { mutate: deleteMutate, isLoading: isDeleteLoading } = useDeleteBoardById(id as string);
   const ref = useOnclickOutside(() => setIsOpenMenu(false));
+  const lang = useLanguage();
 
   const isLoading = isUpdateLoading || isDeleteLoading;
 
@@ -57,7 +82,7 @@ const CardBoard = ({ id, title }: IProps) => {
     <div className={s.card}>
       <>
         <form onSubmit={handleSubmit(submitHandler)}>
-          {!isEdit && <h3 className={s.title}>{currentTitle || 'unknown'}</h3>}
+          {!isEdit && <h3 className={s.title}>{currentTitle}</h3>}
           {isEdit && (
             <input
               {...register('title')}
@@ -83,12 +108,20 @@ const CardBoard = ({ id, title }: IProps) => {
         <div ref={ref} className={menuClasses}>
           <ul className={s.list}>
             <li className={s.listItem}>
-              <button onClick={deleteHandler} className={s.listItemBtn}>
+              <button
+                title={TEXT_PAGE.titleDelete[lang]}
+                onClick={deleteHandler}
+                className={s.listItemBtn}
+              >
                 <DeleteIcon />
               </button>
             </li>
             <li className={s.listItem}>
-              <button onClick={editHandler} className={s.listItemBtn}>
+              <button
+                title={TEXT_PAGE.titleEdit[lang]}
+                onClick={editHandler}
+                className={s.listItemBtn}
+              >
                 <EditIcon />
               </button>
             </li>
@@ -96,7 +129,7 @@ const CardBoard = ({ id, title }: IProps) => {
         </div>
         <Link className={s.link} to={`${pathRoutes.board.relative}/${id}`}>
           <LinkIcon />
-          <span>Move to board</span>
+          <span>{TEXT_PAGE.link[lang]}</span>
         </Link>
         {isLoading ? (
           <CircularProgress sx={{ mt: '15px', color: `var(--text-color-white)` }} size={25} />

@@ -1,3 +1,4 @@
+import { INewBoard } from 'interfaces';
 import { useQueryClient, useMutation } from 'react-query';
 import { ToastOptions, toast } from 'react-toastify';
 import { pathRoutes } from 'utils/pathRoutes';
@@ -13,7 +14,7 @@ export const useCreateBoard = () => {
 
   const { mutate, isLoading } = useMutation(
     pathRoutes.board.create.absolute(),
-    (title: string) => BoardService.create(title),
+    (params: INewBoard) => BoardService.create(params),
     {
       onError: (error: Error) => {
         console.log(error);
