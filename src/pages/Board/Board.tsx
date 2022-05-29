@@ -9,7 +9,6 @@ import { DragItem, IBoard, IColumn, IDragItemParams } from 'interfaces';
 import { pathRoutes } from 'utils/pathRoutes';
 import { SetUserIdInLocalStorage } from 'utils/setUserIdInLocalStorage';
 import TaskContent from './components/TaskContent';
-import Loader from 'components/Loader';
 import LinearProgress from '@mui/material/LinearProgress';
 
 type ContextType = {

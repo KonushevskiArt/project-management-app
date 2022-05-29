@@ -7,9 +7,9 @@ import { INewColumn } from 'interfaces';
 import { useLanguage } from 'hooks/useLanguage';
 
 const toastOption = {
-  position: 'bottom-center',
+  position: 'bottom-right',
   hideProgressBar: true,
-  autoClose: 5000,
+  autoClose: 2000,
 } as ToastOptions;
 
 interface ILANG {
@@ -47,7 +47,6 @@ export const useCreateColumn = (
       },
       onSuccess: () => {
         setIsAddingColumn(false);
-        toast.success(TEXT_PAGE.successMessage[lang], toastOption);
         queryClient.invalidateQueries(pathRoutes.board.getOneById.absolute(boardId));
       },
     }
