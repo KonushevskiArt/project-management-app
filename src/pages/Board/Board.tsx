@@ -50,12 +50,10 @@ const Board: React.FC = () => {
     onSuccess: (data) => setColumns(data.columns as IColumn[]),
   });
 
-  // if (isLoading) return <Loader />;
   if (isLoading) return <LinearProgress />;
   if (error) return <div>Network error...</div>;
   return (
     <div className={styles.container}>
-      {/* {isLoading && <LinearProgress />} */}
       {board && (
         <BoardContext.Provider
           value={{
