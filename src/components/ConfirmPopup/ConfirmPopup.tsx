@@ -1,6 +1,6 @@
 import { useLanguage } from 'hooks/useLanguage';
 import { ITEXT } from 'interfaces';
-import styles from './confirm-modal.module.scss';
+import styles from './styles.module.scss';
 
 const TEXT_CONFIRM_POPUP: ITEXT = {
   cancel: {
@@ -27,14 +27,14 @@ const ConfirmPopup = ({ title, onLeftClick, onRightClick }: IProps) => {
       <div className={styles.buttons}>
         <input
           type="submit"
-          className={styles.button}
+          className={styles.button_ok}
           onClick={onRightClick}
           value={TEXT_CONFIRM_POPUP.ok[lang]}
           autoFocus={true}
         />
         <input
           type="submit"
-          className={styles.button}
+          className={styles.button_cancel}
           onClick={onLeftClick}
           value={TEXT_CONFIRM_POPUP.cancel[lang]}
         />

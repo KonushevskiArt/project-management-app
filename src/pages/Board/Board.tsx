@@ -9,7 +9,6 @@ import { DragItem, IBoard, IColumn, IDragItemParams } from 'interfaces';
 import { pathRoutes } from 'utils/pathRoutes';
 import { SetUserIdInLocalStorage } from 'utils/setUserIdInLocalStorage';
 import TaskContent from './components/TaskContent';
-import Loader from 'components/Loader';
 import LinearProgress from '@mui/material/LinearProgress';
 
 type ContextType = {
@@ -50,12 +49,10 @@ const Board: React.FC = () => {
     onSuccess: (data) => setColumns(data.columns as IColumn[]),
   });
 
-  // if (isLoading) return <Loader />;
   if (isLoading) return <LinearProgress />;
   if (error) return <div>Network error...</div>;
   return (
     <div className={styles.container}>
-      {/* {isLoading && <LinearProgress />} */}
       {board && (
         <BoardContext.Provider
           value={{

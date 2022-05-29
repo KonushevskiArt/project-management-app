@@ -3,20 +3,20 @@ import { toast, ToastOptions } from 'react-toastify';
 import { pathRoutes } from 'utils/pathRoutes';
 import { ColumnService } from 'utils/services/Column.service';
 
+const toastOption = {
+  position: 'bottom-right',
+  hideProgressBar: true,
+  autoClose: 2000,
+} as ToastOptions;
+
 export const useDeleteColumnById = (boardId: string, columnId: string) => {
   const queryClient = useQueryClient();
-  const toastOption = {
-    position: 'bottom-center',
-    hideProgressBar: true,
-    autoClose: 5000,
-  } as ToastOptions;
 
   const { mutate, isLoading } = useMutation(() => ColumnService.deleteOneById(boardId, columnId), {
     onError: () => {
       toast.error('Failed remove by network error!', toastOption);
     },
     onSuccess: () => {
-      toast.success('Column deleted successfuly!', toastOption);
       queryClient.invalidateQueries(pathRoutes.board.getOneById.absolute(boardId));
     },
   });
