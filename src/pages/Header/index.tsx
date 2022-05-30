@@ -75,7 +75,7 @@ export const Header = () => {
     if (matches) return 'flex';
     return 'none';
   };
-
+  if (location.pathname === '/welcome') return <></>;
   return (
     <>
       <Container
@@ -125,7 +125,7 @@ export const Header = () => {
           >
             {TEXT_MAIN_PAGE.newBoard[lang]}
           </Button>
-          <Link to="/">
+          <Link to="/welcome">
             <button className={s.toHome}>
               <HomeIcon fontSize="large" />
             </button>
