@@ -1,4 +1,3 @@
-import { IBoard } from 'interfaces';
 import { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { toast, ToastOptions } from 'react-toastify';
@@ -18,11 +17,10 @@ export const useDeleteBoardById = (boardId: string) => {
     pathRoutes.board.deleteOneById.absolute(boardId),
     () => BoardService.deleteOneById(boardId),
     {
-      onError: (error: Error) => {
-        console.log(error);
+      onError: () => {
         toast.error('Failed remove board by network error!', toastOption);
       },
-      onSuccess: (data) => {
+      onSuccess: () => {
         toast.success('Board removed successfuly!', toastOption);
         queryClient.invalidateQueries(pathRoutes.board.getAll.absolute());
       },

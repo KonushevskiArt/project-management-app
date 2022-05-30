@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { pathRoutes } from 'utils/pathRoutes';
-import { IBoard, IColumn, INewBoard, IUpdatedBoardParams } from '../../interfaces';
+import { IBoard, INewBoard, IUpdatedBoardParams } from '../../interfaces';
 
 export const BoardService = {
   async getAll() {

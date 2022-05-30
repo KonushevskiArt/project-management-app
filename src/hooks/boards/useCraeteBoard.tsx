@@ -16,8 +16,7 @@ export const useCreateBoard = () => {
     pathRoutes.board.create.absolute(),
     (params: INewBoard) => BoardService.create(params),
     {
-      onError: (error: Error) => {
-        console.log(error);
+      onError: () => {
         toast.error('Failed crate new board by network error!', toastOption);
       },
       onSuccess: () => {

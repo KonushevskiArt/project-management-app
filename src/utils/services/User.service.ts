@@ -12,7 +12,6 @@ export const UserService = {
       .then((data) => data.data);
   },
   async updateUserById(id: string, newData: IUserUpdate) {
-    console.log(pathRoutes.user.updateOneById.absolute(id));
     return axios
       .put<IUserUpdate>(pathRoutes.user.updateOneById.absolute(id), newData)
       .then((data) => data.data);

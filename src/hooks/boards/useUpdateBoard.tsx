@@ -20,9 +20,8 @@ export const useUpdateBoardById = (
     pathRoutes.board.updateOneById.absolute(boardId),
     (params: IUpdatedBoardParams) => BoardService.updateOneById(boardId, params),
     {
-      onError: (error: Error) => {
+      onError: () => {
         setIsEditBoard(false);
-        console.log(error);
         toast.error("Failed update board's title by network error!", toastOption);
       },
       onSuccess: (data) => {

@@ -17,14 +17,12 @@ export const BurgerMenu = ({ signOut }: Props) => {
   const appContext = useContext(AppContext);
 
   const handleCloseOpen = () => {
-    console.log(isOpen);
     return setIsOpen(!isOpen);
   };
   function myFunction(x: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     const elem = x.target as HTMLDivElement;
     if (!elem.classList.contains('container')) {
       const tr = elem.parentElement as HTMLDivElement;
-      console.log(elem.parentElement);
       tr.classList.toggle('change');
     }
     elem.classList.toggle('change');

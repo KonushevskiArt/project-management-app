@@ -9,7 +9,7 @@ interface IProps {
   extraClass?: string;
 }
 
-const Dropdown = ({ children, title, onCloseClick, extraClass }: IProps) => (
+const Dropdown = ({ children, title, onCloseClick }: IProps) => (
   <div className={styles.container}>
     <div className={styles.dropdown_wrapper}>
       <div className={styles.dropdown_header}>
