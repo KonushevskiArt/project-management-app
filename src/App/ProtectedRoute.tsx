@@ -9,7 +9,7 @@ const ProtectedRoute = ({ children }: Props) => {
   const token = Cookies.get('token') || null;
 
   if (!token) {
-    return <Navigate to="/signin" replace />;
+    return <Navigate to="/welcome" replace />;
   }
 
   return children ? children : <Outlet />;

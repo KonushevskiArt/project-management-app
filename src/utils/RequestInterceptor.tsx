@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router';
-import { pathRoutes } from 'utils/pathRoutes';
+import { pathRoutes } from './pathRoutes';
 
 type Props = {
   children: JSX.Element;
