@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  width: 100%;
+  padding: 10px 40px;
+  height: calc(100vh - 104px);
+  overflow-x: auto;
+}
+.container::-webkit-scrollbar{
+  background-color: #00000026;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding-left: 40px;
+}
+.container::-webkit-scrollbar-thumb{
+  background-color: #091e4214;
+  border-radius: 15px;
+}
+
+.content {
+  background-color: var(--main-color);
+  flex-grow: 1;
+  color: var(--text-color-white);
+}
+.title{
+  font-size: 20px;
+  line-height: 24px;
+}
