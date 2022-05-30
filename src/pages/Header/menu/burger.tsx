@@ -29,7 +29,7 @@ export const BurgerMenu = ({ signOut }: Props) => {
   }
 
   const icon = (
-    <Box sx={{ display: 'flex', flexDirection: 'column', marginTop: '6px' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', marginTop: '6px', zIndex: '100' }}>
       <Button
         onClick={() => {
           navigate('/update');
