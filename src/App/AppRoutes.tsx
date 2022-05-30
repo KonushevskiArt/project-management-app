@@ -11,6 +11,7 @@ import Board from 'pages/Board';
 import { routes } from 'utils/routes';
 import MainPage from 'pages/Main';
 import Cookies from 'js-cookie';
+import { Footer } from 'pages/Footer/footer';
 
 const AppRoutes = () => {
   const appContext = useContext(AppContext);
@@ -48,6 +49,7 @@ const AppRoutes = () => {
         <Route path="/errorPage/*" element={<ErrorPage />} />
         <Route path="/*" element={<Navigate to="/errorPage" replace />} />
       </Routes>
+      <Footer />
     </>
   );
 };

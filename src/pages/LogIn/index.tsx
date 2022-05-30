@@ -109,9 +109,9 @@ export const LogInForm = () => {
     if (location.pathname === '/update') return TEXT_MAIN_PAGE.update[lang];
   }
   function chechHeight() {
-    if (location.pathname === '/signin') return 'calc(100vh - 75px)';
-    if (location.pathname === '/signup') return 'calc(100vh - 75px)';
-    if (location.pathname === '/update') return 'calc(100vh - 135px)';
+    if (location.pathname === '/signin') return 'calc(100vh - 51px)';
+    if (location.pathname === '/signup') return 'calc(100vh - 51px)';
+    if (location.pathname === '/update') return 'calc(100vh - 111px)';
   }
   function showHidePassord() {
     show ? setShow(false) : setShow(true);

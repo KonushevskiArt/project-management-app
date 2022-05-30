@@ -4,5 +4,19 @@
     text-decoration: none;
     color: white;
     transition: all 0.6s ease-in;
-    font-size: 18px;
+    font-size: 12px;
 }
+.footer-author-img{
+    margin-right: 10px;
+    width: 20px;
+}
+@media screen and (max-width: 360px){
+    .footer-author-link{
+        font-size: 10px;
+        margin-right: 6px;
+    }
+    .footer-author-img{
+        margin-right: 5px;
+        width: 15px;
+    }
+  }

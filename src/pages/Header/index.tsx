@@ -12,8 +12,10 @@ import LanguageSwitcher from 'components/LanguageSwitcher';
 import { useLanguage } from 'hooks/useLanguage';
 import { ITEXT } from 'pages/Main';
 import languageContext from 'contexts/language-context';
+import { BurgerMenu } from './menu/burger';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
-const TEXT_MAIN_PAGE: Readonly<ITEXT> = {
+export const TEXT_MAIN_PAGE: Readonly<ITEXT> = {
   edit: {
     en: 'Edit profile',
     ru: 'Редактировать профиль',
@@ -34,6 +36,7 @@ export const Header = () => {
   const appContext = useContext(AppContext);
   const lang = useLanguage();
   const { setLang } = useContext(languageContext);
+  const matches = useMediaQuery('(min-width:700px)');
 
   window.onscroll = function () {
     if (window.pageYOffset > 0) {
@@ -68,6 +71,11 @@ export const Header = () => {
     navigate('/welcome');
   };
 
+  const checkDisplay = () => {
+    if (matches) return 'flex';
+    return 'none';
+  };
+
   return (
     <>
       <Container
@@ -76,7 +84,6 @@ export const Header = () => {
         sx={{
           bgcolor: '#3f51b5',
           height: '50px',
-          width: '100%',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'flex-end',
@@ -84,47 +91,46 @@ export const Header = () => {
         }}
       >
         <LanguageSwitcher />
-        {Cookies.get('token') && (
-          <Box sx={{ display: 'flex' }}>
-            <Button
-              variant="contained"
-              color="inherit"
-              size="small"
-              sx={{ marginRight: '10px', color: 'black' }}
-              onClick={() => {
-                navigate('/update');
-              }}
-            >
-              {TEXT_MAIN_PAGE.edit[lang]}
-            </Button>
-            <Button
-              variant="contained"
-              color="inherit"
-              size="small"
-              sx={{ marginRight: '10px', color: 'black' }}
-              onClick={signOut}
-            >
-              {TEXT_MAIN_PAGE.out[lang]}
-            </Button>
-            <Button
-              variant="contained"
-              color="inherit"
-              size="small"
-              sx={{ marginRight: '10px', color: 'black' }}
-              onClick={() => {
-                appContext.setCreatingNewBoard(true);
-                navigate('/');
-              }}
-            >
-              {TEXT_MAIN_PAGE.newBoard[lang]}
-            </Button>
-            <Link to="/">
-              <button className={s.toHome}>
-                <HomeIcon fontSize="large" />
-              </button>
-            </Link>
-          </Box>
-        )}
+        <BurgerMenu signOut={signOut} />
+        <Box display={checkDisplay}>
+          <Button
+            variant="contained"
+            color="inherit"
+            size="small"
+            sx={{ marginRight: '10px', color: 'black' }}
+            onClick={() => {
+              navigate('/update');
+            }}
+          >
+            {TEXT_MAIN_PAGE.edit[lang]}
+          </Button>
+          <Button
+            variant="contained"
+            color="inherit"
+            size="small"
+            sx={{ marginRight: '10px', color: 'black' }}
+            onClick={signOut}
+          >
+            {TEXT_MAIN_PAGE.out[lang]}
+          </Button>
+          <Button
+            variant="contained"
+            color="inherit"
+            size="small"
+            sx={{ marginRight: '10px', color: 'black' }}
+            onClick={() => {
+              appContext.setCreatingNewBoard(true);
+              navigate('/');
+            }}
+          >
+            {TEXT_MAIN_PAGE.newBoard[lang]}
+          </Button>
+          <Link to="/">
+            <button className={s.toHome}>
+              <HomeIcon fontSize="large" />
+            </button>
+          </Link>
+        </Box>
       </Container>
     </>
   );
