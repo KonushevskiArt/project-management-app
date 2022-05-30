@@ -109,8 +109,8 @@ export const LogInForm = () => {
     if (location.pathname === '/update') return TEXT_MAIN_PAGE.update[lang];
   }
   function chechHeight() {
-    if (location.pathname === '/signin') return 'calc(100vh - 51px)';
-    if (location.pathname === '/signup') return 'calc(100vh - 51px)';
+    if (location.pathname === '/signin') return 'calc(100vh - 55px)';
+    if (location.pathname === '/signup') return 'calc(100vh - 55px)';
     if (location.pathname === '/update') return 'calc(100vh - 111px)';
   }
   function showHidePassord() {
@@ -149,7 +149,7 @@ export const LogInForm = () => {
       return <Navigate to="/" />;
   }
   return (
-    <Box height={chechHeight()}>
+    <Box height={chechHeight()} sx={{ overflowY: 'auto' }}>
       {location.pathname === '/signin' && <But />}
       {location.pathname === '/signup' && <But />}
       {location.pathname === '/update' && <Delete />}
@@ -236,7 +236,7 @@ export const LogInForm = () => {
               User exist
             </Typography>
           )}
-          <Button variant="contained" color="success" type="submit" sx={{ width: '90px' }}>
+          <Button variant="contained" color="success" type="submit" sx={{ width: '95px' }}>
             {LogInProces ? (
               <CircularProgress color="info" size="24px" />
             ) : location.pathname === '/update' ? (
