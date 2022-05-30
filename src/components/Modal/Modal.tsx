@@ -1,7 +1,6 @@
 import styles from './modal.module.scss';
 import cn from 'classnames';
-import { Component, MouseEventHandler, RefObject, useRef } from 'react';
-import { createPortal } from 'react-dom';
+import { RefObject, useRef } from 'react';
 import ModalRoot from './ModalRoot';
 
 interface Props {

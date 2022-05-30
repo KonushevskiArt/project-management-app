@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { pathRoutes } from 'utils/pathRoutes';
 import s from './style.module.scss';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -63,7 +63,7 @@ const CardBoard = ({ id, title, description }: IProps) => {
   const [currentDescription, setCurrentDescription] = useState(description);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const menuClasses = isOpenMenu ? `${s.options} ${s.menuActive}` : s.options;
-  const { register, handleSubmit, getValues } = useForm<Inputs>();
+  const { register, handleSubmit } = useForm<Inputs>();
   const { mutate: updateMutate, isLoading: isUpdateLoading } = useUpdateBoardById(
     id as string,
     setIsEdit,
