@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from '@mui/material';
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useLocation, useNavigate } from 'react-router';
+import { Navigate, useLocation, useNavigate } from 'react-router';
 import { UserData } from './iterfaces';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -144,6 +144,10 @@ export const LogInForm = () => {
     );
   };
 
+  if (Cookies.get('token')) {
+    if (location.pathname === '/signin' || location.pathname === '/signup')
+      return <Navigate to="/" />;
+  }
   return (
     <Box height={chechHeight()}>
       {location.pathname === '/signin' && <But />}
@@ -232,7 +236,7 @@ export const LogInForm = () => {
               User exist
             </Typography>
           )}
-          <Button variant="contained" color="success" type="submit">
+          <Button variant="contained" color="success" type="submit" sx={{ width: '90px' }}>
             {LogInProces ? (
               <CircularProgress color="info" size="24px" />
             ) : location.pathname === '/update' ? (
