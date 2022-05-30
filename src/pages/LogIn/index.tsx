@@ -145,8 +145,8 @@ export const LogInForm = () => {
   };
 
   if (Cookies.get('token')) {
-    if (location.pathname === '/signin' || location.pathname === 'signup')
-      return <Navigate to="error" />;
+    if (location.pathname === '/signin' || location.pathname === '/signup')
+      return <Navigate to="/" />;
   }
   return (
     <Box height={chechHeight()}>
@@ -236,7 +236,7 @@ export const LogInForm = () => {
               User exist
             </Typography>
           )}
-          <Button variant="contained" color="success" type="submit">
+          <Button variant="contained" color="success" type="submit" sx={{ width: '90px' }}>
             {LogInProces ? (
               <CircularProgress color="info" size="24px" />
             ) : location.pathname === '/update' ? (
