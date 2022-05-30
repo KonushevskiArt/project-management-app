@@ -101,7 +101,7 @@ const CardBoard = ({ id, title, description }: IProps) => {
   };
 
   return (
-    <div className={s.card} ref={ref}>
+    <li className={s.card} ref={ref}>
       <>
         <form onSubmit={handleSubmit(submitHandler)}>
           {!isEdit && (
@@ -187,7 +187,7 @@ const CardBoard = ({ id, title, description }: IProps) => {
           />
         </Modal>
       )}
-    </div>
+    </li>
   );
 };
 

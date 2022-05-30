@@ -43,12 +43,12 @@ const MainPage = () => {
           {error && <p>loading error...</p>}
 
           {data && (
-            <div className={s.container}>
+            <ul className={s.container}>
               {data.map(({ title, id, description }) => (
                 <CardBoard id={id} description={description} title={title} key={id} />
               ))}
               <BoardCreater />
-            </div>
+            </ul>
           )}
         </>
       </div>

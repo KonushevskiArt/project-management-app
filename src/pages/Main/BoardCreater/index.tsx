@@ -61,7 +61,7 @@ const BoardCreater = () => {
   };
 
   return (
-    <div className={boardCreater}>
+    <li className={boardCreater}>
       <div className={wrapperClasses}>
         {!isOpen && (
           <button onClick={() => setIsOpen(true)} className={s.btnAdd}>
@@ -90,7 +90,7 @@ const BoardCreater = () => {
           </form>
         )}
       </div>
-    </div>
+    </li>
   );
 };
 
