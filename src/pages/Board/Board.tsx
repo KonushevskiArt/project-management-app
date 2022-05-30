@@ -1,6 +1,6 @@
 import React, { createContext, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
-import { Route, Routes, useParams } from 'react-router';
+import { Route, Routes, useNavigate, useParams } from 'react-router';
 import { routes } from 'utils/routes';
 import { BoardService } from 'utils/services/Board.service';
 import styles from './styles.module.scss';
@@ -10,6 +10,7 @@ import { pathRoutes } from 'utils/pathRoutes';
 import { SetUserIdInLocalStorage } from 'utils/setUserIdInLocalStorage';
 import TaskContent from './components/TaskContent';
 import LinearProgress from '@mui/material/LinearProgress';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 type ContextType = {
   board: IBoard;
@@ -36,6 +37,7 @@ const Board: React.FC = () => {
   const [columns, setColumns] = useState<IColumn[]>([]);
   const oldColumns = useRef<IColumn[]>([]);
   const typeDragItem = useRef<DragItem>(DragItem.task);
+  const navigate = useNavigate();
 
   SetUserIdInLocalStorage();
 
@@ -49,7 +51,13 @@ const Board: React.FC = () => {
     onSuccess: (data) => setColumns(data.columns as IColumn[]),
   });
 
-  if (isLoading) return <LinearProgress />;
+  if (isLoading)
+    return (
+      <>
+        <LinearProgress />
+        <div style={{ display: 'flex', height: 'calc(100vh - 108px)' }}></div>
+      </>
+    );
   if (error) return <div>Network error...</div>;
   return (
     <div className={styles.container}>
@@ -68,7 +76,15 @@ const Board: React.FC = () => {
             idDraggingColumn: idDraggingColumn,
           }}
         >
-          <h4 className={styles.title}>{board.title}</h4>
+          <div style={{ display: 'flex' }}>
+            <ArrowBackIcon
+              onClick={() => {
+                navigate('/');
+              }}
+              sx={{ marginRight: '10px', ':hover': { cursor: 'pointer', fill: '#4c94bd' } }}
+            />
+            <h4 className={styles.title}>{board.title}</h4>
+          </div>
           <div className={styles.board}>
             {columns && <Columns columns={columns} boardId={boardId} />}
           </div>
