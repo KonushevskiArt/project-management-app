@@ -19,7 +19,6 @@ export const useDeleteBoardById = (boardId: string) => {
     () => BoardService.deleteOneById(boardId),
     {
       onError: (error: Error) => {
-        console.log(error);
         toast.error('Failed remove board by network error!', toastOption);
       },
       onSuccess: (data) => {

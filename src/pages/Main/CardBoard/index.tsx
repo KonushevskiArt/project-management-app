@@ -93,7 +93,6 @@ const CardBoard = ({ id, title, description }: IProps) => {
       !isLoading &&
       (data.title !== currentTitle || data.description !== currentDescription)
     ) {
-      console.log(data);
       updateMutate({ title: data.title, description: data.description });
     } else {
       setIsEdit(false);

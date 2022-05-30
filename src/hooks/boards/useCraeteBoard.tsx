@@ -17,7 +17,6 @@ export const useCreateBoard = () => {
     (params: INewBoard) => BoardService.create(params),
     {
       onError: (error: Error) => {
-        console.log(error);
         toast.error('Failed crate new board by network error!', toastOption);
       },
       onSuccess: () => {

@@ -22,7 +22,6 @@ export const useUpdateBoardById = (
     {
       onError: (error: Error) => {
         setIsEditBoard(false);
-        console.log(error);
         toast.error("Failed update board's title by network error!", toastOption);
       },
       onSuccess: (data) => {
