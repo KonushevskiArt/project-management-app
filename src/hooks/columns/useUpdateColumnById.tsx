@@ -44,7 +44,7 @@ export const useUpdateColumnById = (
         toast.error(TEXT_PAGE.errorMessage[lang], toastOption);
       },
       onSuccess: () => {
-        // queryClient.invalidateQueries(pathRoutes.board.getOneById.absolute(boardId));
+        queryClient.invalidateQueries(pathRoutes.board.getOneById.absolute(boardId));
       },
     }
   );
